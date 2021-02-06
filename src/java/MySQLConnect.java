@@ -6,7 +6,7 @@ public class MySQLConnect {
 
     // CONNECTION INFO
     final String MYSQL_USER = "root";
-    final String MYSQL_PASSWORD = "ics499";
+    final String MYSQL_PASSWORD = "ics311";
     final String MYSQL_URL = "jdbc:mysql://localhost:3306/metro_bank";
 
 
