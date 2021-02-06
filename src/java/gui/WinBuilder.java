@@ -8,14 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 public class WinBuilder extends JFrame {
 
@@ -137,6 +130,7 @@ public class WinBuilder extends JFrame {
 	frmLogin.getContentPane().add(lblPassword);
 
 	JLabel lblNewLabel_1 = new JLabel("User Login");
+	lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 	lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 33));
 	lblNewLabel_1.setBounds(199, 21, 686, 49);
 	frmLogin.getContentPane().add(lblNewLabel_1);
@@ -164,6 +158,7 @@ public class WinBuilder extends JFrame {
 	separator.setBounds(21, 290, 1253, 12);
 	frmLogin.getContentPane().add(separator);
 
+
 	JRadioButton rdbtnNewRadioButton = new JRadioButton("Manager");
 	rdbtnNewRadioButton.setBounds(980, 49, 201, 35);
 	frmLogin.getContentPane().add(rdbtnNewRadioButton);
@@ -176,5 +171,12 @@ public class WinBuilder extends JFrame {
 	rdbtnCustomer.setBounds(980, 183, 201, 35);
 	frmLogin.getContentPane().add(rdbtnCustomer);
 
-    }
+
+	ButtonGroup group = new ButtonGroup();
+	group.add(rdbtnNewRadioButton);
+	group.add(rdbtnTeller);
+	group.add(rdbtnCustomer);
+
+
+	}
 }
