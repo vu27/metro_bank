@@ -55,25 +55,12 @@ public class WinBuilder extends JFrame {
 	frmLogin.setBounds(100, 100, 1365, 638);
 	frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-	JButton btnForgot = new JButton("Forgot User/Password");
-	btnForgot.setBounds(376, 307, 261, 66);
-	btnForgot.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent arg0) {
-
-		// Function f = new Function();
-		// ResultSet rs = null;
-
-		System.exit(0);
-
-	    }
-	});
 
 	JLabel lblUserNotFound = new JLabel("UserName/Password is not correct");
 	lblUserNotFound.setForeground(Color.RED);
 	lblUserNotFound.setBounds(165, 414, 663, 26);
 
 	frmLogin.getContentPane().setLayout(null);
-	frmLogin.getContentPane().add(btnForgot);
 
 	// txtPassword = new JTextField();
 	// txtPassword.setFont(new Font("Tahoma", Font.PLAIN, 30));
