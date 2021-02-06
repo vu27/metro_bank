@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
@@ -175,6 +176,18 @@ public class WinBuilder extends JFrame {
 	JSeparator separator = new JSeparator();
 	separator.setBounds(21, 290, 1253, 12);
 	frmLogin.getContentPane().add(separator);
+
+	JRadioButton rdbtnNewRadioButton = new JRadioButton("Manager");
+	rdbtnNewRadioButton.setBounds(980, 49, 201, 35);
+	frmLogin.getContentPane().add(rdbtnNewRadioButton);
+
+	JRadioButton rdbtnTeller = new JRadioButton("Teller");
+	rdbtnTeller.setBounds(980, 114, 201, 35);
+	frmLogin.getContentPane().add(rdbtnTeller);
+
+	JRadioButton rdbtnCustomer = new JRadioButton("Customer");
+	rdbtnCustomer.setBounds(980, 183, 201, 35);
+	frmLogin.getContentPane().add(rdbtnCustomer);
 
     }
 }
