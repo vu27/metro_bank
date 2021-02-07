@@ -1,15 +1,16 @@
 /* Populate Employees */
-INSERT INTO metro_bank.employee (
-	emp_fname,
-    emp_lname,
-    emp_role,
-    emp_email,
-	emp_phone
+INSERT INTO metro_bank.user (
+	user_fname,
+    user_lname,
+    user_phone,
+    user_role,
+    user_email,
+	user_password
 ) VALUES 
-('Bobby', 'Dolphin', 'Manager', 'b.dolphin@metrobank.com', '651-555-9987'),
-('Tung', 'Vu', 'Student', 'Tung.Vu@metrostate.com', '612-555-1234'),
-('Anthony', 'Nguyen', 'Student', 'Anthony.Nguyen@metrostate.com', '612-555-1233'),
-('Safina', 'Nganga', 'Student', 'Safina.Nganga@metrostate.com', '612-555-1334'),
-('Janaya', 'Thomas', 'Student', 'Janaya.Thomas@metrostate.com', '612-555-2334'),
-('Leona', 'Dunne', 'Teller', 'l.Dunne@metrobank.com', '952-555-1177'),
-('Walter', 'Smith', 'Teller', 'w.Smith@metrobank.com', '612-555-1234');
+('Bobby', 'Dolphin', '651-555-9987', 'Manager', 'b.dolphin@metrobank.edu', 'bobbydolphin'),
+('Tung', 'Vu', '612-555-1234', 'Student', 'Tung.Vu@metrostate.edu', 'tungvu'),
+('Anthony', 'Nguyen', '612-555-1233', 'Teller', 'Anthony.Nguyen@metrostate.edu', 'anthonynguyen'),
+('Safina', 'Nganga', '612-555-1334', 'Manager', 'Safina.Nganga@metrostate.edu', 'safinanganga'),
+('Janaya', 'Thomas', '612-555-2334', 'Teller', 'Janaya.Thomas@metrostate.edu', 'janayathomas'),
+('Leona', 'Dunne', '952-555-1177', 'Teller', 'l.Dunne@metrobank.edu', 'leonadunne'),
+('Walter', 'Smith', '612-555-1234', 'Teller', 'w.Smith@metrobank.edu', 'waltersmith');
