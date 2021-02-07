@@ -1,9 +1,11 @@
-import gui.MySQLConnect;
+package util;
+
+import util.MySQLConnect;
 
 import java.sql.SQLException;
 import java.util.*;
 
-public class MetroBank {
+public class MySqlConnectionExample {
     public static void main(String[] args) throws SQLException {
 
         // Example of MySQL query/connection
