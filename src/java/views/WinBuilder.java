@@ -3,11 +3,10 @@ package views;
 import model.User;
 import util.MySQLConnect;
 
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +19,9 @@ public class WinBuilder extends JFrame {
     private JFrame frmLogin;
     private JTextField txtPassword;
     private JTextField userName;
+    protected String manager = "Manager";
+    protected String teller = "Teller";
+    protected String customer = "Student";
 
 
     /**
@@ -41,18 +43,29 @@ public class WinBuilder extends JFrame {
     /**
      * Create the application.
      */
-    public WinBuilder() {
+    public WinBuilder() throws FontFormatException, IOException {
         initialize();
     }
 
     /**
      * Initialize the contents of the frame.
      */
-    private void initialize() {
+    private void initialize() throws FontFormatException, IOException {
+        System.setProperty("awt.useSystemAAFontSettings", "on");
+        System.setProperty("swing.aatext", "true");
         frmLogin = new JFrame();
         frmLogin.setTitle("Login");
-        frmLogin.setBounds(100, 100, 1365, 638);
+        frmLogin.setBounds(100, 100, 1052, 582);
         frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frmLogin.getContentPane().setBackground(new Color(11, 40, 83));
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        // ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/Myriad Pro
+        // Regular.ttf")));
+        // Font font = Font.createFont(Font.TRUETYPE_FONT, new
+        // File("/Myriad-Pro-Regular.ttf"));
+        //Font font = Font.createFont(Font.TRUETYPE_FONT,
+         //      getClass().getClassLoader().getResourceAsStream("Myriad-Pro-Regular.ttf"));
 
         // LABELS
         JLabel lblUserNotFound = new JLabel("UserName/Password is not correct");
@@ -84,37 +97,47 @@ public class WinBuilder extends JFrame {
         // txtPassword.setColumns(10);
         // txtPassword.setBounds(430, 404, 718, 55);
         password.setColumns(10);
-        password.setBounds(165, 214, 720, 72);
+        password.setBounds(165, 214, 595, 72);
+        password.setFont(new Font("font", Font.PLAIN, 30));
         password.setEchoChar('*');
         frmLogin.getContentPane().add(password);
 
         // contentPane.add(password);
 
         userName = new JTextField();
-        userName.setFont(new Font("Tahoma", Font.PLAIN, 30));
+        userName.setFont(new Font("font", Font.PLAIN, 30));
         userName.setColumns(10);
-        userName.setBounds(165, 107, 720, 72);
+        userName.setBounds(165, 107, 595, 72);
         frmLogin.getContentPane().add(userName);
 
         JButton btnLogin = new JButton("Login");
-        btnLogin.setBounds(658, 307, 227, 66);
+        btnLogin.setBackground(Color.WHITE);
+        btnLogin.setBounds(533, 307, 227, 66);
         frmLogin.getContentPane().add(btnLogin);
 
         JLabel lblNewLabel = new JLabel("UserName");
-        lblNewLabel.setBounds(63, 107, 115, 49);
+        lblNewLabel.setFont(new Font("font", Font.PLAIN, 21));
+        lblNewLabel.setForeground(Color.WHITE);
+        lblNewLabel.setBounds(63, 122, 115, 49);
         frmLogin.getContentPane().add(lblNewLabel);
 
         JLabel lblPassword = new JLabel("Password");
-        lblPassword.setBounds(63, 215, 115, 49);
+        lblPassword.setFont(new Font("font", Font.PLAIN, 21));
+        lblPassword.setForeground(Color.WHITE);
+        lblPassword.setBounds(63, 226, 115, 49);
         frmLogin.getContentPane().add(lblPassword);
 
-        JLabel lblNewLabel_1 = new JLabel("User Login");
+        JLabel lblNewLabel_1 = new JLabel("Metro State Bank");
+        // lblNewLabel_1.setFont(font);
+        lblNewLabel_1.setForeground(Color.WHITE);
         lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 33));
-        lblNewLabel_1.setBounds(199, 21, 686, 49);
+        lblNewLabel_1.setFont(new Font("Dialog", Font.PLAIN, 40));
+        lblNewLabel_1.setBounds(102, 21, 686, 49);
+
         frmLogin.getContentPane().add(lblNewLabel_1);
 
         JButton btnExit = new JButton("Exit");
+        btnExit.setBackground(Color.WHITE);
         btnExit.setBounds(165, 307, 190, 66);
         frmLogin.getContentPane().add(btnExit);
         btnExit.addMouseListener(new MouseAdapter() {
@@ -133,32 +156,74 @@ public class WinBuilder extends JFrame {
             }
         });
 
-        JSeparator separator = new JSeparator();
-        separator.setBounds(21, 290, 1253, 12);
-        frmLogin.getContentPane().add(separator);
-
-
+        //radial buttons
         JRadioButton rdbtnManager = new JRadioButton("Manager");
-        rdbtnManager.setBounds(980, 49, 201, 35);
+        rdbtnManager.setFont(new Font("Dialog", Font.PLAIN, 21));
+        rdbtnManager.setForeground(Color.WHITE);
+        rdbtnManager.setBounds(784, 104, 244, 66);
+        rdbtnManager.setBackground(new Color(11, 40, 83));
         frmLogin.getContentPane().add(rdbtnManager);
 
         JRadioButton rdbtnTeller = new JRadioButton("Teller");
-        rdbtnTeller.setBounds(980, 114, 201, 35);
+        rdbtnTeller.setFont(new Font("Dialog", Font.PLAIN, 21));
+        rdbtnTeller.setForeground(Color.WHITE);
+        rdbtnTeller.setBounds(784, 183, 234, 46);
         frmLogin.getContentPane().add(rdbtnTeller);
+        rdbtnTeller.setBackground(new Color(11, 40, 83));
 
         JRadioButton rdbtnCustomer = new JRadioButton("Student");
-        rdbtnCustomer.setBounds(980, 183, 201, 35);
+        rdbtnCustomer.setFont(new Font("Dialog", Font.PLAIN, 21));
+        rdbtnCustomer.setForeground(Color.WHITE);
+        rdbtnCustomer.setBounds(784, 247, 244, 62);
+        rdbtnCustomer.setBackground(new Color(11, 40, 83));
         frmLogin.getContentPane().add(rdbtnCustomer);
-
 
         ButtonGroup buttonGroupRole = new ButtonGroup();
         buttonGroupRole.add(rdbtnManager);
         buttonGroupRole.add(rdbtnTeller);
         buttonGroupRole.add(rdbtnCustomer);
 
+        //images
+        JLabel lblSchool = new JLabel("");
+        Image school = new ImageIcon(this.getClass().getResource("Untitled.jpg")).getImage();
+        lblSchool.setIcon(new ImageIcon(school));
+        lblSchool.setBounds(543, 385, 464, 150);
+        // ImageIcon image = new ImageIcon("/Untitled.jpg");
+        frmLogin.getContentPane().add(lblSchool);
+
+        JLabel lblFdic = new JLabel("");
+        lblFdic.setBounds(0, 465, 126, 83);
+        Image fdic = new ImageIcon(this.getClass().getResource("fdic1.jpg")).getImage();
+        lblFdic.setIcon(new ImageIcon(fdic));
+        frmLogin.getContentPane().add(lblFdic);
+
+        JLabel lblVisa = new JLabel("");
+        lblVisa.setBounds(126, 500, 97, 49);
+        Image visa = new ImageIcon(this.getClass().getResource("visa.jpg")).getImage();
+        lblVisa.setIcon(new ImageIcon(visa));
+        frmLogin.getContentPane().add(lblVisa);
+
+
         // LOG IN USER
         btnLogin.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent arg0) {
+                teller4 tellerScreen = new teller4();
+                customer customerScreen = new customer();
+                Manager managerScreen = new Manager();
+
+                String selectRole = "";
+                if(rdbtnManager.isSelected()){
+                    selectRole = manager;
+                }
+                else if( rdbtnCustomer.isSelected()){
+                    selectRole = customer;
+                }
+                else if( rdbtnTeller.isSelected()){
+                    selectRole = teller;
+                }
+
+
+
 
                 // Check if user selected a role
                 if (!rdbtnManager.isSelected() && !rdbtnTeller.isSelected() && !rdbtnCustomer.isSelected()) {
@@ -194,13 +259,49 @@ public class WinBuilder extends JFrame {
                         if ((rdbtnManager.isSelected() && !user.getRole().equals("Manager")) ||
                                 (rdbtnTeller.isSelected() && !user.getRole().equals("Teller")) ||
                                 (rdbtnCustomer.isSelected() && !user.getRole().equals("Student"))) {
-                            JOptionPane.showMessageDialog(lblUserNotFound, "Userfd not found");
+                            JOptionPane.showMessageDialog(lblUserNotFound, "User not found");
                         } else {
+
                             // Verify password
-                            if (user.getPassword() != String.valueOf(password.getPassword())) {
+                            if (!user.getPassword().equals(password.getText())) {
                                 JOptionPane.showMessageDialog(lblIncorrectCredentials, "Username or password is incorrect");
                             } else {
                                 // Success - send to GUI based on role
+
+                                if(user.getEmail().equals(userName.getText()) &&  user.getPassword().equals(password.getText()) && user.getRole().equals(selectRole)  ){
+                                    System.out.println("pass this stage");
+
+                                    if(user.getRole().equals("Manager")){
+                                        managerScreen.setVisible(true);
+                                        userName.setText(null);
+                                        password.setText(null);
+                                    }
+                                    else if(user.getRole().equals("Teller")){
+                                        tellerScreen.setVisible(true);
+                                        userName.setText(null);
+                                        password.setText(null);
+                                    }
+                                    else if(user.getRole().equals("Student")){
+                                        customerScreen.setVisible(true);
+                                        userName.setText(null);
+                                        password.setText(null);
+                                    }
+
+                                    else
+                                    {
+                                        JOptionPane.showMessageDialog(lblIncorrectCredentials, "role error");
+                                    }
+
+				                    //tellerInfo.setVisible(true);
+
+                                }
+
+
+
+
+
+
+
 
                                 // to be implemented
                             }
