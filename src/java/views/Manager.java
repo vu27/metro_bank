@@ -47,7 +47,7 @@ public class Manager extends JFrame {
 
 	JComboBox comboBoxManager = new JComboBox();
 	comboBoxManager.setModel(new DefaultComboBoxModel(
-		new String[] { "Select", "Add Employee", "Delete Employee", "Edit Employee", "Bank Stats" }));
+		new String[] { "Select", "Add Employee", "Delete Employee", "Edit Employee", "Bank Stats", "View All Students", "View All Employees" }));
 	comboBoxManager.setBounds(21, 51, 227, 49);
 	contentPane.add(comboBoxManager);
 
@@ -59,23 +59,31 @@ public class Manager extends JFrame {
 
 		try {
 
-		    String x = String.valueOf(comboBoxManager.getSelectedItem());
+			String x = String.valueOf(comboBoxManager.getSelectedItem());
 
-		    if (x.equals("Add Employee")) {
-			// OpenAccount openAccount = new OpenAccount();
-			// openAccount.setVisible(true);
-			AddEmployee addEmployee = new AddEmployee();
-			addEmployee.setVisible(true);
-		    }
-		    if (x.equals("Delete Employee")) {
-
-		    }
-		    if (x.equals("Edit Employee")) {
-			// ModifyAccount modifyAccount = new ModifyAccount();
-			// modifyAccount.setVisible(true);
-			ModifyEmployee modifyEmployee = new ModifyEmployee();
-			modifyEmployee.setVisible(true);
-		    }
+			switch (x) {
+				case "Add Employee":
+					AddEmployee addEmployee = new AddEmployee();
+					addEmployee.setVisible(true);
+					break;
+				case "Delete Employee":
+					break;
+				case "Edit Employee":
+					ModifyEmployee modifyEmployee = new ModifyEmployee();
+					modifyEmployee.setVisible(true);
+					break;
+				case "View All Students":
+					ManagerViewAllStudents viewStudents = new ManagerViewAllStudents();
+					viewStudents.setVisible(true);
+					break;
+				case "View All Employees":
+					ManagerViewAllEmployees viewEmployees = new ManagerViewAllEmployees();
+					viewEmployees.setVisible(true);
+					break;
+				default:
+					System.out.print("Swtich Error");
+					break;
+			}
 
 		} catch (Exception ex) {
 
@@ -115,8 +123,8 @@ public class Manager extends JFrame {
 		    // WinBuilder mainMenu = new WinBuilder();
 		    // mainMenu.setVisible(true);
 
-		    MainMenu mainMenu = new MainMenu();
-		    mainMenu.setVisible(true);
+		    //MainMenu mainMenu = new MainMenu();
+		   // mainMenu.setVisible(true);
 
 		    // ((JComponent) mainMenu).setVisible(true);
 
