@@ -6,6 +6,7 @@ import util.MySQLConnect;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -62,10 +63,10 @@ public class WinBuilder extends JFrame {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         // ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/Myriad Pro
         // Regular.ttf")));
-        // Font font = Font.createFont(Font.TRUETYPE_FONT, new
-        // File("/Myriad-Pro-Regular.ttf"));
+        //Font font = Font.createFont(Font.TRUETYPE_FONT, new
+        //         File("/static/Myriad-Pro-Regular.ttf"));
         //Font font = Font.createFont(Font.TRUETYPE_FONT,
-         //      getClass().getClassLoader().getResourceAsStream("Myriad-Pro-Regular.ttf"));
+        //       getClass().getClassLoader().getResourceAsStream("/static/Myriad-Pro-Regular.ttf"));
 
         // LABELS
         JLabel lblUserNotFound = new JLabel("UserName/Password is not correct");
@@ -185,7 +186,7 @@ public class WinBuilder extends JFrame {
 
         //images
         JLabel lblSchool = new JLabel("");
-        Image school = new ImageIcon(this.getClass().getResource("Untitled.jpg")).getImage();
+        Image school = new ImageIcon(this.getClass().getResource("/static/Untitled.jpg")).getImage();
         lblSchool.setIcon(new ImageIcon(school));
         lblSchool.setBounds(543, 385, 464, 150);
         // ImageIcon image = new ImageIcon("/Untitled.jpg");
@@ -193,13 +194,13 @@ public class WinBuilder extends JFrame {
 
         JLabel lblFdic = new JLabel("");
         lblFdic.setBounds(0, 465, 126, 83);
-        Image fdic = new ImageIcon(this.getClass().getResource("fdic1.jpg")).getImage();
+        Image fdic = new ImageIcon(this.getClass().getResource("/static/fdic1.jpg")).getImage();
         lblFdic.setIcon(new ImageIcon(fdic));
         frmLogin.getContentPane().add(lblFdic);
 
         JLabel lblVisa = new JLabel("");
         lblVisa.setBounds(126, 500, 97, 49);
-        Image visa = new ImageIcon(this.getClass().getResource("visa.jpg")).getImage();
+        Image visa = new ImageIcon(this.getClass().getResource("/static/visa.jpg")).getImage();
         lblVisa.setIcon(new ImageIcon(visa));
         frmLogin.getContentPane().add(lblVisa);
 
