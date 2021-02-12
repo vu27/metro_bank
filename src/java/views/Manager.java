@@ -73,7 +73,7 @@ public class Manager extends JFrame {
 					modifyEmployee.setVisible(true);
 					break;
 				case "View All Students":
-					ManagerViewAllStudents viewStudents = new ManagerViewAllStudents();
+					ManagerViewAllCustomers viewStudents = new ManagerViewAllCustomers();
 					viewStudents.setVisible(true);
 					break;
 				case "View All Employees":

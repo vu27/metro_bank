@@ -6,14 +6,13 @@ import util.MySQLConnect;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.*;
 
-public class WinBuilder extends JFrame {
+public class Login extends JFrame {
 
     MySQLConnect mysql = new MySQLConnect();
     User user;
@@ -32,7 +31,7 @@ public class WinBuilder extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    WinBuilder window = new WinBuilder();
+                    Login window = new Login();
                     window.frmLogin.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -44,7 +43,7 @@ public class WinBuilder extends JFrame {
     /**
      * Create the application.
      */
-    public WinBuilder() throws FontFormatException, IOException {
+    public Login() throws FontFormatException, IOException {
         initialize();
     }
 

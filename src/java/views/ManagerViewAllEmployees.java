@@ -1,10 +1,16 @@
 package views;
 
+import model.User;
+import util.MySQLConnect;
+import util.UserMapper;
+
 import java.awt.EventQueue;
 import java.awt.Panel;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -152,4 +158,20 @@ public class ManagerViewAllEmployees extends JFrame {
 	// panel.add(scrollbar);
     }
 
+    // Return list of employees from database
+    public List<User> getEmployees() {
+
+		MySQLConnect mysql = new MySQLConnect();
+		String queryString = "SELECT * FROM user WHERE user_role = \"Employee\"";
+
+		List<Map<String, Object>> resultList = mysql.getData(queryString);
+		List<User> employees = UserMapper.mapUsersFromMySQL(resultList);
+
+		// For each loop example to view employee data
+		for (User employee : employees) {
+			System.out.println(employee.getFname() + " " + employee.getFname());
+		}
+
+		return employees;
+	}
 }

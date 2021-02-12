@@ -1,10 +1,16 @@
 package views;
 
+import model.User;
+import util.MySQLConnect;
+import util.UserMapper;
+
 import java.awt.EventQueue;
 import java.awt.Panel;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,7 +23,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-public class ManagerViewAllStudents extends JFrame {
+public class ManagerViewAllCustomers extends JFrame {
 
     private JPanel contentPane;
     private JTable table;
@@ -29,7 +35,7 @@ public class ManagerViewAllStudents extends JFrame {
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 		try {
-		    ManagerViewAllStudents frame = new ManagerViewAllStudents();
+		    ManagerViewAllCustomers frame = new ManagerViewAllCustomers();
 		    frame.setVisible(true);
 		} catch (Exception e) {
 		    e.printStackTrace();
@@ -41,7 +47,7 @@ public class ManagerViewAllStudents extends JFrame {
     /**
      * Create the frame.
      */
-    public ManagerViewAllStudents() {
+    public ManagerViewAllCustomers() {
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setBounds(100, 100, 993, 520);
 	contentPane = new JPanel();
@@ -150,4 +156,21 @@ public class ManagerViewAllStudents extends JFrame {
 	// scrollbar.setBounds(486, 5, 34, 214);
 	// panel.add(scrollbar);
     }
+
+	// Return list of employees from database
+	public List<User> getCustomers() {
+
+		MySQLConnect mysql = new MySQLConnect();
+		String queryString = "SELECT * FROM user WHERE user_role = \"Customer\"";
+
+		List<Map<String, Object>> resultList = mysql.getData(queryString);
+		List<User> customers = UserMapper.mapUsersFromMySQL(resultList);
+
+		// For each loop example to view employee data
+		for (User customer : customers) {
+			System.out.println(customer.getFname() + " " + customer.getFname());
+		}
+
+		return customers;
+	}
 }
