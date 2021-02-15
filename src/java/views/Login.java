@@ -21,7 +21,7 @@ public class Login extends JFrame {
     private JTextField userName;
     protected String manager = "Manager";
     protected String teller = "Teller";
-    protected String customer = "Student";
+    protected String customer = "Customer";
 
 
     /**
@@ -143,16 +143,12 @@ public class Login extends JFrame {
         btnExit.addMouseListener(new MouseAdapter() {
 
             public void mouseClicked(MouseEvent arg0) {
-
-                // Function f = new Function();
-                // ResultSet rs = null;
                 try {
                     System.exit(0);
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-
             }
         });
 
@@ -171,7 +167,7 @@ public class Login extends JFrame {
         frmLogin.getContentPane().add(rdbtnTeller);
         rdbtnTeller.setBackground(new Color(11, 40, 83));
 
-        JRadioButton rdbtnCustomer = new JRadioButton("Student");
+        JRadioButton rdbtnCustomer = new JRadioButton("Customer");
         rdbtnCustomer.setFont(new Font("Dialog", Font.PLAIN, 21));
         rdbtnCustomer.setForeground(Color.WHITE);
         rdbtnCustomer.setBounds(784, 247, 244, 62);
@@ -212,17 +208,13 @@ public class Login extends JFrame {
                 Manager managerScreen = new Manager();
 
                 String selectRole = "";
-                if(rdbtnManager.isSelected()){
+                if (rdbtnManager.isSelected()) {
                     selectRole = manager;
-                }
-                else if( rdbtnCustomer.isSelected()){
+                } else if (rdbtnCustomer.isSelected()) {
                     selectRole = customer;
-                }
-                else if( rdbtnTeller.isSelected()){
+                } else if (rdbtnTeller.isSelected()) {
                     selectRole = teller;
                 }
-
-
 
 
                 // Check if user selected a role
@@ -246,86 +238,36 @@ public class Login extends JFrame {
                                     resultList.get(0).get("user_role").toString(),
                                     resultList.get(0).get("user_email").toString(),
                                     resultList.get(0).get("user_password").toString());
-
-                            // Print current user to console
-                            System.out.println(user.getFname());
-                            System.out.println(user.getLname());
-                            System.out.println(user.getPhone());
-                            System.out.println(user.getRole());
-                            System.out.println(user.getEmail());
                         }
 
                         // Verify role then verify password
                         if ((rdbtnManager.isSelected() && !user.getRole().equals("Manager")) ||
                                 (rdbtnTeller.isSelected() && !user.getRole().equals("Teller")) ||
-                                (rdbtnCustomer.isSelected() && !user.getRole().equals("Student"))) {
+                                (rdbtnCustomer.isSelected() && !user.getRole().equals("Customer"))) {
                             JOptionPane.showMessageDialog(lblUserNotFound, "User not found");
                         } else {
-
                             // Verify password
                             if (!user.getPassword().equals(password.getText())) {
                                 JOptionPane.showMessageDialog(lblIncorrectCredentials, "Username or password is incorrect");
                             } else {
                                 // Success - send to GUI based on role
 
-                                if(user.getEmail().equals(userName.getText()) &&  user.getPassword().equals(password.getText()) && user.getRole().equals(selectRole)  ){
-                                    System.out.println("pass this stage");
-
-                                    if(user.getRole().equals("Manager")){
-                                        managerScreen.setVisible(true);
-                                        userName.setText(null);
-                                        password.setText(null);
-                                    }
-                                    else if(user.getRole().equals("Teller")){
-                                        tellerScreen.setVisible(true);
-                                        userName.setText(null);
-                                        password.setText(null);
-                                    }
-                                    else if(user.getRole().equals("Student")){
-                                        customerScreen.setVisible(true);
-                                        userName.setText(null);
-                                        password.setText(null);
-                                    }
-
-                                    else
-                                    {
-                                        JOptionPane.showMessageDialog(lblIncorrectCredentials, "role error");
-                                    }
-
-				                    //tellerInfo.setVisible(true);
-
+                                if (user.getRole().equals("Manager")) {
+                                    managerScreen.setVisible(true);
+                                    userName.setText(null);
+                                    password.setText(null);
+                                } else if (user.getRole().equals("Teller")) {
+                                    tellerScreen.setVisible(true);
+                                    userName.setText(null);
+                                    password.setText(null);
+                                } else if (user.getRole().equals("Customer")) {
+                                    customerScreen.setVisible(true);
+                                    userName.setText(null);
+                                    password.setText(null);
                                 }
 
-
-
-
-
-
-
-
-                                // to be implemented
                             }
                         }
-
-
-//					if (userName.getText().equals("Teller")) {
-//						teller4 tellerInfo = new teller4();
-//						tellerInfo.setVisible(true);
-//						dispose();
-//
-//					} else if (userName.getText().equals("Manager")) {
-//
-//						Manager manager = new Manager();
-//						manager.setVisible(true);
-//						dispose();
-//
-//					} else {
-//
-//						// String name = JOptionPane.showInputDialog("user not found");
-//						// userName.setText(name);
-//						JOptionPane.showMessageDialog(lblUserNotFound, "User not found");
-//
-//		    }
 
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -335,10 +277,7 @@ public class Login extends JFrame {
                         frmLogin.getContentPane().add(lblUserNotFound);
                     }
                 }
-
-
             }
         });
-
     }
 }
