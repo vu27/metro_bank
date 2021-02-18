@@ -21,7 +21,7 @@ public class Login extends JFrame {
     private JTextField userName;
     protected String manager = "Manager";
     protected String teller = "Teller";
-    protected String customer = "Customer";
+    protected String student = "Student";
 
 
     /**
@@ -167,17 +167,17 @@ public class Login extends JFrame {
         frmLogin.getContentPane().add(rdbtnTeller);
         rdbtnTeller.setBackground(new Color(11, 40, 83));
 
-        JRadioButton rdbtnCustomer = new JRadioButton("Customer");
-        rdbtnCustomer.setFont(new Font("Dialog", Font.PLAIN, 21));
-        rdbtnCustomer.setForeground(Color.WHITE);
-        rdbtnCustomer.setBounds(784, 247, 244, 62);
-        rdbtnCustomer.setBackground(new Color(11, 40, 83));
-        frmLogin.getContentPane().add(rdbtnCustomer);
+        JRadioButton rdbtnStudent = new JRadioButton("Student");
+        rdbtnStudent.setFont(new Font("Dialog", Font.PLAIN, 21));
+        rdbtnStudent.setForeground(Color.WHITE);
+        rdbtnStudent.setBounds(784, 247, 244, 62);
+        rdbtnStudent.setBackground(new Color(11, 40, 83));
+        frmLogin.getContentPane().add(rdbtnStudent);
 
         ButtonGroup buttonGroupRole = new ButtonGroup();
         buttonGroupRole.add(rdbtnManager);
         buttonGroupRole.add(rdbtnTeller);
-        buttonGroupRole.add(rdbtnCustomer);
+        buttonGroupRole.add(rdbtnStudent);
 
         //images
         JLabel lblSchool = new JLabel("");
@@ -204,21 +204,21 @@ public class Login extends JFrame {
         btnLogin.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent arg0) {
                 teller4 tellerScreen = new teller4();
-                customer customerScreen = new customer();
+                Student studentScreen = new Student();
                 Manager managerScreen = new Manager();
 
                 String selectRole = "";
                 if (rdbtnManager.isSelected()) {
                     selectRole = manager;
-                } else if (rdbtnCustomer.isSelected()) {
-                    selectRole = customer;
+                } else if (rdbtnStudent.isSelected()) {
+                    selectRole = student;
                 } else if (rdbtnTeller.isSelected()) {
                     selectRole = teller;
                 }
 
 
                 // Check if user selected a role
-                if (!rdbtnManager.isSelected() && !rdbtnTeller.isSelected() && !rdbtnCustomer.isSelected()) {
+                if (!rdbtnManager.isSelected() && !rdbtnTeller.isSelected() && !rdbtnStudent.isSelected()) {
                     JOptionPane.showMessageDialog(lblRoleNotSelected, "User role not selected");
                 } else {
 
@@ -243,7 +243,7 @@ public class Login extends JFrame {
                         // Verify role then verify password
                         if ((rdbtnManager.isSelected() && !user.getRole().equals("Manager")) ||
                                 (rdbtnTeller.isSelected() && !user.getRole().equals("Teller")) ||
-                                (rdbtnCustomer.isSelected() && !user.getRole().equals("Customer"))) {
+                                (rdbtnStudent.isSelected() && !user.getRole().equals("Student"))) {
                             JOptionPane.showMessageDialog(lblUserNotFound, "User not found");
                         } else {
                             // Verify password
@@ -260,8 +260,8 @@ public class Login extends JFrame {
                                     tellerScreen.setVisible(true);
                                     userName.setText(null);
                                     password.setText(null);
-                                } else if (user.getRole().equals("Customer")) {
-                                    customerScreen.setVisible(true);
+                                } else if (user.getRole().equals("Student")) {
+                                    studentScreen.setVisible(true);
                                     userName.setText(null);
                                     password.setText(null);
                                 }

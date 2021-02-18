@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-public class customer extends JFrame {
+public class Student extends JFrame {
 
     private JPanel contentPane;
     private JTextField txtTotal;
@@ -30,7 +30,7 @@ public class customer extends JFrame {
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 		try {
-		    customer frame = new customer();
+		    Student frame = new Student();
 		    frame.setVisible(true);
 		} catch (Exception e) {
 		    e.printStackTrace();
@@ -42,7 +42,7 @@ public class customer extends JFrame {
     /**
      * Create the frame.
      */
-    public customer() {
+    public Student() {
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setBounds(100, 100, 1263, 553);
 	contentPane = new JPanel();
@@ -162,7 +162,7 @@ public class customer extends JFrame {
 		try {
 
 		    dispose();
-		    creditCardCustomer creditCard = new creditCardCustomer();
+		    CreditCardStudent creditCard = new CreditCardStudent();
 		    creditCard.setVisible(true);
 		    // this.setVisible(false);
 

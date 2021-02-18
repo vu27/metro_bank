@@ -22,13 +22,12 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 
 // This class creates a GUI that shows all students within the banking database
 // Anthony Nguyen 2021.02.12
 // Version Alpha Build 1.0.0
 //
-public class ManagerViewAllCustomers extends JFrame {
+public class ManagerViewAllStudents extends JFrame {
 
     private JPanel contentPane;
     private JTable table; // table
@@ -43,7 +42,7 @@ public class ManagerViewAllCustomers extends JFrame {
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 		try {
-		    ManagerViewAllCustomers frame = new ManagerViewAllCustomers(); //create frame
+		    ManagerViewAllStudents frame = new ManagerViewAllStudents(); //create frame
 		    frame.setVisible(true); //show frame
 		} catch (Exception e) {
 		    e.printStackTrace();
@@ -55,7 +54,7 @@ public class ManagerViewAllCustomers extends JFrame {
     /**
      * Create the frame.
      */
-    public ManagerViewAllCustomers() {
+    public ManagerViewAllStudents() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 941, 613);
 		contentPane = new JPanel(); //create Jpanel
@@ -116,7 +115,7 @@ public class ManagerViewAllCustomers extends JFrame {
 		});
 		btnNewButton.setBounds(714, 439, 180, 82);
 		contentPane.add(btnNewButton);
-		students = getCustomers(); //get students and put it into students array list
+		students = getStudents(); //get students and put it into students array list
 		updateTable(); // put students into table
 
 		// may be implemented later
@@ -188,15 +187,15 @@ public class ManagerViewAllCustomers extends JFrame {
 
 	// Return list of employees from database
 	// @return array list of students
-	public List<User> getCustomers() {
+	public List<User> getStudents() {
 
 		MySQLConnect mysql = new MySQLConnect(); //connect to database
-		String queryString = "SELECT * FROM user WHERE user_role = \"Customer\""; //search through database string
+		String queryString = "SELECT * FROM user WHERE user_role = \"Student\""; //search through database string
 
 		List<Map<String, Object>> resultList = mysql.getData(queryString);
-		List<User> customers = UserMapper.mapUsersFromMySQL(resultList); //put students into arraylist
+		List<User> students = UserMapper.mapUsersFromMySQL(resultList); //put students into arraylist
 
-		return customers;
+		return students;
 	}
 
 	//update table with students

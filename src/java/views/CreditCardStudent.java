@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-public class creditCardCustomer extends JFrame {
+public class CreditCardStudent extends JFrame {
 
     private JPanel contentPane;
     private JTable table;
@@ -32,7 +32,7 @@ public class creditCardCustomer extends JFrame {
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 		try {
-		    creditCardCustomer frame = new creditCardCustomer();
+		    CreditCardStudent frame = new CreditCardStudent();
 		    frame.setVisible(true);
 
 		} catch (Exception e) {
@@ -45,7 +45,7 @@ public class creditCardCustomer extends JFrame {
     /**
      * Create the frame.
      */
-    public creditCardCustomer() {
+    public CreditCardStudent() {
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setBounds(100, 100, 1039, 548);
 	contentPane = new JPanel();
@@ -118,7 +118,7 @@ public class creditCardCustomer extends JFrame {
 		    // JFrame.DISPOSE_ON_CLOSE;
 		    // frame.setVisible(false);
 		    dispose();
-		    customer custom = new customer();
+		    Student custom = new Student();
 		    custom.setVisible(true);
 		    // System.exit(0);
 

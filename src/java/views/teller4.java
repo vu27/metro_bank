@@ -104,8 +104,8 @@ public class teller4 extends JFrame {
 			dispose();
 		    }
 		    if (x.equals("Close Account")) {
-			DeleteCustomer deleteCustomer = new DeleteCustomer();
-			deleteCustomer.setVisible(true);
+			DeleteStudent deleteStudent = new DeleteStudent();
+			deleteStudent.setVisible(true);
 			dispose();
 		    }
 

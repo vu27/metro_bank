@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-public class DeleteCustomer extends JFrame {
+public class DeleteStudent extends JFrame {
 
     private JPanel contentPane;
     private JTextField txtFname;
@@ -34,7 +34,7 @@ public class DeleteCustomer extends JFrame {
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 		try {
-		    DeleteCustomer frame = new DeleteCustomer();
+		    DeleteStudent frame = new DeleteStudent();
 		    frame.setVisible(true);
 		} catch (Exception e) {
 		    e.printStackTrace();
@@ -46,7 +46,7 @@ public class DeleteCustomer extends JFrame {
     /**
      * Create the frame.
      */
-    public DeleteCustomer() {
+    public DeleteStudent() {
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setBounds(100, 100, 1050, 691);
 	contentPane = new JPanel();
