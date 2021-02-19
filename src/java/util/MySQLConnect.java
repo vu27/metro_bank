@@ -50,4 +50,63 @@ public class MySQLConnect {
 
         return resultList;
     }
+
+    // Method to execute any sql statement to database
+    public void executeStatement(String queryString) {
+
+        try {
+            // Initialize and open MySQL connection
+            Properties connectionProps = new Properties();
+            connectionProps.put("user", MYSQL_USER);
+            connectionProps.put("password", MYSQL_PASSWORD);
+            Connection conn = DriverManager.getConnection(MYSQL_URL, connectionProps);
+
+            // Statement used to make raw SQL query
+            Statement statement = conn.createStatement();
+
+            statement.executeUpdate(queryString);
+
+            // Close MySQL connection
+            conn.close();
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

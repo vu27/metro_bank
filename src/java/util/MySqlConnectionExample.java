@@ -12,15 +12,25 @@ public class MySqlConnectionExample {
         // Example of MySQL query/connection
         MySQLConnect mysql = new MySQLConnect();
 
-        String queryString = "SELECT * FROM user WHERE user_role = \"Customer\"";
+        String queryString = "INSERT INTO metro_bank.user (user_fname, user_lname, user_phone, user_role, user_email, user_password) " +
+                "VALUES ('New', 'Person', '922-555-2222', 'Manager', 'new@gmail.com', '123');";
 
-        List<Map<String, Object>> resultList = mysql.getData(queryString);
+        mysql.executeStatement(queryString);
 
-        List<User> users = UserMapper.mapUsersFromMySQL(resultList);
 
-        for (User user : users) {
-            System.out.println(user.getFname());
-        }
+
+
+
+
+//        String queryString = "SELECT * FROM user WHERE user_role = \"Customer\"";
+
+//        List<Map<String, Object>> resultList = mysql.getData(queryString);
+//
+//        List<User> users = UserMapper.mapUsersFromMySQL(resultList);
+//
+//        for (User user : users) {
+//            System.out.println(user.getFname());
+//        }
 
 
         // Example of how the returned data is stored in resultList:
