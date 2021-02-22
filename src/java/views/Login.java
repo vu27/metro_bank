@@ -20,7 +20,7 @@ public class Login extends JFrame {
     private JTextField txtPassword;
     private JTextField userName;
     protected String manager = "Manager";
-    protected String teller = "Employee";
+    protected String employee = "Employee";
     protected String student = "Student";
 
 
@@ -160,12 +160,12 @@ public class Login extends JFrame {
         rdbtnManager.setBackground(new Color(11, 40, 83));
         frmLogin.getContentPane().add(rdbtnManager);
 
-        JRadioButton rdbtnTeller = new JRadioButton("Employee");
-        rdbtnTeller.setFont(new Font("Dialog", Font.PLAIN, 21));
-        rdbtnTeller.setForeground(Color.WHITE);
-        rdbtnTeller.setBounds(784, 183, 234, 46);
-        frmLogin.getContentPane().add(rdbtnTeller);
-        rdbtnTeller.setBackground(new Color(11, 40, 83));
+        JRadioButton rdbtnemployee = new JRadioButton("Employee");
+        rdbtnemployee.setFont(new Font("Dialog", Font.PLAIN, 21));
+        rdbtnemployee.setForeground(Color.WHITE);
+        rdbtnemployee.setBounds(784, 183, 234, 46);
+        frmLogin.getContentPane().add(rdbtnemployee);
+        rdbtnemployee.setBackground(new Color(11, 40, 83));
 
         JRadioButton rdbtnStudent = new JRadioButton("Student");
         rdbtnStudent.setFont(new Font("Dialog", Font.PLAIN, 21));
@@ -176,7 +176,7 @@ public class Login extends JFrame {
 
         ButtonGroup buttonGroupRole = new ButtonGroup();
         buttonGroupRole.add(rdbtnManager);
-        buttonGroupRole.add(rdbtnTeller);
+        buttonGroupRole.add(rdbtnemployee);
         buttonGroupRole.add(rdbtnStudent);
 
         //images
@@ -203,7 +203,7 @@ public class Login extends JFrame {
         // LOG IN USER
         btnLogin.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent arg0) {
-                Employee tellerScreen = new Employee();
+                Employee employeeScreen = new Employee();
                 Student studentScreen = new Student();
                 Manager managerScreen = new Manager();
 
@@ -212,13 +212,13 @@ public class Login extends JFrame {
                     selectRole = manager;
                 } else if (rdbtnStudent.isSelected()) {
                     selectRole = student;
-                } else if (rdbtnTeller.isSelected()) {
-                    selectRole = teller;
+                } else if (rdbtnemployee.isSelected()) {
+                    selectRole = employee;
                 }
 
 
                 // Check if user selected a role
-                if (!rdbtnManager.isSelected() && !rdbtnTeller.isSelected() && !rdbtnStudent.isSelected()) {
+                if (!rdbtnManager.isSelected() && !rdbtnemployee.isSelected() && !rdbtnStudent.isSelected()) {
                     JOptionPane.showMessageDialog(lblRoleNotSelected, "User role not selected");
                 } else {
 
@@ -242,7 +242,7 @@ public class Login extends JFrame {
 
                         // Verify role then verify password
                         if ((rdbtnManager.isSelected() && !user.getRole().equals("Manager")) ||
-                                (rdbtnTeller.isSelected() && !user.getRole().equals("Employee")) ||
+                                (rdbtnemployee.isSelected() && !user.getRole().equals("Employee")) ||
                                 (rdbtnStudent.isSelected() && !user.getRole().equals("Student"))) {
                             JOptionPane.showMessageDialog(lblUserNotFound, "User not found");
                         } else {
@@ -257,7 +257,7 @@ public class Login extends JFrame {
                                     userName.setText(null);
                                     password.setText(null);
                                 } else if (user.getRole().equals("Employee")) {
-                                    tellerScreen.setVisible(true);
+                                    employeeScreen.setVisible(true);
                                     userName.setText(null);
                                     password.setText(null);
                                 } else if (user.getRole().equals("Student")) {
