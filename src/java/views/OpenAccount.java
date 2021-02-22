@@ -159,7 +159,7 @@ public class OpenAccount extends JFrame {
 		try {
 
 		    dispose();
-		    teller4 teller = new teller4();
+		    Employee teller = new Employee();
 		    teller.setVisible(true);
 
 		} catch (Exception ex) {
@@ -200,7 +200,7 @@ public class OpenAccount extends JFrame {
 
 		try {
 		    dispose();
-		    teller4 teller = new teller4();
+		    Employee teller = new Employee();
 		    teller.setVisible(true);
 
 		} catch (Exception ex) {

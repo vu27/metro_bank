@@ -76,7 +76,7 @@ public class MainMenu extends JFrame {
 		// ResultSet rs = null;
 		try {
 		    if (txtUserName.getText().equals("Teller")) {
-			teller4 tellerInfo = new teller4();
+			Employee tellerInfo = new Employee();
 			tellerInfo.setVisible(true);
 
 		    } else if (txtUserName.getText().equals("Manager")) {

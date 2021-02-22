@@ -131,7 +131,7 @@ public class DeleteStudent extends JFrame {
 
 		try {
 		    dispose();
-		    teller4 teller = new teller4();
+		    Employee teller = new Employee();
 		    teller.setVisible(true);
 
 		} catch (Exception ex) {

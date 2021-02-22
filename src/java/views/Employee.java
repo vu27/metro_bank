@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-public class teller4 extends JFrame {
+public class Employee extends JFrame {
 
     private JFrame frame;
     private JTextField txtFName;
@@ -57,7 +57,7 @@ public class teller4 extends JFrame {
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 		try {
-		    teller4 frame = new teller4();
+		    Employee frame = new Employee();
 		    frame.setVisible(true);
 		} catch (Exception e) {
 		    e.printStackTrace();
@@ -69,7 +69,7 @@ public class teller4 extends JFrame {
     /**
      * Create the frame.
      */
-    public teller4() {
+    public Employee() {
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setBounds(100, 100, 1348, 649);
 	contentPane = new JPanel();

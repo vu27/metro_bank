@@ -203,7 +203,7 @@ public class Login extends JFrame {
         // LOG IN USER
         btnLogin.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent arg0) {
-                teller4 tellerScreen = new teller4();
+                Employee tellerScreen = new Employee();
                 Student studentScreen = new Student();
                 Manager managerScreen = new Manager();
 
