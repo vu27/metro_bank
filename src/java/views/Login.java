@@ -20,7 +20,7 @@ public class Login extends JFrame {
     private JTextField txtPassword;
     private JTextField userName;
     protected String manager = "Manager";
-    protected String teller = "Teller";
+    protected String teller = "Employee";
     protected String student = "Student";
 
 
@@ -160,7 +160,7 @@ public class Login extends JFrame {
         rdbtnManager.setBackground(new Color(11, 40, 83));
         frmLogin.getContentPane().add(rdbtnManager);
 
-        JRadioButton rdbtnTeller = new JRadioButton("Teller");
+        JRadioButton rdbtnTeller = new JRadioButton("Employee");
         rdbtnTeller.setFont(new Font("Dialog", Font.PLAIN, 21));
         rdbtnTeller.setForeground(Color.WHITE);
         rdbtnTeller.setBounds(784, 183, 234, 46);
@@ -242,7 +242,7 @@ public class Login extends JFrame {
 
                         // Verify role then verify password
                         if ((rdbtnManager.isSelected() && !user.getRole().equals("Manager")) ||
-                                (rdbtnTeller.isSelected() && !user.getRole().equals("Teller")) ||
+                                (rdbtnTeller.isSelected() && !user.getRole().equals("Employee")) ||
                                 (rdbtnStudent.isSelected() && !user.getRole().equals("Student"))) {
                             JOptionPane.showMessageDialog(lblUserNotFound, "User not found");
                         } else {
@@ -256,7 +256,7 @@ public class Login extends JFrame {
                                     managerScreen.setVisible(true);
                                     userName.setText(null);
                                     password.setText(null);
-                                } else if (user.getRole().equals("Teller")) {
+                                } else if (user.getRole().equals("Employee")) {
                                     tellerScreen.setVisible(true);
                                     userName.setText(null);
                                     password.setText(null);
