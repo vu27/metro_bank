@@ -4,14 +4,15 @@ package views;
  * this creates a frame so the user can view all the employees in the MySQL server
  *
  *
- * @author Anthony Nguyen
  * @version alpha build 1.0.0
  * @date 2020.12.02
  */
 
+import model.Employee;
+import model.Manager;
 import model.User;
 import util.MySQLConnect;
-import util.UserMapper;
+import util.UserMappers;
 
 import java.awt.EventQueue;
 import java.awt.Panel;
@@ -37,7 +38,7 @@ public class ManagerViewAllEmployees extends JFrame {
 
     private JPanel contentPane;
     private JTable table;
-	private List<User> employees = new ArrayList<>(); //holds all students
+	private List<Employee> employees = new ArrayList<>(); //holds all students
 	private DefaultTableModel dtm = new DefaultTableModel(0, 0); //default table model
 
     /**
@@ -120,24 +121,9 @@ public class ManagerViewAllEmployees extends JFrame {
 		});
 		btnNewButton.setBounds(714, 439, 180, 82);
 		contentPane.add(btnNewButton);
-		employees = getEmployees(); //get employees from function and return it to array list
+		employees = Manager.getEmployees(); //get employees from function and return it to array list
 		updateTable(); // put Employees into table
     }
-
-	/**
-	 * get list of Employees from MySQL server and returns it
-	 * @return arraylist of employees
-	 */
-	public List<User> getEmployees() {
-
-		MySQLConnect mysql = new MySQLConnect();
-		String queryString = "SELECT * FROM user WHERE user_role = \"Employee\""; //query to get employee roles
-
-		List<Map<String, Object>> resultList = mysql.getData(queryString); // get employees
-		List<User> employees = UserMapper.mapUsersFromMySQL(resultList); // put into list
-
-		return employees;
-	}
 
 	/**
 	 * update table with employees information

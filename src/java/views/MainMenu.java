@@ -76,11 +76,11 @@ public class MainMenu extends JFrame {
 		// ResultSet rs = null;
 		try {
 		    if (txtUserName.getText().equals("Teller")) {
-			Employee tellerInfo = new Employee();
+			EmployeeGUI tellerInfo = new EmployeeGUI();
 			tellerInfo.setVisible(true);
 
 		    } else if (txtUserName.getText().equals("Manager")) {
-			Manager manager = new Manager();
+			ManagerGUI manager = new ManagerGUI();
 			manager.setVisible(true);
 		    } else {
 			JOptionPane.showMessageDialog(btnLogin, "User not found");

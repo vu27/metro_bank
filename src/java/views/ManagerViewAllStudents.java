@@ -1,8 +1,11 @@
 package views;
 
+import model.Manager;
+import model.Student;
 import model.User;
 import util.MySQLConnect;
-import util.UserMapper;
+import util.UserMappers;
+//import util.UserMapper;
 
 import java.awt.EventQueue;
 import java.awt.Panel;
@@ -24,14 +27,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 // This class creates a GUI that shows all students within the banking database
-// Anthony Nguyen 2021.02.12
 // Version Alpha Build 1.0.0
 //
 public class ManagerViewAllStudents extends JFrame {
 
     private JPanel contentPane;
     private JTable table; // table
-	private List<User> students = new ArrayList<>(); //holds all students
+	private List<Student> students = new ArrayList<>(); //holds all students
 	private DefaultTableModel dtm = new DefaultTableModel(0, 0); //default table model
 
 
@@ -115,7 +117,7 @@ public class ManagerViewAllStudents extends JFrame {
 		});
 		btnNewButton.setBounds(714, 439, 180, 82);
 		contentPane.add(btnNewButton);
-		students = getStudents(); //get students and put it into students array list
+		students = Manager.getStudents(); //get students and put it into students array list
 		updateTable(); // put students into table
 
 		// may be implemented later
@@ -185,18 +187,6 @@ public class ManagerViewAllStudents extends JFrame {
 
 
 
-	// Return list of employees from database
-	// @return array list of students
-	public List<User> getStudents() {
-
-		MySQLConnect mysql = new MySQLConnect(); //connect to database
-		String queryString = "SELECT * FROM user WHERE user_role = \"Student\""; //search through database string
-
-		List<Map<String, Object>> resultList = mysql.getData(queryString);
-		List<User> students = UserMapper.mapUsersFromMySQL(resultList); //put students into arraylist
-
-		return students;
-	}
 
 	//update table with students
 	public void updateTable(){

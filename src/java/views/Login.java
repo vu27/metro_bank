@@ -1,6 +1,8 @@
 package views;
 
-import model.User;
+import model.Employee;
+import model.Manager;
+import model.Student;
 import util.MySQLConnect;
 
 import java.awt.*;
@@ -15,13 +17,17 @@ import javax.swing.*;
 public class Login extends JFrame {
 
     MySQLConnect mysql = new MySQLConnect();
-    User user;
+    public Manager manager;
+    public Employee employee;
+    public Student student;
+
     private JFrame frmLogin;
     private JTextField txtPassword;
     private JTextField userName;
-    protected String manager = "Manager";
-    protected String teller = "Employee";
-    protected String student = "Student";
+
+    protected String manager_str = "Manager";
+    protected String employee_string = "Employee";
+    protected String student_string = "Student";
 
 
     /**
@@ -58,14 +64,6 @@ public class Login extends JFrame {
         frmLogin.setBounds(100, 100, 1052, 582);
         frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frmLogin.getContentPane().setBackground(new Color(11, 40, 83));
-
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        // ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/Myriad Pro
-        // Regular.ttf")));
-        //Font font = Font.createFont(Font.TRUETYPE_FONT, new
-        //         File("/static/Myriad-Pro-Regular.ttf"));
-        //Font font = Font.createFont(Font.TRUETYPE_FONT,
-        //       getClass().getClassLoader().getResourceAsStream("/static/Myriad-Pro-Regular.ttf"));
 
         // LABELS
         JLabel lblUserNotFound = new JLabel("UserName/Password is not correct");
@@ -160,12 +158,12 @@ public class Login extends JFrame {
         rdbtnManager.setBackground(new Color(11, 40, 83));
         frmLogin.getContentPane().add(rdbtnManager);
 
-        JRadioButton rdbtnTeller = new JRadioButton("Employee");
-        rdbtnTeller.setFont(new Font("Dialog", Font.PLAIN, 21));
-        rdbtnTeller.setForeground(Color.WHITE);
-        rdbtnTeller.setBounds(784, 183, 234, 46);
-        frmLogin.getContentPane().add(rdbtnTeller);
-        rdbtnTeller.setBackground(new Color(11, 40, 83));
+        JRadioButton rdbtnEmployee = new JRadioButton("Employee");
+        rdbtnEmployee.setFont(new Font("Dialog", Font.PLAIN, 21));
+        rdbtnEmployee.setForeground(Color.WHITE);
+        rdbtnEmployee.setBounds(784, 183, 234, 46);
+        frmLogin.getContentPane().add(rdbtnEmployee);
+        rdbtnEmployee.setBackground(new Color(11, 40, 83));
 
         JRadioButton rdbtnStudent = new JRadioButton("Student");
         rdbtnStudent.setFont(new Font("Dialog", Font.PLAIN, 21));
@@ -176,7 +174,7 @@ public class Login extends JFrame {
 
         ButtonGroup buttonGroupRole = new ButtonGroup();
         buttonGroupRole.add(rdbtnManager);
-        buttonGroupRole.add(rdbtnTeller);
+        buttonGroupRole.add(rdbtnEmployee);
         buttonGroupRole.add(rdbtnStudent);
 
         //images
@@ -203,70 +201,97 @@ public class Login extends JFrame {
         // LOG IN USER
         btnLogin.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent arg0) {
-                Employee tellerScreen = new Employee();
-                Student studentScreen = new Student();
-                Manager managerScreen = new Manager();
+                EmployeeGUI employeeGUI = new EmployeeGUI();
+                StudentGUI studentGUI = new StudentGUI();
+                ManagerGUI managerGUI = new ManagerGUI();
 
                 String selectRole = "";
                 if (rdbtnManager.isSelected()) {
-                    selectRole = manager;
+                    selectRole = manager_str;
                 } else if (rdbtnStudent.isSelected()) {
-                    selectRole = student;
-                } else if (rdbtnTeller.isSelected()) {
-                    selectRole = teller;
+                    selectRole = student_string;
+                } else if (rdbtnEmployee.isSelected()) {
+                    selectRole = employee_string;
                 }
 
 
                 // Check if user selected a role
-                if (!rdbtnManager.isSelected() && !rdbtnTeller.isSelected() && !rdbtnStudent.isSelected()) {
+                if (!rdbtnManager.isSelected() && !rdbtnEmployee.isSelected() && !rdbtnStudent.isSelected()) {
                     JOptionPane.showMessageDialog(lblRoleNotSelected, "User role not selected");
                 } else {
 
                     try {
                         // Get the user from mySql db where username == inputted_email
-                        String queryString = "SELECT * FROM user WHERE user_email = \"" + userName.getText().toLowerCase() + "\";";
+                        String queryString = "SELECT * FROM " + selectRole.toLowerCase()
+                                + " WHERE + " + selectRole.toLowerCase() + "_email = \""
+                                + userName.getText().toLowerCase() + "\";";
                         List<Map<String, Object>> resultList = mysql.getData(queryString);
 
                         // Create user model if user exists
-                        if (resultList.isEmpty()) {
-                            JOptionPane.showMessageDialog(lblUserNotFound, "User not found");
+                        if (!resultList.isEmpty()) {
+                            switch (selectRole) {
+                                case "Manager":
+                                    manager = new Manager(Integer.parseInt(resultList.get(0).get("manager_id").toString()),
+                                            resultList.get(0).get("manager_fname").toString(),
+                                            resultList.get(0).get("manager_lname").toString(),
+                                            resultList.get(0).get("manager_phone").toString(),
+                                            resultList.get(0).get("manager_email").toString(),
+                                            resultList.get(0).get("manager_password").toString(),
+                                            Double.parseDouble(resultList.get(0).get("manager_salary").toString()));
+                                    break;
+                                case "Employee":
+                                    employee = new Employee(Integer.parseInt(resultList.get(0).get("employee_id").toString()),
+                                            resultList.get(0).get("employee_fname").toString(),
+                                            resultList.get(0).get("employee_lname").toString(),
+                                            resultList.get(0).get("employee_phone").toString(),
+                                            resultList.get(0).get("employee_email").toString(),
+                                            resultList.get(0).get("employee_password").toString(),
+                                            Double.parseDouble(resultList.get(0).get("employee_salary").toString()));
+                                    break;
+                                case "Student":
+                                    student = new Student(Integer.parseInt(resultList.get(0).get("student_id").toString()),
+                                            resultList.get(0).get("student_fname").toString(),
+                                            resultList.get(0).get("student_lname").toString(),
+                                            resultList.get(0).get("student_phone").toString(),
+                                            resultList.get(0).get("student_email").toString(),
+                                            resultList.get(0).get("student_password").toString(),
+                                            resultList.get(0).get("date_created").toString());
+                                    break;
+                                default:
+                                    System.out.println("Error with role selection.");
+                            }
                         } else {
-                            user = new User(Integer.parseInt(resultList.get(0).get("user_id").toString()),
-                                    resultList.get(0).get("user_fname").toString(),
-                                    resultList.get(0).get("user_lname").toString(),
-                                    resultList.get(0).get("user_phone").toString(),
-                                    resultList.get(0).get("user_role").toString(),
-                                    resultList.get(0).get("user_email").toString(),
-                                    resultList.get(0).get("user_password").toString());
+                            JOptionPane.showMessageDialog(lblUserNotFound, "User not found");
                         }
 
-                        // Verify role then verify password
-                        if ((rdbtnManager.isSelected() && !user.getRole().equals("Manager")) ||
-                                (rdbtnTeller.isSelected() && !user.getRole().equals("Employee")) ||
-                                (rdbtnStudent.isSelected() && !user.getRole().equals("Student"))) {
-                            JOptionPane.showMessageDialog(lblUserNotFound, "User not found");
-                        } else {
-                            // Verify password
-                            if (!user.getPassword().equals(password.getText())) {
-                                JOptionPane.showMessageDialog(lblIncorrectCredentials, "Username or password is incorrect");
-                            } else {
-                                // Success - send to GUI based on role
-
-                                if (user.getRole().equals("Manager")) {
-                                    managerScreen.setVisible(true);
-                                    userName.setText(null);
-                                    password.setText(null);
-                                } else if (user.getRole().equals("Employee")) {
-                                    tellerScreen.setVisible(true);
-                                    userName.setText(null);
-                                    password.setText(null);
-                                } else if (user.getRole().equals("Student")) {
-                                    studentScreen.setVisible(true);
-                                    userName.setText(null);
-                                    password.setText(null);
+                        // Verify password
+                        switch (selectRole) {
+                            case "Manager":
+                                if (manager != null && manager.getPassword().equals(password.getText())) {
+                                    managerGUI.setVisible(true);
+                                    resetLoginTextInputs(userName, password);
+                                } else {
+                                    JOptionPane.showMessageDialog(lblIncorrectCredentials, "Username or password is incorrect");
                                 }
-
-                            }
+                                break;
+                            case "Employee":
+                                if (employee != null && employee.getPassword().equals(password.getText())) {
+                                    employeeGUI.setVisible(true);
+                                    resetLoginTextInputs(userName, password);
+                                } else {
+                                    JOptionPane.showMessageDialog(lblIncorrectCredentials, "Username or password is incorrect");
+                                }
+                                break;
+                            case "Student":
+                                if (student != null && student.getPassword().equals(password.getText())) {
+                                    studentGUI.setVisible(true);
+                                    resetLoginTextInputs(userName, password);
+                                } else {
+                                    JOptionPane.showMessageDialog(lblIncorrectCredentials, "Username or password is incorrect");
+                                }
+                                break;
+                            default:
+                                System.out.println("Error at password confirmation");
                         }
 
                     } catch (Exception ex) {
@@ -279,5 +304,10 @@ public class Login extends JFrame {
                 }
             }
         });
+    }
+
+    public void resetLoginTextInputs(JTextField userName, JPasswordField password) {
+        userName.setText("");
+        password.setText("");
     }
 }

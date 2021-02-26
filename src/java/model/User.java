@@ -9,16 +9,6 @@ public class User {
     String email;
     String password;
 
-    public User(int id, String fname, String lname, String phone, String role, String email, String password) {
-        this.id = id;
-        this.fname = fname;
-        this.lname = lname;
-        this.phone = phone;
-        this.role = role;
-        this.email = email;
-        this.password = password;
-    }
-
     public int getId() {
         return id;
     }

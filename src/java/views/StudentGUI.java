@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-public class Student extends JFrame {
+public class StudentGUI extends JFrame {
 
     private JPanel contentPane;
     private JTextField txtTotal;
@@ -30,7 +30,7 @@ public class Student extends JFrame {
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 		try {
-		    Student frame = new Student();
+		    StudentGUI frame = new StudentGUI();
 		    frame.setVisible(true);
 		} catch (Exception e) {
 		    e.printStackTrace();
@@ -42,7 +42,7 @@ public class Student extends JFrame {
     /**
      * Create the frame.
      */
-    public Student() {
+    public StudentGUI() {
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setBounds(100, 100, 1263, 553);
 	contentPane = new JPanel();

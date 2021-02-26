@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class Manager extends JFrame {
+public class ManagerGUI extends JFrame {
 
     private JPanel contentPane;
     private JTextField textField;
@@ -25,7 +25,7 @@ public class Manager extends JFrame {
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 		try {
-		    Manager frame = new Manager();
+		    ManagerGUI frame = new ManagerGUI();
 		    frame.setVisible(true);
 		} catch (Exception e) {
 		    e.printStackTrace();
@@ -37,7 +37,7 @@ public class Manager extends JFrame {
     /**
      * Create the frame.
      */
-    public Manager() {
+    public ManagerGUI() {
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setBounds(100, 100, 1049, 573);
 	contentPane = new JPanel();

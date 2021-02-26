@@ -142,7 +142,7 @@ public class DeleteEmployee extends JFrame {
 		    // JFrame.DISPOSE_ON_CLOSE;
 		    // frame.setVisible(false);
 		    dispose();
-		    Manager manager = new Manager();
+		    ManagerGUI manager = new ManagerGUI();
 		    manager.setVisible(true);
 		    // System.exit(0);
 

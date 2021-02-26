@@ -1,5 +1,7 @@
 package util;
 
+import model.Employee;
+import model.Manager;
 import model.User;
 import util.MySQLConnect;
 
@@ -9,15 +11,21 @@ import java.util.*;
 public class MySqlConnectionExample {
     public static void main(String[] args) throws SQLException {
 
-        // Example of MySQL query/connection
-        MySQLConnect mysql = new MySQLConnect();
+//        // Example of MySQL query/connection
+//        MySQLConnect mysql = new MySQLConnect();
+//
+//        String queryString = "INSERT INTO metro_bank.user (user_fname, user_lname, user_phone, user_role, user_email, user_password) " +
+//                "VALUES ('New', 'Person', '922-555-2222', 'Manager', 'new@gmail.com', '123');";
+//
+//        mysql.executeStatement(queryString);
+//
+//                List<Map<String, Object>> resultList = mysql.getData(queryString);
 
-        String queryString = "INSERT INTO metro_bank.user (user_fname, user_lname, user_phone, user_role, user_email, user_password) " +
-                "VALUES ('New', 'Person', '922-555-2222', 'Manager', 'new@gmail.com', '123');";
+        List<Employee> employees = Manager.getEmployees();
 
-        mysql.executeStatement(queryString);
-
-
+        for (Employee employee : employees) {
+            System.out.println(employee.getFname());
+        }
 
 
 

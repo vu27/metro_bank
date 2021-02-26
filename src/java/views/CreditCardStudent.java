@@ -118,7 +118,7 @@ public class CreditCardStudent extends JFrame {
 		    // JFrame.DISPOSE_ON_CLOSE;
 		    // frame.setVisible(false);
 		    dispose();
-		    Student custom = new Student();
+		    StudentGUI custom = new StudentGUI();
 		    custom.setVisible(true);
 		    // System.exit(0);
 
