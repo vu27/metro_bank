@@ -10,7 +10,7 @@ import java.util.Map;
 public class Manager extends User {
     double salary;
 
-    public Manager(int id, String fname, String lname, String phone, String email, String password, double salary) {
+    public Manager(int id, String fname, String lname, String phone, String email, String password, double salary, int ssn, String address, String city, String state) {
         this.id = id;
         this.fname = fname;
         this.lname = lname;
@@ -18,6 +18,10 @@ public class Manager extends User {
         this.email = email;
         this.password = password;
         this.salary = salary;
+        this.ssn = ssn;
+        this.address = address;
+        this.city = city;
+        this.state = state;
     }
 
     public double getSalary() {
@@ -59,4 +63,5 @@ public class Manager extends User {
 
         return students;
     }
+
 }

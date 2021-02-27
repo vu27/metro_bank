@@ -3,7 +3,7 @@ package model;
 public class Employee extends User {
     double salary;
 
-    public Employee(int id, String fname, String lname, String phone, String email, String password, double salary) {
+    public Employee(int id, String fname, String lname, String phone, String email, String password, double salary, int ssn, String address, String city, String state) {
         this.id = id;
         this.fname = fname;
         this.lname = lname;
@@ -11,6 +11,10 @@ public class Employee extends User {
         this.email = email;
         this.password = password;
         this.salary = salary;
+        this.ssn = ssn;
+        this.address = address;
+        this.city = city;
+        this.state = state;
     }
 
     public double getSalary() {
