@@ -1,17 +1,19 @@
 package views;
 
-import java.awt.EventQueue;
+import model.Employee;
+import model.Manager;
+import model.Student;
+import util.MySQLConnect;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class ModifyAccount extends JFrame {
@@ -67,6 +69,33 @@ public class ModifyAccount extends JFrame {
     private JLabel lblNewLabel;
     private JLabel lblUpdateCustomerInformation;
     private JLabel lblEditCustomer;
+	//private JPanel contentPane;
+	//private JTextField txtFname;
+	//private JTextField txtLname;
+	private JTextField txtEmail;
+	//private JTextField txtCity;
+	private JTextField txtStuID;
+	//private JTextField txtFname2;
+	private JTextField txtLName2;
+	private JTextField txtEmail2;
+	private JTextField txtCity2;
+	private JTextField txtStuID2;
+	private JTextField txtPhone;
+	//private JTextField textField;
+	MySQLConnect mysql = new MySQLConnect();
+	private Employee employee;
+	private Employee oldEmployee;
+	private String oldEmail;
+	private String newEmail;
+	//private JButton btnUpdate;
+	//private String oldEmail;
+	//private String newEmail;
+	private JTextField txtID;
+	private JTextField txtDate;
+	private JTextField txtPassword;
+	private JTextField textPhone;
+	private List<Student> students = new ArrayList<>(); //holds all students
+	private Student student;
 
     /**
      * Launch the application.
@@ -88,189 +117,265 @@ public class ModifyAccount extends JFrame {
      * Create the frame.
      */
     public ModifyAccount() {
-	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	setBounds(100, 100, 1901, 587);
-	contentPane = new JPanel();
-	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-	setContentPane(contentPane);
-	contentPane.setLayout(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1723, 565);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 
-	txtFname = new JTextField();
-	txtFname.setBounds(1096, 50, 269, 55);
-	contentPane.add(txtFname);
-	txtFname.setColumns(10);
+		JLabel lblstreet = new JLabel("Email");
+		lblstreet.setHorizontalAlignment(SwingConstants.CENTER);
+		lblstreet.setBounds(21, 167, 154, 41);
+		contentPane.add(lblstreet);
 
-	txtLname = new JTextField();
-	txtLname.setBounds(1509, 50, 295, 55);
-	txtLname.setColumns(10);
-	contentPane.add(txtLname);
+		txtEmail = new JTextField();
+		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		txtEmail.setColumns(10);
+		txtEmail.setBounds(174, 160, 513, 55);
+		contentPane.add(txtEmail);
 
-	lblFname = new JLabel("First Name");
-	lblFname.setBounds(964, 57, 133, 41);
-	lblFname.setHorizontalAlignment(SwingConstants.CENTER);
-	contentPane.add(lblFname);
+		// JLabel lblstate = new JLabel("State");
+		// lblstate.setHorizontalAlignment(SwingConstants.CENTER);
+		// lblstate.setBounds(444, 239, 149, 48);
+		// contentPane.add(lblstate);
 
-	lblLastName = new JLabel("Last Name");
-	lblLastName.setBounds(1370, 57, 133, 41);
-	lblLastName.setHorizontalAlignment(SwingConstants.CENTER);
-	contentPane.add(lblLastName);
+		txtStuID = new JTextField();
+		txtStuID.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		txtStuID.setColumns(10);
+		txtStuID.setBounds(173, 87, 269, 55);
+		contentPane.add(txtStuID);
 
-	lblstreet = new JLabel("Street Address");
-	lblstreet.setBounds(943, 130, 154, 41);
-	lblstreet.setHorizontalAlignment(SwingConstants.CENTER);
-	contentPane.add(lblstreet);
+		JLabel lblEmployeeId = new JLabel("Employee ID");
+		lblEmployeeId.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEmployeeId.setBounds(21, 94, 154, 41);
+		contentPane.add(lblEmployeeId);
 
-	txtStreet = new JTextField();
-	txtStreet.setBounds(1096, 123, 708, 55);
-	txtStreet.setColumns(10);
-	contentPane.add(txtStreet);
+		txtFname2 = new JTextField();
+		txtFname2.setColumns(10);
+		txtFname2.setBounds(969, 87, 269, 55);
+		contentPane.add(txtFname2);
 
-	lblcity = new JLabel("City");
-	lblcity.setBounds(943, 206, 154, 41);
-	lblcity.setHorizontalAlignment(SwingConstants.CENTER);
-	contentPane.add(lblcity);
+		txtLName2 = new JTextField();
+		txtLName2.setColumns(10);
+		txtLName2.setBounds(1382, 87, 295, 55);
+		contentPane.add(txtLName2);
 
-	txtcity = new JTextField();
-	txtcity.setBounds(1096, 199, 269, 55);
-	txtcity.setColumns(10);
-	contentPane.add(txtcity);
+		JLabel lblFname_1 = new JLabel("First Name");
+		lblFname_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFname_1.setBounds(837, 94, 133, 41);
+		contentPane.add(lblFname_1);
 
-	comboBoxstate = new JComboBox();
-	comboBoxstate.setBounds(1509, 199, 295, 48);
-	comboBoxstate.setModel(new DefaultComboBoxModel(new String[] { "Select", "Alabama", "Alaska", "Arizona",
-		"Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii",
-		"Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland",
-		"Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada",
-		"New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
-		"Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee",
-		"Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming" }));
-	comboBoxstate.setMaximumRowCount(51);
-	contentPane.add(comboBoxstate);
+		JLabel lblLastName_1 = new JLabel("Last Name");
+		lblLastName_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLastName_1.setBounds(1243, 94, 133, 41);
+		contentPane.add(lblLastName_1);
 
-	lblstate = new JLabel("State");
-	lblstate.setBounds(1366, 202, 149, 48);
-	lblstate.setHorizontalAlignment(SwingConstants.CENTER);
-	contentPane.add(lblstate);
+		JLabel lblstreet_1 = new JLabel("Email");
+		lblstreet_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblstreet_1.setBounds(816, 167, 154, 41);
+		contentPane.add(lblstreet_1);
 
-	lblcardNum = new JLabel("Card Number");
-	lblcardNum.setBounds(964, 287, 133, 41);
-	lblcardNum.setHorizontalAlignment(SwingConstants.CENTER);
-	contentPane.add(lblcardNum);
+		txtEmail2 = new JTextField();
+		txtEmail2.setColumns(10);
+		txtEmail2.setBounds(969, 160, 708, 55);
+		contentPane.add(txtEmail2);
 
-	txtCardNum = new JTextField();
-	txtCardNum.setBounds(1096, 280, 708, 55);
-	txtCardNum.setColumns(10);
-	contentPane.add(txtCardNum);
+		JComboBox comboBoxstate2 = new JComboBox();
+		comboBoxstate2.setModel(new DefaultComboBoxModel(new String[] { "Select", "Alabama", "Alaska", "Arizona",
+				"Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii",
+				"Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland",
+				"Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada",
+				"New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
+				"Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee",
+				"Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming" }));
+		comboBoxstate2.setMaximumRowCount(51);
+		comboBoxstate2.setBounds(1541, 236, 295, 48);
 
-	lblAccountNumber = new JLabel("Account Number");
-	lblAccountNumber.setBounds(930, 363, 166, 41);
-	lblAccountNumber.setHorizontalAlignment(SwingConstants.CENTER);
-	contentPane.add(lblAccountNumber);
+		txtPassword = new JTextField();
+		txtPassword.setColumns(10);
+		txtPassword.setBounds(969, 236, 269, 55);
+		contentPane.add(txtPassword);
 
-	txtAccNum = new JTextField();
-	txtAccNum.setBounds(1096, 356, 708, 55);
-	txtAccNum.setColumns(10);
-	contentPane.add(txtAccNum);
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPassword.setBounds(816, 243, 154, 41);
+		contentPane.add(lblPassword);
 
-	txtFname2 = new JTextField();
-	txtFname2.setColumns(10);
-	txtFname2.setBounds(187, 50, 269, 55);
-	contentPane.add(txtFname2);
+		textPhone = new JTextField();
+		textPhone.setColumns(10);
+		textPhone.setBounds(1382, 236, 295, 55);
+		contentPane.add(textPhone);
 
-	txtlName2 = new JTextField();
-	txtlName2.setColumns(10);
-	txtlName2.setBounds(600, 50, 295, 55);
-	contentPane.add(txtlName2);
+		JLabel lblPhone_1 = new JLabel("Phone");
+		lblPhone_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPhone_1.setBounds(1243, 243, 154, 41);
+		contentPane.add(lblPhone_1);
 
-	lblFname_1 = new JLabel("First Name");
-	lblFname_1.setHorizontalAlignment(SwingConstants.CENTER);
-	lblFname_1.setBounds(55, 57, 133, 41);
-	contentPane.add(lblFname_1);
+		JButton btnExit = new JButton("Exit");
+		btnExit.setBounds(638, 399, 199, 55);
+		contentPane.add(btnExit);
 
-	lblLastName_1 = new JLabel("Last Name");
-	lblLastName_1.setHorizontalAlignment(SwingConstants.CENTER);
-	lblLastName_1.setBounds(461, 57, 133, 41);
-	contentPane.add(lblLastName_1);
+		JLabel lblSearchEmployee = new JLabel("Search Student");
+		lblSearchEmployee.setBounds(174, 21, 178, 45);
+		contentPane.add(lblSearchEmployee);
 
-	lblstreet_1 = new JLabel("Street Address");
-	lblstreet_1.setHorizontalAlignment(SwingConstants.CENTER);
-	lblstreet_1.setBounds(34, 130, 154, 41);
-	contentPane.add(lblstreet_1);
+		JLabel lblUpdateEmployee = new JLabel("Update Student");
+		lblUpdateEmployee.setBounds(773, 21, 178, 45);
+		contentPane.add(lblUpdateEmployee);
 
-	txtStreetAddress2 = new JTextField();
-	txtStreetAddress2.setColumns(10);
-	txtStreetAddress2.setBounds(187, 123, 708, 55);
-	contentPane.add(txtStreetAddress2);
+		JLabel lblEditEmployee = new JLabel("Edit Student");
+		lblEditEmployee.setBounds(1357, 21, 178, 45);
+		contentPane.add(lblEditEmployee);
 
-	lblcity_1 = new JLabel("City");
-	lblcity_1.setHorizontalAlignment(SwingConstants.CENTER);
-	lblcity_1.setBounds(34, 206, 154, 41);
-	contentPane.add(lblcity_1);
+		JButton btnSearch = new JButton("Search");
+		btnSearch.setBounds(174, 399, 199, 55);
+		contentPane.add(btnSearch);
 
-	JTextField txtCity2 = new JTextField();
-	txtCity2.setColumns(10);
-	txtCity2.setBounds(187, 199, 269, 55);
-	contentPane.add(txtCity2);
+		// employees = Manager.getEmployees();
 
-	comboBoxstate_1 = new JComboBox();
-	comboBoxstate_1.setMaximumRowCount(51);
-	comboBoxstate_1.setBounds(600, 199, 295, 48);
-	contentPane.add(comboBoxstate_1);
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.setBounds(1128, 399, 199, 55);
+		contentPane.add(btnUpdate);
 
-	lblstate_1 = new JLabel("State");
-	lblstate_1.setHorizontalAlignment(SwingConstants.CENTER);
-	lblstate_1.setBounds(457, 202, 149, 48);
-	contentPane.add(lblstate_1);
+		JLabel lblEmployeeId_1_1 = new JLabel("Employee ID");
+		lblEmployeeId_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEmployeeId_1_1.setBounds(816, 319, 154, 41);
+		contentPane.add(lblEmployeeId_1_1);
 
-	lblcardNum_1 = new JLabel("Card Number");
-	lblcardNum_1.setHorizontalAlignment(SwingConstants.CENTER);
-	lblcardNum_1.setBounds(55, 287, 133, 41);
-	contentPane.add(lblcardNum_1);
+		txtID = new JTextField();
+		txtID.setColumns(10);
+		txtID.setBounds(969, 312, 269, 55);
+		contentPane.add(txtID);
 
-	txtCardNumber2 = new JTextField();
-	txtCardNumber2.setColumns(10);
-	txtCardNumber2.setBounds(187, 280, 708, 55);
-	contentPane.add(txtCardNumber2);
+		JLabel lblSalary = new JLabel("Date Created");
+		lblSalary.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSalary.setBounds(1243, 319, 154, 41);
+		contentPane.add(lblSalary);
 
-	lblAccountNumber_1 = new JLabel("Account Number");
-	lblAccountNumber_1.setHorizontalAlignment(SwingConstants.CENTER);
-	lblAccountNumber_1.setBounds(21, 363, 166, 41);
-	contentPane.add(lblAccountNumber_1);
+		txtDate = new JTextField();
+		txtDate.setColumns(10);
+		txtDate.setBounds(1382, 312, 295, 55);
+		contentPane.add(txtDate);
 
-	txtAccNum2 = new JTextField();
-	txtAccNum2.setColumns(10);
-	txtAccNum2.setBounds(187, 356, 708, 55);
-	contentPane.add(txtAccNum2);
 
-	btnSearch2 = new JButton("Search");
-	btnSearch2.setBounds(187, 445, 210, 49);
-	contentPane.add(btnSearch2);
-	btnSearch2.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent arg0) {
 
-	    }
-	});
+		students = Manager.getStudents();
+		//employees = Manager.getEmployees();
 
-	btnExit = new JButton("Exit");
-	btnExit.setBounds(685, 445, 210, 49);
-	contentPane.add(btnExit);
+		btnSearch.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
+				getStudents();
 
-	btnUpdate = new JButton("Update");
-	btnUpdate.setBounds(1420, 445, 210, 49);
-	contentPane.add(btnUpdate);
+			}
+		});
 
-	lblNewLabel = new JLabel("Search Customer");
-	lblNewLabel.setBounds(187, 3, 221, 26);
-	contentPane.add(lblNewLabel);
+		btnUpdate.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
 
-	lblUpdateCustomerInformation = new JLabel("Update Customer Information");
-	lblUpdateCustomerInformation.setBounds(755, 3, 308, 26);
-	contentPane.add(lblUpdateCustomerInformation);
+				updateEmployee();
 
-	lblEditCustomer = new JLabel("Edit Customer");
-	lblEditCustomer.setBounds(1319, 3, 221, 26);
-	contentPane.add(lblEditCustomer);
+			}
+		});
 
-    }
+
+
+	}
+
+	public void updateEmployee(){
+
+
+		if(allDigits(txtID.getText())) {
+			//System.out.print("hit");
+			String queryString = "UPDATE student SET student_email = \"" + txtEmail2.getText() +
+					"\"" + " , student_id = \"" + Integer.parseInt(txtID.getText()) + "\"" + " , student_fname =  \"" + txtFname2.getText()  + "\""  +
+					" ,  student_lname = \"" + txtLName2.getText() + "\""  + " , student_phone = \"" + textPhone.getText() + "\""  + "  , student_password = \"" + txtPassword.getText()  + "\""  +
+					" , date_created = \"" +  txtDate.getText()+ "\""  +  "WHERE student_email = \"" + student.getEmail() + "\";";
+
+			mysql.executeStatement(queryString);
+			resetTextInputs();
+			student = null;
+
+		}
+
+		else if(!allDigits(txtID.getText())){
+			JLabel useriderror = new JLabel("must enter a proper ID number and/or salary");
+			useriderror.setForeground(Color.RED);
+			useriderror.setBounds(165, 414, 663, 26);
+			JOptionPane.showMessageDialog(useriderror, "must enter a proper ID number and/or salary");
+		}
+
+
+
+	}
+
+	public void getStudents(){
+		int size = students.size(); //how many students in list
+		int id = 0;
+
+
+		if(!txtStuID.getText().isEmpty()){
+			if(!allDigits(txtStuID.getText())){
+				//System.out.println("error");
+				JLabel useriderror = new JLabel("must enter a proper ID number");
+				useriderror.setForeground(Color.RED);
+				useriderror.setBounds(165, 414, 663, 26);
+				JOptionPane.showMessageDialog(useriderror, "must enter a proper ID number");
+
+
+				return;
+			}
+			else
+				id = Integer.parseInt(txtStuID.getText().toString());
+		}
+
+
+
+		//String num = txtID.getText();
+
+
+		for(int i = 0; i < size; i++){
+
+			if(students.get(i).getEmail().equalsIgnoreCase(txtEmail.getText()) || students.get(i).getId() == id){
+				//oldEmployee = students.get(i);
+				student = students.get(i);
+				txtFname2.setText(student.getFname());
+				txtLName2.setText(student.getLname());
+				txtEmail2.setText(student.getEmail());
+				txtPassword.setText(student.getPassword());
+				textPhone.setText(student.getPhone());
+				txtID.setText(String.valueOf(student.getId()));
+				txtDate.setText(student.getDateCreated().replaceAll("[Z,T]", " "));
+				return;
+				//break;
+			}
+
+
+
+		}
+		JLabel usernotfound = new JLabel("User was not found");
+		usernotfound.setForeground(Color.RED);
+		usernotfound.setBounds(165, 414, 663, 26);
+		JOptionPane.showMessageDialog(usernotfound, "User not found");
+	}
+
+	public static boolean allDigits(String s) {
+		return s.replaceAll("\\d", "").equals("");
+	}
+
+	public void resetTextInputs() {
+
+    	txtEmail.setText("");
+	txtStuID.setText("");
+	txtFname2.setText("");
+	txtLName2.setText("");
+	txtEmail2.setText("");
+	txtPassword.setText("");
+	textPhone.setText("");
+	txtID.setText("");
+	txtDate.setText("");
+	}
+
+
 
 }

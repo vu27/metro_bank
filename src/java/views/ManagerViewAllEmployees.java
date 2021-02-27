@@ -74,7 +74,7 @@ public class ManagerViewAllEmployees extends JFrame {
 
 		DefaultTableModel tableModel = new DefaultTableModel(); //create table
 		table = new JTable(tableModel);
-		String header[] =  new String[] { "First Name", "Last Name", "Phone", "Email", "Password" }; // columns name
+		String header[] =  new String[] { "ID","First Name", "Last Name", "Phone", "Email", "Password", "Salary" }; // columns name
 		dtm.setColumnIdentifiers(header); //set column names to column
 		table.setModel(dtm); //set table to default table model
 		//for (int count = 1; count <= 2; count++) {
@@ -90,6 +90,8 @@ public class ManagerViewAllEmployees extends JFrame {
 		table.getColumnModel().getColumn(2).setPreferredWidth(96);
 		table.getColumnModel().getColumn(3).setPreferredWidth(220);
 		table.getColumnModel().getColumn(4).setPreferredWidth(135);
+		table.getColumnModel().getColumn(5).setPreferredWidth(135);
+		table.getColumnModel().getColumn(6).setPreferredWidth(135);
 		panel.setLayout(null);
 		JScrollPane pane = new JScrollPane(table); // create scroll if table becomes too big
 		pane.setBounds(0, 0, 690, 200);
@@ -134,11 +136,14 @@ public class ManagerViewAllEmployees extends JFrame {
 
 		// put user info into table
 		for(int i = 0; i < size; i++){
-			table.getModel().setValueAt(employees.get(i).getFname(),i,0);
-			table.getModel().setValueAt(employees.get(i).getLname(),i,1);
-			table.getModel().setValueAt(employees.get(i).getPhone().toString(),i,2);
-			table.getModel().setValueAt(employees.get(i).getEmail(),i,3);
-			table.getModel().setValueAt("******",i,4); //password is hidden
+
+			table.getModel().setValueAt(employees.get(i).getId(),i,0);
+			table.getModel().setValueAt(employees.get(i).getFname(),i,1);
+			table.getModel().setValueAt(employees.get(i).getLname(),i,2);
+			table.getModel().setValueAt(employees.get(i).getPhone().toString(),i,3);
+			table.getModel().setValueAt(employees.get(i).getEmail(),i,4);
+			table.getModel().setValueAt("******",i,5); //password is hidden
+			table.getModel().setValueAt(employees.get(i).getSalary(),i,6);
 			dtm.addRow(new Object[]{ null, null, null, null, null }); // create a empty row
 		}
 
