@@ -70,7 +70,8 @@ public class ManagerViewAllStudents extends JFrame {
 
 		DefaultTableModel tableModel = new DefaultTableModel(); //create table
 		table = new JTable(tableModel);
-		String header[] =  new String[] {"ID", "First Name", "Last Name", "Phone", "Email", "Password", "Date Created" }; // columns name
+		String header[] =  new String[] {"ID", "First Name", "Last Name", "Phone", "Email", "Password", "Date Created" ,
+				"SSN", "Address", "City", "State"}; // columns name
 		dtm.setColumnIdentifiers(header); //set column names to column
 		table.setModel(dtm); //set table to default table model
 		//for (int count = 1; count <= 2; count++) {
@@ -88,6 +89,10 @@ public class ManagerViewAllStudents extends JFrame {
 		table.getColumnModel().getColumn(4).setPreferredWidth(135);
 		table.getColumnModel().getColumn(5).setPreferredWidth(135);
 		table.getColumnModel().getColumn(6).setPreferredWidth(135);
+		table.getColumnModel().getColumn(7).setPreferredWidth(135);
+		table.getColumnModel().getColumn(8).setPreferredWidth(160);
+		table.getColumnModel().getColumn(9).setPreferredWidth(135);
+		table.getColumnModel().getColumn(10).setPreferredWidth(135);
 		panel.setLayout(null);
 		JScrollPane pane = new JScrollPane(table); // create scroll if table becomes too big
 		pane.setBounds(0, 0, 690, 200);
@@ -203,6 +208,10 @@ public class ManagerViewAllStudents extends JFrame {
 			table.getModel().setValueAt(students.get(i).getEmail(),i,4);
 			table.getModel().setValueAt("******",i,5); //password is hidden
 			table.getModel().setValueAt(students.get(i).getDateCreated(),i,6);
+			table.getModel().setValueAt(students.get(i).getSsn(),i,7);
+			table.getModel().setValueAt(students.get(i).getAddress(),i,8);
+			table.getModel().setValueAt(students.get(i).getCity(),i,9);
+			table.getModel().setValueAt(students.get(i).getState(),i,10);
 			dtm.addRow(new Object[]{ null, null, null, null, null }); // create a empty row
 		}
 

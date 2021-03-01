@@ -64,4 +64,72 @@ public class Manager extends User {
         return students;
     }
 
+    public static List<Manager> getManagers() {
+
+        MySQLConnect mysql = new MySQLConnect();
+        String queryString = "SELECT * FROM manager;"; //query to get employees
+
+        List<Map<String, Object>> resultList = mysql.getData(queryString); // get employees
+        List<Manager> managers = UserMappers.mapManagers(resultList); // put into list
+
+        return managers;
+    }
+
+
+
+
+    public static void updateEmployee(Employee employee, String fName, String lName, String email, int ID,
+                                      String phone, String password, double salary, String address, String city,
+                                      String state, int ssn ){
+
+        MySQLConnect mysql = new MySQLConnect();
+        String queryString = "UPDATE employee SET employee_email = \"" + email +
+                "\"" + " , employee_id = \"" + ID + "\"" + " , employee_fname =  \"" + fName  + "\""  +
+                " ,  employee_lname = \"" + lName + "\""  + " , employee_phone = \"" + phone + "\""  +
+                "  , employee_password = \"" + password  + "\""  + "  , employee_ssn = \"" + ssn  + "\""  +
+                "  , employee_address = \"" + address  + "\""  + "  , employee_city = \"" + city  + "\""  +
+                "  , employee_state = \"" + state  + "\""  + " , employee_salary = \"" +  salary + "\""  +
+                "WHERE employee_email = \"" +  employee.getEmail() + "\";";
+
+        mysql.executeStatement(queryString);
+
+    }
+
+
+    public static void updateStudent(Student student, String fName, String lName, String email, int ID,
+                                     String phone, String password, String date, String address, String city,
+                                     String state, int ssn ){
+        MySQLConnect mysql = new MySQLConnect();
+
+        String queryString = "UPDATE student SET student_email = \"" + email +
+                "\"" + " , student_id = \"" + ID + "\"" + " , student_fname =  \"" + fName  + "\""  +
+                " ,  student_lname = \"" + lName + "\""  + " , student_phone = \"" + phone + "\""  +
+                "  , student_password = \"" + password  + "\""  +
+                " , date_created = \"" +  date + "\""  + "  , student_ssn = \"" + ssn  + "\""  +
+                "  , student_address = \"" + address  + "\""  +
+                "  , student_city = \"" + city  + "\""  + "  , student_state = \"" + state  + "\""  +
+                "WHERE student_email = \"" + student.getEmail() + "\";";
+        mysql.executeStatement(queryString);
+    }
+
+
+    public static void updateManager(Manager manager, String fName, String lName, String email, int ID,
+                                String phone, String password, Double salary, String address, String city,
+                                String state, int ssn ){
+
+        MySQLConnect mysql = new MySQLConnect();
+        String queryString = "UPDATE manager SET manager_email = \"" + email +
+                "\"" + " , manager_id = \"" + ID + "\"" + " , manager_fname =  \"" + fName  + "\""  +
+                " ,  manager_lname = \"" + lName + "\""  + " , manager_phone = \"" + phone + "\""  +
+                "  , manager_password = \"" + password  + "\""  + "  , manager_ssn = \"" + ssn  + "\""  +
+                "  , manager_address = \"" + address  + "\""  + "  , manager_city = \"" + city  + "\""  +
+                "  , manager_state = \"" + state  + "\""  + " , manager_salary = \"" +  salary + "\""  +
+                "WHERE manager_email = \"" +  manager.getEmail() + "\";";
+
+        mysql.executeStatement(queryString);
+
+
+    }
+
+
 }

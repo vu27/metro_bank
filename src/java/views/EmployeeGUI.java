@@ -79,7 +79,7 @@ public class EmployeeGUI extends JFrame {
 
 	JComboBox comboBoxAccount = new JComboBox();
 	comboBoxAccount.setModel(new DefaultComboBoxModel(
-		new String[] { "Select", "Open Account", "Close Account", "Modify Account", "View All Accounts" }));
+		new String[] { "Select", "Open Account", "Close Account", "Modify Student Account", "View All Accounts" }));
 	comboBoxAccount.setBounds(53, 52, 282, 55);
 	contentPane.add(comboBoxAccount);
 
@@ -98,8 +98,8 @@ public class EmployeeGUI extends JFrame {
 			openAccount.setVisible(true);
 			dispose();
 		    }
-		    if (x.equals("Modify Account")) {
-			ModifyAccount modifyAccount = new ModifyAccount();
+		    if (x.equals("Modify Student Account")) {
+			ModifyStudent modifyAccount = new ModifyStudent();
 			modifyAccount.setVisible(true);
 			dispose();
 		    }
@@ -205,24 +205,7 @@ public class EmployeeGUI extends JFrame {
 
 		try {
 
-		    // creditCardCustomer creditCard = new creditCardCustomer();
-		    // System.exit(0);
-		    // creditCard.setVisible(false);
-		    // this.
-		    // JFrame.DISPOSE_ON_CLOSE;
-		    // frame.setVisible(false);
 		    dispose();
-		    // WinBuilder mainMenu = new WinBuilder();
-		    // mainMenu.setVisible(true);
-
-		    // MainMenu mainMenu = new MainMenu();
-		    // mainMenu.setVisible(true);
-
-		    // ((JComponent) mainMenu).setVisible(true);
-
-		    // customer custom = new customer();
-		    // custom.setVisible(true);
-		    // System.exit(0);
 
 		} catch (Exception ex) {
 

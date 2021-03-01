@@ -1,10 +1,7 @@
 package views;
 
-import model.Employee;
 import model.Manager;
 import model.Student;
-import util.MySQLConnect;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,90 +9,33 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-public class ModifyAccount extends JFrame {
+/**
+ * this class creates a GUI to search for a student and edit the students information by searching with the ID or Email
+ * @since 2021.28.02
+ * @author Everyone
+ * @version 1.2.5
+ */
+public class ModifyStudent extends JFrame {
 
     private JPanel contentPane;
-    private JFrame frame;
-    private JTextField txtFName;
-    private JTextField txtStreetAddress;
-    private JLabel Fname;
-    private JLabel address;
-    private JLabel Lname;
-    private JTextField txtLName;
-    private JTextField txtCity;
-    private JLabel city;
-    private JLabel State;
-    private JComboBox comboState;
-    private JTextField textField;
-    private JLabel cardNumber;
-    private JTextField textField_1;
-    private JLabel accountNumber;
-    private JButton btnSearch;
-    // private JPanel contentPane;
-    private JTextField txtFname;
-    private JTextField txtLname;
-    private JLabel lblFname;
-    private JLabel lblLastName;
-    private JLabel lblstreet;
-    private JTextField txtStreet;
-    private JLabel lblcity;
-    private JTextField txtcity;
-    private JComboBox comboBoxstate;
-    private JLabel lblstate;
-    private JLabel lblcardNum;
-    private JTextField txtCardNum;
-    private JLabel lblAccountNumber;
-    private JTextField txtAccNum;
+	private List<Student> students = new ArrayList<>(); //holds all students
+	private Student student;
     private JTextField txtFname2;
-    private JTextField txtlName2;
-    private JLabel lblFname_1;
-    private JLabel lblLastName_1;
-    private JLabel lblstreet_1;
-    private JTextField txtStreetAddress2;
-    private JLabel lblcity_1;
-    private JComboBox comboBoxstate_1;
-    private JLabel lblstate_1;
-    private JLabel lblcardNum_1;
-    private JTextField txtCardNumber2;
-    private JLabel lblAccountNumber_1;
-    private JTextField txtAccNum2;
-    private JButton btnSearch2;
-    private JButton btnExit;
-    private JButton btnUpdate;
-    private JLabel lblNewLabel;
-    private JLabel lblUpdateCustomerInformation;
-    private JLabel lblEditCustomer;
-	//private JPanel contentPane;
-	//private JTextField txtFname;
-	//private JTextField txtLname;
 	private JTextField txtEmail;
-	//private JTextField txtCity;
 	private JTextField txtStuID;
-	//private JTextField txtFname2;
 	private JTextField txtLName2;
 	private JTextField txtEmail2;
-	private JTextField txtCity2;
-	private JTextField txtStuID2;
-	private JTextField txtPhone;
-	//private JTextField textField;
-	MySQLConnect mysql = new MySQLConnect();
-	private Employee employee;
-	private Employee oldEmployee;
-	private String oldEmail;
-	private String newEmail;
-	//private JButton btnUpdate;
-	//private String oldEmail;
-	//private String newEmail;
 	private JTextField txtID;
 	private JTextField txtDate;
 	private JTextField txtPassword;
 	private JTextField textPhone;
-	private List<Student> students = new ArrayList<>(); //holds all students
-	private Student student;
+	private JTextField textAddress;
+	private JTextField textCity;
+	private JTextField textSSN;
+	private  JComboBox comboBoxstate2 = new JComboBox();
 
     /**
      * Launch the application.
@@ -104,11 +44,11 @@ public class ModifyAccount extends JFrame {
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 		try {
-		    ModifyAccount frame = new ModifyAccount();
+		    ModifyStudent frame = new ModifyStudent();
 		    frame.setVisible(true);
 		} catch (Exception e) {
 		    e.printStackTrace();
-		}
+			}
 	    }
 	});
     }
@@ -116,9 +56,9 @@ public class ModifyAccount extends JFrame {
     /**
      * Create the frame.
      */
-    public ModifyAccount() {
+    public ModifyStudent() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1723, 565);
+		setBounds(100, 100, 1723, 700);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -135,10 +75,10 @@ public class ModifyAccount extends JFrame {
 		txtEmail.setBounds(174, 160, 513, 55);
 		contentPane.add(txtEmail);
 
-		// JLabel lblstate = new JLabel("State");
-		// lblstate.setHorizontalAlignment(SwingConstants.CENTER);
-		// lblstate.setBounds(444, 239, 149, 48);
-		// contentPane.add(lblstate);
+		JLabel lblstate = new JLabel("State");
+		lblstate.setHorizontalAlignment(SwingConstants.CENTER);
+		lblstate.setBounds(1248, 472, 149, 48);
+		contentPane.add(lblstate);
 
 		txtStuID = new JTextField();
 		txtStuID.setFont(new Font("Tahoma", Font.PLAIN, 30));
@@ -146,10 +86,10 @@ public class ModifyAccount extends JFrame {
 		txtStuID.setBounds(173, 87, 269, 55);
 		contentPane.add(txtStuID);
 
-		JLabel lblEmployeeId = new JLabel("Employee ID");
-		lblEmployeeId.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEmployeeId.setBounds(21, 94, 154, 41);
-		contentPane.add(lblEmployeeId);
+		JLabel lblStudentId = new JLabel("Student ID");
+		lblStudentId.setHorizontalAlignment(SwingConstants.CENTER);
+		lblStudentId.setBounds(21, 94, 154, 41);
+		contentPane.add(lblStudentId);
 
 		txtFname2 = new JTextField();
 		txtFname2.setColumns(10);
@@ -181,7 +121,6 @@ public class ModifyAccount extends JFrame {
 		txtEmail2.setBounds(969, 160, 708, 55);
 		contentPane.add(txtEmail2);
 
-		JComboBox comboBoxstate2 = new JComboBox();
 		comboBoxstate2.setModel(new DefaultComboBoxModel(new String[] { "Select", "Alabama", "Alaska", "Arizona",
 				"Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii",
 				"Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland",
@@ -189,8 +128,9 @@ public class ModifyAccount extends JFrame {
 				"New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
 				"Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee",
 				"Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming" }));
-		comboBoxstate2.setMaximumRowCount(51);
-		comboBoxstate2.setBounds(1541, 236, 295, 48);
+		comboBoxstate2.setMaximumRowCount(54);
+		comboBoxstate2.setBounds(1386, 472, 295, 48);
+		contentPane.add(comboBoxstate2);
 
 		txtPassword = new JTextField();
 		txtPassword.setColumns(10);
@@ -213,35 +153,24 @@ public class ModifyAccount extends JFrame {
 		contentPane.add(lblPhone_1);
 
 		JButton btnExit = new JButton("Exit");
-		btnExit.setBounds(638, 399, 199, 55);
+		btnExit.setBounds(174, 553, 199, 55);
 		contentPane.add(btnExit);
 
-		JLabel lblSearchEmployee = new JLabel("Search Student");
-		lblSearchEmployee.setBounds(174, 21, 178, 45);
-		contentPane.add(lblSearchEmployee);
+		JLabel lblSearchStudent = new JLabel("Search Student");
+		lblSearchStudent.setBounds(264, 21, 178, 45);
+		contentPane.add(lblSearchStudent);
 
-		JLabel lblUpdateEmployee = new JLabel("Update Student");
-		lblUpdateEmployee.setBounds(773, 21, 178, 45);
-		contentPane.add(lblUpdateEmployee);
-
-		JLabel lblEditEmployee = new JLabel("Edit Student");
-		lblEditEmployee.setBounds(1357, 21, 178, 45);
-		contentPane.add(lblEditEmployee);
+		JLabel lblUpdateStudent = new JLabel("Update Student");
+		lblUpdateStudent.setBounds(1198, 21, 178, 45);
+		contentPane.add(lblUpdateStudent);
 
 		JButton btnSearch = new JButton("Search");
-		btnSearch.setBounds(174, 399, 199, 55);
+		btnSearch.setBounds(174, 263, 199, 55);
 		contentPane.add(btnSearch);
 
-		// employees = Manager.getEmployees();
-
 		JButton btnUpdate = new JButton("Update");
-		btnUpdate.setBounds(1128, 399, 199, 55);
+		btnUpdate.setBounds(959, 553, 199, 55);
 		contentPane.add(btnUpdate);
-
-		JLabel lblEmployeeId_1_1 = new JLabel("Employee ID");
-		lblEmployeeId_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEmployeeId_1_1.setBounds(816, 319, 154, 41);
-		contentPane.add(lblEmployeeId_1_1);
 
 		txtID = new JTextField();
 		txtID.setColumns(10);
@@ -258,10 +187,42 @@ public class ModifyAccount extends JFrame {
 		txtDate.setBounds(1382, 312, 295, 55);
 		contentPane.add(txtDate);
 
+		textAddress = new JTextField();
+		textAddress.setColumns(10);
+		textAddress.setBounds(969, 388, 708, 55);
+		contentPane.add(textAddress);
 
+		JLabel lblAddress = new JLabel("Address");
+		lblAddress.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAddress.setBounds(816, 395, 154, 41);
+		contentPane.add(lblAddress);
 
-		students = Manager.getStudents();
-		//employees = Manager.getEmployees();
+		textCity = new JTextField();
+		textCity.setColumns(10);
+		textCity.setBounds(969, 465, 295, 55);
+		contentPane.add(textCity);
+
+		JLabel lblCity = new JLabel("City");
+		lblCity.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCity.setBounds(816, 472, 154, 41);
+		contentPane.add(lblCity);
+
+		textSSN = new JTextField();
+		textSSN.setColumns(10);
+		textSSN.setBounds(1382, 553, 295, 55);
+		contentPane.add(textSSN);
+
+		JLabel lblSSN = new JLabel("SSN");
+		lblSSN.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSSN.setBounds(1222, 560, 154, 41);
+		contentPane.add(lblSSN);
+
+		JLabel lblOr = new JLabel("OR");
+		lblOr.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOr.setBounds(507, 87, 133, 41);
+		contentPane.add(lblOr);
+
+		students = Manager.getStudents(); //get all students from database and put into arraylist
 
 		btnSearch.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
@@ -273,26 +234,40 @@ public class ModifyAccount extends JFrame {
 		btnUpdate.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
 
-				updateEmployee();
+				updateStudent();
+				students = Manager.getStudents();
+
+			}
+		});
+
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				try {
+
+					dispose();
+
+				} catch (Exception ex) {
+
+				}
 
 			}
 		});
 
 
-
 	}
 
-	public void updateEmployee(){
+	public void updateStudent(){
 
 
 		if(allDigits(txtID.getText())) {
 			//System.out.print("hit");
-			String queryString = "UPDATE student SET student_email = \"" + txtEmail2.getText() +
-					"\"" + " , student_id = \"" + Integer.parseInt(txtID.getText()) + "\"" + " , student_fname =  \"" + txtFname2.getText()  + "\""  +
-					" ,  student_lname = \"" + txtLName2.getText() + "\""  + " , student_phone = \"" + textPhone.getText() + "\""  + "  , student_password = \"" + txtPassword.getText()  + "\""  +
-					" , date_created = \"" +  txtDate.getText()+ "\""  +  "WHERE student_email = \"" + student.getEmail() + "\";";
 
-			mysql.executeStatement(queryString);
+
+			Manager.updateStudent(student, txtFname2.getText(), txtLName2.getText(), txtEmail2.getText(),
+					Integer.parseInt(txtID.getText()), textPhone.getText(), txtPassword.getText(),
+					txtDate.getText(), textAddress.getText(), textCity.getText(),
+					comboBoxstate2.getSelectedItem().toString(), Integer.parseInt(textSSN.getText()));
 			resetTextInputs();
 			student = null;
 
@@ -304,40 +279,33 @@ public class ModifyAccount extends JFrame {
 			useriderror.setBounds(165, 414, 663, 26);
 			JOptionPane.showMessageDialog(useriderror, "must enter a proper ID number and/or salary");
 		}
-
-
-
 	}
 
+	/**
+	 * get student information by using the txtStuID to get the id or the email to search in the array list
+	 */
 	public void getStudents(){
 		int size = students.size(); //how many students in list
-		int id = 0;
+		int id = 0; //ID to search with
 
 
 		if(!txtStuID.getText().isEmpty()){
-			if(!allDigits(txtStuID.getText())){
-				//System.out.println("error");
+			if(!allDigits(txtStuID.getText())){ //if Id isnt a number throw error
 				JLabel useriderror = new JLabel("must enter a proper ID number");
 				useriderror.setForeground(Color.RED);
 				useriderror.setBounds(165, 414, 663, 26);
 				JOptionPane.showMessageDialog(useriderror, "must enter a proper ID number");
-
-
 				return;
 			}
 			else
 				id = Integer.parseInt(txtStuID.getText().toString());
 		}
 
-
-
-		//String num = txtID.getText();
-
-
+		//search for target in arrayList
 		for(int i = 0; i < size; i++){
 
+			// if found set textfields to targets data
 			if(students.get(i).getEmail().equalsIgnoreCase(txtEmail.getText()) || students.get(i).getId() == id){
-				//oldEmployee = students.get(i);
 				student = students.get(i);
 				txtFname2.setText(student.getFname());
 				txtLName2.setText(student.getLname());
@@ -346,26 +314,35 @@ public class ModifyAccount extends JFrame {
 				textPhone.setText(student.getPhone());
 				txtID.setText(String.valueOf(student.getId()));
 				txtDate.setText(student.getDateCreated().replaceAll("[Z,T]", " "));
+				textAddress.setText(student.getAddress());
+				textCity.setText(student.getCity());
+				textSSN.setText(String.valueOf(student.getSsn()));
+				comboBoxstate2.setEditable(true);
+				comboBoxstate2.getModel().setSelectedItem(student.getState());
+				comboBoxstate2.setEditable(false);
 				return;
-				//break;
 			}
 
-
-
-		}
-		JLabel usernotfound = new JLabel("User was not found");
+		} //if target not found throw error
+		JLabel usernotfound = new JLabel("Target not found");
 		usernotfound.setForeground(Color.RED);
 		usernotfound.setBounds(165, 414, 663, 26);
-		JOptionPane.showMessageDialog(usernotfound, "User not found");
+		JOptionPane.showMessageDialog(usernotfound, "Target not found");
 	}
 
+	/**
+	 * check if string is only numeric
+	 * @param s string to check
+	 * @return bool if string is all numeric
+	 */
 	public static boolean allDigits(String s) {
 		return s.replaceAll("\\d", "").equals("");
 	}
 
+	/**
+	 * sets all text fields to null
+	 */
 	public void resetTextInputs() {
-
-    	txtEmail.setText("");
 	txtStuID.setText("");
 	txtFname2.setText("");
 	txtLName2.setText("");
@@ -374,6 +351,11 @@ public class ModifyAccount extends JFrame {
 	textPhone.setText("");
 	txtID.setText("");
 	txtDate.setText("");
+	txtEmail.setText("");
+	textAddress.setText("");
+	textCity.setText("");
+	textSSN.setText("");
+	comboBoxstate2.setSelectedIndex(0);
 	}
 
 

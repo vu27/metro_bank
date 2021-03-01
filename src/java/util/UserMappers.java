@@ -23,10 +23,10 @@ public class UserMappers {
                     resultList.get(i).get("manager_email").toString(),
                     resultList.get(i).get("manager_password").toString(),
                     Double.parseDouble(resultList.get(i).get("manager_salary").toString()),
-                    Integer.parseInt(resultList.get(0).get("manager_ssn").toString()),
-                    resultList.get(0).get("manager_address").toString(),
-                    resultList.get(0).get("manager_city").toString(),
-                    resultList.get(0).get("manager_state").toString()));
+                    Integer.parseInt(resultList.get(i).get("manager_ssn").toString()),
+                    resultList.get(i).get("manager_address").toString(),
+                    resultList.get(i).get("manager_city").toString(),
+                    resultList.get(i).get("manager_state").toString()));
         }
         return managers;
     }
@@ -42,10 +42,10 @@ public class UserMappers {
                     resultList.get(i).get("employee_email").toString(),
                     resultList.get(i).get("employee_password").toString(),
                     Double.parseDouble(resultList.get(i).get("employee_salary").toString()),
-                    Integer.parseInt(resultList.get(0).get("employee_ssn").toString()),
-                    resultList.get(0).get("employee_address").toString(),
-                    resultList.get(0).get("employee_city").toString(),
-                    resultList.get(0).get("employee_state").toString()));
+                    Integer.parseInt(resultList.get(i).get("employee_ssn").toString()),
+                    resultList.get(i).get("employee_address").toString(),
+                    resultList.get(i).get("employee_city").toString(),
+                    resultList.get(i).get("employee_state").toString()));
         }
         return employees;
     }
@@ -61,10 +61,10 @@ public class UserMappers {
                     resultList.get(i).get("student_email").toString(),
                     resultList.get(i).get("student_password").toString(),
                     resultList.get(i).get("date_created").toString(),
-                    Integer.parseInt(resultList.get(0).get("student_ssn").toString()),
-                    resultList.get(0).get("student_address").toString(),
-                    resultList.get(0).get("student_city").toString(),
-                    resultList.get(0).get("student_state").toString()));
+                    Integer.parseInt(resultList.get(i).get("student_ssn").toString()),
+                    resultList.get(i).get("student_address").toString(),
+                    resultList.get(i).get("student_city").toString(),
+                    resultList.get(i).get("student_state").toString()));
         }
         return students;
     }
