@@ -76,60 +76,93 @@ public class Manager extends User {
     }
 
 
-
-
     public static void updateEmployee(Employee employee, String fName, String lName, String email, int ID,
                                       String phone, String password, double salary, String address, String city,
-                                      String state, int ssn ){
+                                      String state, int ssn) {
 
         MySQLConnect mysql = new MySQLConnect();
         String queryString = "UPDATE employee SET employee_email = \"" + email +
-                "\"" + " , employee_id = \"" + ID + "\"" + " , employee_fname =  \"" + fName  + "\""  +
-                " ,  employee_lname = \"" + lName + "\""  + " , employee_phone = \"" + phone + "\""  +
-                "  , employee_password = \"" + password  + "\""  + "  , employee_ssn = \"" + ssn  + "\""  +
-                "  , employee_address = \"" + address  + "\""  + "  , employee_city = \"" + city  + "\""  +
-                "  , employee_state = \"" + state  + "\""  + " , employee_salary = \"" +  salary + "\""  +
-                "WHERE employee_email = \"" +  employee.getEmail() + "\";";
+                "\"" + " , employee_id = \"" + ID + "\"" + " , employee_fname =  \"" + fName + "\"" +
+                " ,  employee_lname = \"" + lName + "\"" + " , employee_phone = \"" + phone + "\"" +
+                "  , employee_password = \"" + password + "\"" + "  , employee_ssn = \"" + ssn + "\"" +
+                "  , employee_address = \"" + address + "\"" + "  , employee_city = \"" + city + "\"" +
+                "  , employee_state = \"" + state + "\"" + " , employee_salary = \"" + salary + "\"" +
+                "WHERE employee_email = \"" + employee.getEmail() + "\";";
 
         mysql.executeStatement(queryString);
-
     }
 
 
     public static void updateStudent(Student student, String fName, String lName, String email, int ID,
                                      String phone, String password, String date, String address, String city,
-                                     String state, int ssn ){
+                                     String state, int ssn) {
         MySQLConnect mysql = new MySQLConnect();
 
         String queryString = "UPDATE student SET student_email = \"" + email +
-                "\"" + " , student_id = \"" + ID + "\"" + " , student_fname =  \"" + fName  + "\""  +
-                " ,  student_lname = \"" + lName + "\""  + " , student_phone = \"" + phone + "\""  +
-                "  , student_password = \"" + password  + "\""  +
-                " , date_created = \"" +  date + "\""  + "  , student_ssn = \"" + ssn  + "\""  +
-                "  , student_address = \"" + address  + "\""  +
-                "  , student_city = \"" + city  + "\""  + "  , student_state = \"" + state  + "\""  +
+                "\"" + " , student_id = \"" + ID + "\"" + " , student_fname =  \"" + fName + "\"" +
+                " ,  student_lname = \"" + lName + "\"" + " , student_phone = \"" + phone + "\"" +
+                "  , student_password = \"" + password + "\"" +
+                " , date_created = \"" + date + "\"" + "  , student_ssn = \"" + ssn + "\"" +
+                "  , student_address = \"" + address + "\"" +
+                "  , student_city = \"" + city + "\"" + "  , student_state = \"" + state + "\"" +
                 "WHERE student_email = \"" + student.getEmail() + "\";";
         mysql.executeStatement(queryString);
     }
 
 
     public static void updateManager(Manager manager, String fName, String lName, String email, int ID,
-                                String phone, String password, Double salary, String address, String city,
-                                String state, int ssn ){
+                                     String phone, String password, Double salary, String address, String city,
+                                     String state, int ssn) {
 
         MySQLConnect mysql = new MySQLConnect();
         String queryString = "UPDATE manager SET manager_email = \"" + email +
-                "\"" + " , manager_id = \"" + ID + "\"" + " , manager_fname =  \"" + fName  + "\""  +
-                " ,  manager_lname = \"" + lName + "\""  + " , manager_phone = \"" + phone + "\""  +
-                "  , manager_password = \"" + password  + "\""  + "  , manager_ssn = \"" + ssn  + "\""  +
-                "  , manager_address = \"" + address  + "\""  + "  , manager_city = \"" + city  + "\""  +
-                "  , manager_state = \"" + state  + "\""  + " , manager_salary = \"" +  salary + "\""  +
-                "WHERE manager_email = \"" +  manager.getEmail() + "\";";
+                "\"" + " , manager_id = \"" + ID + "\"" + " , manager_fname =  \"" + fName + "\"" +
+                " ,  manager_lname = \"" + lName + "\"" + " , manager_phone = \"" + phone + "\"" +
+                "  , manager_password = \"" + password + "\"" + "  , manager_ssn = \"" + ssn + "\"" +
+                "  , manager_address = \"" + address + "\"" + "  , manager_city = \"" + city + "\"" +
+                "  , manager_state = \"" + state + "\"" + " , manager_salary = \"" + salary + "\"" +
+                "WHERE manager_email = \"" + manager.getEmail() + "\";";
 
         mysql.executeStatement(queryString);
-
-
     }
 
+    public static void addEmployee(Employee employee) {
+        MySQLConnect mysql = new MySQLConnect();
+        String queryString = "INSERT INTO metro_bank.employee " +
+                "(employee_fname, employee_lname, employee_phone, employee_email, " +
+                "employee_password, employee_salary, employee_ssn, employee_address, " +
+                "employee_city, employee_state) VALUES (" +
+                "\"" + employee.getFname() + "\"," +
+                "\"" + employee.getLname() + "\"," +
+                "\"" + employee.getPhone() + "\"," +
+                "\"" + employee.getEmail() + "\"," +
+                "\"" + employee.getPassword() + "\"," +
+                "\"" + employee.getSalary() + "\"," +
+                "\"" + employee.getSsn() + "\"," +
+                "\"" + employee.getAddress() + "\"," +
+                "\"" + employee.getCity() + "\"," +
+                "\"" + employee.getState() + "\");";
+        mysql.executeStatement(queryString);
+        System.out.println("New employee added successfully.");
+    }
 
+    public static void addManager(Manager manager) {
+        MySQLConnect mysql = new MySQLConnect();
+        String queryString = "INSERT INTO metro_bank.manager " +
+                "(manager_fname, manager_lname, manager_phone, manager_email, " +
+                "manager_password, manager_salary, manager_ssn, manager_address, " +
+                "manager_city, manager_state) VALUES (" +
+                "\"" + manager.getFname() + "\"," +
+                "\"" + manager.getLname() + "\"," +
+                "\"" + manager.getPhone() + "\"," +
+                "\"" + manager.getEmail() + "\"," +
+                "\"" + manager.getPassword() + "\"," +
+                "\"" + manager.getSalary() + "\"," +
+                "\"" + manager.getSsn() + "\"," +
+                "\"" + manager.getAddress() + "\"," +
+                "\"" + manager.getCity() + "\"," +
+                "\"" + manager.getState() + "\");";
+        mysql.executeStatement(queryString);
+        System.out.println("New manager added successfully.");
+    }
 }

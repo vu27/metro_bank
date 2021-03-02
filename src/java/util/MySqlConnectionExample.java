@@ -21,12 +21,25 @@ public class MySqlConnectionExample {
 //
 //                List<Map<String, Object>> resultList = mysql.getData(queryString);
 
-        List<Employee> employees = Manager.getEmployees();
+//        List<Employee> employees = Manager.getEmployees();
+//
+//        for (Employee employee : employees) {
+//            System.out.println(employee.getFname());
+//        }
 
-        for (Employee employee : employees) {
-            System.out.println(employee.getFname());
-        }
+        Employee newEmployee = new Employee(1,
+                "Toby",
+                "Smith",
+                "612",
+                "email@gmail.com",
+                "passwprd",
+                50000,
+                123231232,
+                "Address",
+                "City",
+                "MN");
 
+        Manager.addEmployee(newEmployee);
 
 
 

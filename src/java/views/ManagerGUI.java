@@ -47,7 +47,7 @@ public class ManagerGUI extends JFrame {
 
 	JComboBox comboBoxManager = new JComboBox();
 	comboBoxManager.setModel(new DefaultComboBoxModel(
-		new String[] { "Select", "Add Employee", "Delete Employee", "Edit Employee", "Edit Students", "Edit Managers", "Bank Stats", "View All Students", "View All Employees" }));
+		new String[] { "Select", "Add Employee", "Add Manager", "Delete Employee", "Edit Employee", "Edit Students", "Edit Managers", "Bank Stats", "View All Students", "View All Employees" }));
 	comboBoxManager.setBounds(21, 51, 227, 49);
 	contentPane.add(comboBoxManager);
 
@@ -63,8 +63,12 @@ public class ManagerGUI extends JFrame {
 
 			switch (x) {
 				case "Add Employee":
-					AddEmployee addEmployee = new AddEmployee();
-					addEmployee.setVisible(true);
+					AddEmployeeGUI addEmployeeGUI = new AddEmployeeGUI();
+					addEmployeeGUI.setVisible(true);
+					break;
+				case "Add Manager":
+					AddManagerGUI addManagerGUI = new AddManagerGUI();
+					addManagerGUI.setVisible(true);
 					break;
 				case "Delete Employee":
 					break;
