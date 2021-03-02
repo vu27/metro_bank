@@ -165,4 +165,24 @@ public class Manager extends User {
         mysql.executeStatement(queryString);
         System.out.println("New manager added successfully.");
     }
+
+    public static void addStudent(Student student) {
+        MySQLConnect mysql = new MySQLConnect();
+        String queryString = "INSERT INTO metro_bank.student " +
+                "(student_fname, student_lname, student_phone, student_email, " +
+                "student_password, date_created, student_ssn, student_address, " +
+                "student_city, student_state) VALUES (" +
+                "\"" + student.getFname() + "\"," +
+                "\"" + student.getLname() + "\"," +
+                "\"" + student.getPhone() + "\"," +
+                "\"" + student.getEmail() + "\"," +
+                "\"" + student.getPassword() + "\"," +
+                "\"" + student.getDateCreated() + "\"," +
+                "\"" + student.getSsn() + "\"," +
+                "\"" + student.getAddress() + "\"," +
+                "\"" + student.getCity() + "\"," +
+                "\"" + student.getState() + "\");";
+        mysql.executeStatement(queryString);
+        System.out.println("New student added successfully.");
+    }
 }
