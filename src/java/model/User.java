@@ -12,6 +12,19 @@ public class User {
     String city;
     String state;
 
+    public User(int id, String fname, String lname, String phone, String email, String password, int ssn, String address, String city, String state) {
+        this.id = id;
+        this.fname = fname;
+        this.lname = lname;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.ssn = ssn;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+    }
+
     public int getId() {
         return id;
     }
