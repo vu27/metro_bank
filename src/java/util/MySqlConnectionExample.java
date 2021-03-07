@@ -1,15 +1,22 @@
 package util;
 
+import model.Checkings;
 import model.Employee;
 import model.Manager;
 import model.User;
 import util.MySQLConnect;
 
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.*;
 
 public class MySqlConnectionExample {
     public static void main(String[] args) throws SQLException {
+
+        Checkings checkingsEx = new Checkings(1, Instant.now().toString(), true, 1, 122.22, false);
+
+        System.out.println(checkingsEx.getTotal());
+
 
 //        // Example of MySQL query/connection
 //        MySQLConnect mysql = new MySQLConnect();
@@ -27,20 +34,19 @@ public class MySqlConnectionExample {
 //            System.out.println(employee.getFname());
 //        }
 
-        Employee newEmployee = new Employee(1,
-                "Toby",
-                "Smith",
-                "612",
-                "email@gmail.com",
-                "passwprd",
-                50000,
-                123231232,
-                "Address",
-                "City",
-                "MN");
-
-        Manager.addEmployee(newEmployee);
-
+//        Employee newEmployee = new Employee(1,
+//                "Toby",
+//                "Smith",
+//                "612",
+//                "email@gmail.com",
+//                "passwprd",
+//                50000,
+//                123231232,
+//                "Address",
+//                "City",
+//                "MN");
+//
+//        Manager.addEmployee(newEmployee);
 
 
 //        String queryString = "SELECT * FROM user WHERE user_role = \"Customer\"";
