@@ -1,6 +1,6 @@
-package model;
+package model.bank_accounts;
 
-public class Checkings extends Account{
+public class Checkings extends Account {
     double total;
     boolean isOverdrafted;
 

@@ -47,6 +47,61 @@ CREATE TABLE IF NOT EXISTS metro_bank.student (
     student_state varchar(75) NOT NULL
 );
 
+/* Create Checkings Model */
+CREATE TABLE IF NOT EXISTS metro_bank.checkings (
+	id integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	date_opened varchar(75) NOT NULL,
+	is_active boolean NOT NULL,
+    student_id integer NOT NULL,
+    total double NOT NULL,
+	is_overdrafted double NOT NULL,
+	FOREIGN KEY (student_id) REFERENCES metro_bank.student(student_id)
+);
+
+/* Create Savings Model */
+CREATE TABLE IF NOT EXISTS metro_bank.savings (
+	id integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	date_opened varchar(75) NOT NULL,
+	is_active boolean NOT NULL,
+    student_id integer NOT NULL,
+    total double NOT NULL,
+	interest double NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES metro_bank.student(student_id)
+);
+
+/* Create Credit Model */
+CREATE TABLE IF NOT EXISTS metro_bank.credit (
+	id integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	date_opened varchar(75) NOT NULL,
+	is_active boolean NOT NULL,
+    student_id integer NOT NULL,
+    balance double NOT NULL,
+	statement_balance double NOT NULL,
+	available_credit double NOT NULL,
+	apr double NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES metro_bank.student(student_id)
+);
+
+/* Create CreditApplication Model */
+CREATE TABLE IF NOT EXISTS metro_bank.credit_application (
+	id integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    fname varchar(75) NOT NULL,
+    lname varchar(75) NOT NULL,
+    address varchar(75) NOT NULL,
+    city varchar(75) NOT NULL,
+    state varchar(75) NOT NULL,
+    email varchar(75) NOT NULL,
+    phone varchar(75) NOT NULL,
+    ssn integer NOT NULL,
+    credit_score integer NOT NULL,
+    income double NOT NULL,
+    password varchar(75) NOT NULL,
+    student_id integer NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES metro_bank.student(student_id),
+    status varchar(75) NOT NULL,
+    date_applied varchar(75) NOT NULL
+);
+
 /* Populate Managers */
 INSERT INTO metro_bank.manager (
 	manager_fname,
@@ -115,24 +170,53 @@ INSERT INTO metro_bank.student (
 ('Elena', 'Adam', '970-346-0526', 'e.adam@metrobank.edu', 'password', '2021-02-25T05:47:26.853Z', 420722015 , '27 N. Riverside St. ', 'Covington', 'GA'),
 ('Bobby', 'Dolphin', '651-555-9987', 'b.dolphin@metrobank.edu', 'password', '2021-02-25T05:47:26.853Z',  580544296 , '479 S. Santa Clara St.', 'South El Monte', 'CA');
 
+/* Populate Credit accounts */
+INSERT INTO metro_bank.credit (
+	date_opened,
+    is_active,
+    student_id,
+    balance,
+	statement_balance,
+	available_credit,
+	apr
+) VALUES
+('2021-02-25T05:47:26.853Z', true, 2, 322.22, 50.01, 9000, .2443);
 
+/* Populate Checkings accounts */
+INSERT INTO metro_bank.checkings (
+	date_opened,
+    is_active,
+    student_id,
+    total,
+	is_overdrafted
+) VALUES
+('2021-02-25T05:47:26.853Z', true, 1, 2002.99, false);
 
+/* Populate Savings accounts */
+INSERT INTO metro_bank.savings (
+	date_opened,
+    is_active,
+    student_id,
+    total,
+	interest
+) VALUES
+('2021-02-25T05:47:26.853Z', true, 1, 1202.00, .02);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* Populate Credit applications */
+INSERT INTO metro_bank.credit_application (
+	fname,
+    lname,
+    address,
+    city,
+	state,
+	email,
+	phone,
+    ssn,
+    credit_score,
+    income,
+    password,
+    student_id,
+    status,
+    date_applied
+) VALUES
+('Jerry', 'Hills', '8930 Theatre Street', 'Stow', 'OH', 'j.hills@metrobank.edu', '953-555-1177', 119038905, 500, 35000, 'password', 2, 'In review', '2021-02-25T05:47:26.853Z' );

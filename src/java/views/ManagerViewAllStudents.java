@@ -2,9 +2,6 @@ package views;
 
 import model.Manager;
 import model.Student;
-import model.User;
-import util.MySQLConnect;
-import util.UserMappers;
 //import util.UserMapper;
 
 import java.awt.EventQueue;
@@ -14,7 +11,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;

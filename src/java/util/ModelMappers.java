@@ -10,7 +10,7 @@ import java.util.Map;
 import model.Manager;
 
 // Util methods to map users from MySQL database to User model classes
-public class UserMappers {
+public class ModelMappers {
 
     public static List<Manager> mapManagers(List<Map<String, Object>> resultList) {
         List<Manager> managers = new ArrayList<>();

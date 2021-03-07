@@ -1,14 +1,9 @@
 package util;
 
-import model.Checkings;
-import model.Employee;
-import model.Manager;
-import model.User;
-import util.MySQLConnect;
+import model.bank_accounts.Checkings;
 
 import java.sql.SQLException;
 import java.time.Instant;
-import java.util.*;
 
 public class MySqlConnectionExample {
     public static void main(String[] args) throws SQLException {

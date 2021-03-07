@@ -1,7 +1,7 @@
 package model;
 
 import util.MySQLConnect;
-import util.UserMappers;
+import util.ModelMappers;
 //import util.UserMapper;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class Manager extends User {
         String queryString = "SELECT * FROM employee;"; //query to get employees
 
         List<Map<String, Object>> resultList = mysql.getData(queryString); // get employees
-        List<Employee> employees = UserMappers.mapEmployees(resultList); // put into list
+        List<Employee> employees = ModelMappers.mapEmployees(resultList); // put into list
 
         return employees;
     }
@@ -50,7 +50,7 @@ public class Manager extends User {
         String queryString = "SELECT * FROM student;"; //query to get employees
 
         List<Map<String, Object>> resultList = mysql.getData(queryString); // get employees
-        List<Student> students = UserMappers.mapStudents(resultList); // put into list
+        List<Student> students = ModelMappers.mapStudents(resultList); // put into list
 
         return students;
     }
@@ -61,7 +61,7 @@ public class Manager extends User {
         String queryString = "SELECT * FROM manager;"; //query to get employees
 
         List<Map<String, Object>> resultList = mysql.getData(queryString); // get employees
-        List<Manager> managers = UserMappers.mapManagers(resultList); // put into list
+        List<Manager> managers = ModelMappers.mapManagers(resultList); // put into list
 
         return managers;
     }

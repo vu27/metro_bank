@@ -1,4 +1,4 @@
-package model;
+package model.bank_accounts;
 
 public class Account {
     int id;

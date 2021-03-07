@@ -10,18 +10,13 @@ package views;
 
 import model.Employee;
 import model.Manager;
-import model.User;
-import util.MySQLConnect;
-import util.UserMappers;
 
 import java.awt.EventQueue;
 import java.awt.Panel;
-import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,7 +27,6 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 
 public class ManagerViewAllEmployees extends JFrame {
 

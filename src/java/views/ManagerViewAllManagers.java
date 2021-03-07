@@ -1,31 +1,18 @@
 package views;
 
 import model.Manager;
-import model.Student;
 
-import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import model.Manager;
-import model.Student;
-import model.User;
-import util.MySQLConnect;
-import util.UserMappers;
 //import util.UserMapper;
 
 import java.awt.EventQueue;
 import java.awt.Panel;
 import java.awt.Point;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -34,8 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
 public class ManagerViewAllManagers extends JFrame {
 
