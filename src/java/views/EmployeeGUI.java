@@ -79,7 +79,7 @@ public class EmployeeGUI extends JFrame {
 
 	JComboBox comboBoxAccount = new JComboBox();
 	comboBoxAccount.setModel(new DefaultComboBoxModel(
-		new String[] { "Select", "Open Account", "Close Account", "Modify Student Account", "View All Accounts" }));
+		new String[] { "Select", "Open Account", "Close Account", "Modify Student Account", "Apply Student Credit", "View All Accounts" }));
 	comboBoxAccount.setBounds(53, 52, 282, 55);
 	contentPane.add(comboBoxAccount);
 
@@ -108,6 +108,11 @@ public class EmployeeGUI extends JFrame {
 			deleteStudent.setVisible(true);
 			dispose();
 		    }
+		    if (x.equals("Apply Student Credit")){
+		    	applyCredit credit = new applyCredit();
+		    	credit.setVisible(true);
+		    	dispose();
+			}
 
 		} catch (Exception ex) {
 
