@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import model.Manager;
+import model.bank_accounts.CreditApplication;
 
 // Util methods to map users from MySQL database to User model classes
 public class ModelMappers {
@@ -68,4 +69,28 @@ public class ModelMappers {
         }
         return students;
     }
+
+    public static List<CreditApplication> mapCreditApplications(List<Map<String, Object>> resultList){
+        List<CreditApplication> creditApplications = new ArrayList<>();
+
+        for (int i = 0; i < resultList.size(); i++) {
+            creditApplications.add(new CreditApplication( Integer.parseInt(resultList.get(i).get("id").toString()),
+                    resultList.get(i).get("fname").toString(),
+                    resultList.get(i).get("lname").toString(),
+                    resultList.get(i).get("address").toString(),
+                    resultList.get(i).get("city").toString(),
+                    resultList.get(i).get("state").toString(),
+                    resultList.get(i).get("email").toString(),
+                    resultList.get(i).get("phone").toString(),
+                    Integer.parseInt(resultList.get(i).get("ssn").toString()),
+                    Integer.parseInt(resultList.get(i).get("credit_score").toString()),
+                    Double.parseDouble(resultList.get(i).get("income").toString()),
+                    resultList.get(i).get("password").toString(),
+                    resultList.get(i).get("student_id").toString(),
+                    resultList.get(i).get("status").toString(),
+                    resultList.get(i).get("date_applied").toString()));
+        }
+        return creditApplications;
+    }
+
 }

@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
@@ -17,7 +19,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import model.Employee;
+import model.Manager;
 import model.Student;
+import model.bank_accounts.CreditApplication;
+
 public class applyCreditExisting extends JFrame {
 
     private JPanel contentPane;
@@ -183,7 +190,7 @@ public class applyCreditExisting extends JFrame {
 		"Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming" }));
 	comboBoxstate.setMaximumRowCount(54);
 	comboBoxstate.setBounds(556, 241, 295, 48);
-		comboBoxstate.setEditable(false);
+	comboBoxstate.setEditable(false);
 	contentPane.add(comboBoxstate);
 
 	txtStuID = new JTextField();
@@ -219,15 +226,41 @@ public class applyCreditExisting extends JFrame {
 
     public void finishApplication() {
 
-		if (isTextFieldsValid()) {
+		if (isTextFieldsValid() && validCreditScore()) {
+
+			String income = txtIncome.getText().replaceAll("[$,]", "");
+			String date = Instant.now().toString();
+
+			CreditApplication creditApplication = new CreditApplication(0,txtFname.getText(), txtLname.getText(),
+					txtAddress.getText(),txtCity.getText(),
+					txtEmail.getText(), txtPhone.getText(),comboBoxstate.getSelectedItem().toString(),
+					Integer.parseInt(txtSSN.getText()), Integer.parseInt(txtCreditScore.getText()),Double.parseDouble(income),
+					student.getPassword(), String.valueOf(student.getId()),
+					"In review", date);
+
+
+
+			Manager.processApp(creditApplication);
+
 
 	    // add to datebase somehow
 
+		resetTextInputs();
 	    JLabel lblAddSuccess = new JLabel("");
 	    lblAddSuccess.setForeground(Color.RED);
 	    lblAddSuccess.setBounds(165, 414, 663, 26);
 	    JOptionPane.showMessageDialog(lblAddSuccess, "Application Created successfully");
+
 		}
+
+		JLabel lblAddSuccess = new JLabel("");
+		lblAddSuccess.setForeground(Color.RED);
+		lblAddSuccess.setBounds(165, 414, 663, 26);
+		JOptionPane.showMessageDialog(lblAddSuccess, "Application Process Failed");
+
+
+
+
     }
 
     public boolean isTextFieldsValid() {
@@ -242,10 +275,40 @@ public class applyCreditExisting extends JFrame {
 	    lblFieldIsEmpty.setForeground(Color.RED);
 	    lblFieldIsEmpty.setBounds(165, 414, 663, 26);
 	    JOptionPane.showMessageDialog(lblFieldIsEmpty, "Input fields cannot be empty.");
+	    return false;
 		}
 
 	return true;
     }
+
+    public boolean validCreditScore(){
+    	if(Integer.parseInt(txtCreditScore.getText()) > 300 && Integer.parseInt(txtCreditScore.getText()) < 850)
+    		return true;
+
+		JLabel lblFieldIsEmpty = new JLabel("");
+		lblFieldIsEmpty.setForeground(Color.RED);
+		lblFieldIsEmpty.setBounds(165, 414, 663, 26);
+		JOptionPane.showMessageDialog(lblFieldIsEmpty, "Credit Score Invalid.");
+    	return false;
+	}
+
+	public boolean validNumber(){
+		String regex = "[0-9, /,]+";
+
+		if(txtIncome.getText().contains(regex) && txtCreditScore.getText().contains(regex)){
+			return true;
+		}
+		JLabel lblFieldIsEmpty = new JLabel("");
+		lblFieldIsEmpty.setForeground(Color.RED);
+		lblFieldIsEmpty.setBounds(165, 414, 663, 26);
+		JOptionPane.showMessageDialog(lblFieldIsEmpty, "Income and/or Credit Score not valid");
+		return false;
+
+	}
+
+
+
+
 
     public void setData(){
     	student = applyCreditSearch.getter();
@@ -264,6 +327,27 @@ public class applyCreditExisting extends JFrame {
 	}
 
 
+	/**
+	 * reset the text fields to null
+	 */
+	public void resetTextInputs() {
+		txtEmail.setText("");
+		//txtManID.setText("");
+		txtFname.setText("");
+		txtLname.setText("");
+		txtEmail.setText("");
+		//txtPassword.setText("");
+		txtPhone.setText("");
+		//txtID.setText("");
+		txtIncome.setText("");
+		txtAddress.setText("");
+		txtCity.setText("");
+		txtSSN.setText("");
+		txtCreditScore.setText("");
+		txtIncome.setText("");
+		comboBoxstate.setSelectedIndex(0);
+
+	}
 
 
 

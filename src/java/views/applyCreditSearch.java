@@ -5,12 +5,15 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import model.Manager;
+import model.bank_accounts.CreditApplication;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import model.Manager;
 import model.Student;
+import model.bank_accounts.CreditApplication;
 
 public class applyCreditSearch extends JFrame {
 
@@ -19,6 +22,7 @@ public class applyCreditSearch extends JFrame {
     private JTextField txtEmail;
     public static Student student;
 	private List<Student> students = new ArrayList<>(); //holds all students
+	private List<CreditApplication> creditApplications = new ArrayList<>();
 
     /**
      * Launch the application.
@@ -88,9 +92,15 @@ public class applyCreditSearch extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 
 					try {
-						if(getStudents() != null){
-							applyCreditExisting applycreditexist = new applyCreditExisting();
-							applycreditexist.setVisible(true);
+						if(getStudents() != null ){
+
+
+							if(ifAppExists(student)) {
+								applyCreditExisting applycreditexist = new applyCreditExisting();
+								applycreditexist.setVisible(true);
+								dispose();
+							}
+
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -154,8 +164,29 @@ public class applyCreditSearch extends JFrame {
 
 	}
 
+
+
+
 	public static boolean allDigits(String s) {
 		return s.replaceAll("\\d", "").equals("");
+	}
+
+	public boolean ifAppExists(Student student){
+
+    	creditApplications = Manager.getCreditApplication();
+
+		for(int i = 0; i < creditApplications.size(); i++){
+			if(creditApplications.get(i).getEmail().equals(student.getEmail()) ||
+					creditApplications.get(i).getStudentId().equals(student.getId())){
+				JLabel lblAddSuccess = new JLabel("");
+				lblAddSuccess.setForeground(Color.RED);
+				lblAddSuccess.setBounds(165, 414, 663, 26);
+				JOptionPane.showMessageDialog(lblAddSuccess, "Application Already Exisits");
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 

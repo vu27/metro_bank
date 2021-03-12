@@ -1,23 +1,27 @@
-package WinBuilder;
+package views;//package WinBuilder;
 
-import java.awt.Color;
-import java.awt.EventQueue;
+import model.Manager;
+import model.Student;
+import model.bank_accounts.CreditApplication;
+
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+
+/**
+ * This creates a GUI so someone who doesn't have an exisiting account can apply for credit
+ *
+ */
 public class applyCreditNew extends JFrame {
 
     private JPanel contentPane;
@@ -27,19 +31,17 @@ public class applyCreditNew extends JFrame {
     private JTextField txtEmail;
     private JTextField txtAddress;
     private JTextField txtCity;
+	private JTextField txtCreditScore;
+	private JTextField txtSSN;
+	private JTextField txtIncome;
     private JComboBox comboBoxstate = new JComboBox();
     private JLabel lblState;
-    private JTextField txtSSN;
     private JLabel lblSSN;
-    private JTextField txtCreditScore;
     private JLabel lblCreditScore;
     private JTextField txtPassword;
     private JTextField txtPassword2;
     private JLabel lblCreatePassword;
     private JLabel lblCreatePassword2;
-    private JButton btnFinish;
-    private JButton btnExit;
-    private JTextField txtIncome;
     private JLabel lblIncome;
     private JLabel lblNewLabel;
     private String email = "@metrostate.edu";
@@ -48,6 +50,15 @@ public class applyCreditNew extends JFrame {
     private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
     private JTextField txtStuID;
     private JLabel lblStudentId;
+	private List<Student> students = new ArrayList<>(); //holds all students
+	JPasswordField password = new JPasswordField();
+	JPasswordField password2 = new JPasswordField();
+	private List<CreditApplication> creditApplications = new ArrayList<>();
+	private JButton btnFinish;
+	private JButton btnExit;
+
+
+
 
     /**
      * Launch the application.
@@ -163,15 +174,32 @@ public class applyCreditNew extends JFrame {
 	lblCreditScore.setBounds(425, 373, 142, 49);
 	contentPane.add(lblCreditScore);
 
-	txtPassword = new JTextField();
-	txtPassword.setColumns(10);
-	txtPassword.setBounds(569, 442, 282, 49);
-	contentPane.add(txtPassword);
 
-	txtPassword2 = new JTextField();
-	txtPassword2.setColumns(10);
-	txtPassword2.setBounds(591, 509, 260, 49);
-	contentPane.add(txtPassword2);
+	password.setColumns(10);
+	password.setBounds(569, 442, 282, 49);
+	password.setFont(new Font("font", Font.PLAIN, 30));
+	password.setEchoChar('*');
+	contentPane.add(password);
+
+
+	password2.setColumns(10);
+	password2.setBounds(591, 509, 260, 49);
+	password2.setFont(new Font("font", Font.PLAIN, 30));
+	password2.setEchoChar('*');
+	contentPane.add(password2);
+
+
+
+	//txtPassword = new JTextField();
+	//txtPassword.setColumns(10);
+	//txtPassword.setBounds(569, 442, 282, 49);
+	//txtPassword.setEchoChar('*');
+	//contentPane.add(txtPassword);
+
+	//txtPassword2 = new JTextField();
+	//txtPassword2.setColumns(10);
+	//txtPassword2.setBounds(591, 509, 260, 49);
+	//contentPane.add(txtPassword2);
 
 	lblCreatePassword = new JLabel("Create Password");
 	lblCreatePassword.setBounds(398, 443, 453, 49);
@@ -206,18 +234,16 @@ public class applyCreditNew extends JFrame {
 	txtStuID = new JTextField();
 	txtStuID.setColumns(10);
 	txtStuID.setBounds(163, 517, 225, 49);
-	contentPane.add(txtStuID);
+	//contentPane.add(txtStuID);
 
 	lblStudentId = new JLabel("Student ID");
 	lblStudentId.setBounds(43, 520, 111, 49);
-	contentPane.add(lblStudentId);
+	//contentPane.add(lblStudentId);
 
 	btnFinish.addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent arg0) {
-		finishApplication();
+	    	finishApplication();
 	    }
-
-	    ;
 	});
 	btnExit.addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent arg0) {
@@ -228,50 +254,229 @@ public class applyCreditNew extends JFrame {
 	});
     }
 
-    public void finishApplication() {
+    public void finishApplication (){
 
-		if (isTextFieldsValid()) {
+		if (isTextFieldsValid() && validEmail() && validCreditScore() && userExists() && passwordMatch()) {
 
-			// add to datebase somehow
+			String income = txtIncome.getText().replaceAll("[$,]", "");
+			String date = Instant.now().toString();
+			Student student = new Student(0,txtFname.getText(), txtLname.getText(),txtPhone.getText(),
+					txtEmail.getText(), String.valueOf(password.getPassword()), date, Integer.parseInt(txtSSN.getText()),
+					txtAddress.getText(), txtCity.getText(), comboBoxstate.getSelectedItem().toString());
 
-			//JLabel lblAddSuccess = new JLabel("");
-			//lblAddSuccess.setForeground(Color.RED);
-			//lblAddSuccess.setBounds(165, 414, 663, 26);
-			//JOptionPane.showMessageDialog(lblAddSuccess, "Application Created successfully");
+
+			Manager.addStudent(student); //create new student and add to database
+			//student = null;
+			students = Manager.getStudents(); //get database
+			//int size = students.size();
+
+			Student newStudent = findStudent(); // search for student in new databse and get the Object
+
+
+			if(newStudent == null){
+				JLabel lblAddSuccess = new JLabel("");
+				lblAddSuccess.setForeground(Color.RED);
+				lblAddSuccess.setBounds(165, 414, 663, 26);
+				JOptionPane.showMessageDialog(lblAddSuccess, "Student created not found in database");
+				resetTextInputs();
+				resetTextInputs();
+				dispose();
+			}
+
+
+			CreditApplication creditApplication = new CreditApplication(0,txtFname.getText(), txtLname.getText(),
+					txtAddress.getText(),txtCity.getText(),
+					txtEmail.getText(), txtPhone.getText(),comboBoxstate.getSelectedItem().toString(),
+					Integer.parseInt(txtSSN.getText()), Integer.parseInt(txtCreditScore.getText()),Double.parseDouble(income),
+					String.valueOf(password.getPassword()), String.valueOf(newStudent.getId()),
+					"In review", date);
+
+			Manager.processApp(creditApplication);
+			resetTextInputs();
+
+			JLabel lblAddSuccess = new JLabel("");
+			lblAddSuccess.setForeground(Color.RED);
+			lblAddSuccess.setBounds(165, 414, 663, 26);
+			JOptionPane.showMessageDialog(lblAddSuccess, "Application Created successfully");
 		}
+		else {
+			JLabel lblAddSuccess = new JLabel("");
+			lblAddSuccess.setForeground(Color.RED);
+			lblAddSuccess.setBounds(165, 414, 663, 26);
+			JOptionPane.showMessageDialog(lblAddSuccess, "Application Failed");
+			resetTextInputs();
+		}
+
     }
 
-    public boolean isTextFieldsValid() {
-	// Verify all fields have values
-	if (txtFname.getText().isEmpty() || txtLname.getText().isEmpty() || txtAddress.getText().isEmpty()
-		|| txtCity.getText().isEmpty() || txtEmail.getText().isEmpty() || txtPhone.getText().isEmpty()
-		|| txtSSN.getText().isEmpty() || txtIncome.getText().isEmpty()
-		|| String.valueOf(comboBoxstate.getSelectedItem()).contentEquals("Select")
-		|| txtPassword.getText().isEmpty() || txtCreditScore.getText().isEmpty()
-		|| txtStuID.getText().isEmpty()) {
+	/**
+	 * checks if credit score field is in range
+	 * @return true if in range
+	 */
+	public boolean validCreditScore(){
+		if(Integer.parseInt(txtCreditScore.getText()) > 300 && Integer.parseInt(txtCreditScore.getText()) < 850)
+			return true;
 
-	    JLabel lblFieldIsEmpty = new JLabel("");
-	    lblFieldIsEmpty.setForeground(Color.RED);
-	    lblFieldIsEmpty.setBounds(165, 414, 663, 26);
-	    JOptionPane.showMessageDialog(lblFieldIsEmpty, "Input fields cannot be empty.");
-	    return false;
+		JLabel lblFieldIsEmpty = new JLabel("");
+		lblFieldIsEmpty.setForeground(Color.RED);
+		lblFieldIsEmpty.setBounds(165, 414, 663, 26);
+		JOptionPane.showMessageDialog(lblFieldIsEmpty, "Credit Score out of range");
+		return false;
 	}
 
-	return true;
-    }
+	public boolean validNumber(){
+		String regex = "[0-9, /,]+";
 
+		if(txtIncome.getText().contains(regex) && txtCreditScore.getText().contains(regex)){
+			return true;
+		}
+
+
+		JLabel lblFieldIsEmpty = new JLabel("");
+		lblFieldIsEmpty.setForeground(Color.RED);
+		lblFieldIsEmpty.setBounds(165, 414, 663, 26);
+		JOptionPane.showMessageDialog(lblFieldIsEmpty, "Income or Credit score is not Valid");
+		return false;
+
+	}
+
+
+	/**
+	 * check if fields are empty
+	 * @return false if one field is empty
+	 */
+    public boolean isTextFieldsValid() {
+			if (txtFname.getText().isEmpty() || txtLname.getText().isEmpty() || txtAddress.getText().isEmpty()
+					|| txtCity.getText().isEmpty() || txtEmail.getText().isEmpty() || txtPhone.getText().isEmpty()
+					|| txtSSN.getText().isEmpty() || txtIncome.getText().isEmpty()
+					|| String.valueOf(comboBoxstate.getSelectedItem()).contentEquals("Select")
+					|| txtCreditScore.getText().isEmpty()) {
+
+
+				JLabel lblFieldIsEmpty = new JLabel("");
+				lblFieldIsEmpty.setForeground(Color.RED);
+				lblFieldIsEmpty.setBounds(165, 414, 663, 26);
+				JOptionPane.showMessageDialog(lblFieldIsEmpty, "Input fields cannot be empty.");
+				return false;
+			}
+
+			return true;
+
+	}
+
+
+	/**
+	 * check if passwords match
+	 * @return true if passwords match
+	 */
     public boolean passwordMatch() {
-	if (txtPassword.getText().equals(txtPassword2)) {
+	if (Arrays.equals(password.getPassword(), password2.getPassword())) {
 	    return true;
 	}
+
+	JLabel lblAddSuccess = new JLabel("");
+	lblAddSuccess.setForeground(Color.RED);
+	lblAddSuccess.setBounds(165, 414, 663, 26);
+	JOptionPane.showMessageDialog(lblAddSuccess, "Passwords Don't match");
+
 	return false;
     }
 
-    public boolean validEmail() {
+	/**
+	 * check txtEmail field to see if it is a proper school email
+	 * @return true if contains valid email
+	 */
+	public boolean validEmail() {
 	if (txtEmail.getText().contains(email) || txtEmail.getText().contains(emailBank)) {
 	    return true;
 	}
+		JLabel lblAddSuccess = new JLabel("");
+		lblAddSuccess.setForeground(Color.RED);
+		lblAddSuccess.setBounds(165, 414, 663, 26);
+		JOptionPane.showMessageDialog(lblAddSuccess, "Need to use a @metrobank or @metrostate email");
 	return false;
     }
+
+	/**
+	 * check if user is already in databse
+	 * @return false if found in databse under student
+	 */
+	public boolean userExists(){
+			int size = students.size();
+		for(int i = size - 1  ; i > 0; i--){
+
+			// if found set textfields to targets data
+			if(students.get(i).getEmail().equalsIgnoreCase(txtEmail.getText())){
+				JLabel lblFieldIsEmpty = new JLabel("");
+				lblFieldIsEmpty.setForeground(Color.RED);
+				lblFieldIsEmpty.setBounds(165, 414, 663, 26);
+				JOptionPane.showMessageDialog(lblFieldIsEmpty, "User exists Already, use the exisiting user form");
+				resetTextInputs();
+				return false;
+
+			}
+
+		}
+		return true;
+	}
+
+
+
+
+	/**
+	 * reset the text fields to null
+	 */
+	public void resetTextInputs() {
+		txtEmail.setText("");
+		txtFname.setText("");
+		txtLname.setText("");
+		txtEmail.setText("");
+		txtPhone.setText("");
+		txtIncome.setText("");
+		txtAddress.setText("");
+		txtCity.setText("");
+		txtSSN.setText("");
+		txtCreditScore.setText("");
+		txtIncome.setText("");
+		comboBoxstate.setSelectedIndex(0);
+		password.setText("");
+		password2.setText("");
+
+	}
+
+	public boolean ifAppExists(){
+
+		creditApplications = Manager.getCreditApplication();
+
+		for(int i = 0; i < creditApplications.size(); i++){
+			if(creditApplications.get(i).getEmail().equals(txtEmail.getText())){
+				JLabel lblAddSuccess = new JLabel("");
+				lblAddSuccess.setForeground(Color.RED);
+				lblAddSuccess.setBounds(165, 414, 663, 26);
+				JOptionPane.showMessageDialog(lblAddSuccess, "Application Already Exists");
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+
+		public Student findStudent() {
+			Student student = null;
+			students = Manager.getStudents();
+
+			for (int i = 0; i < students.size(); i++) {
+
+				if (students.get(i).getEmail().equals(txtEmail.getText())) {
+					student = students.get(i);
+					return student;
+				}
+
+			}
+			return null;
+		}
+
+
 
 }

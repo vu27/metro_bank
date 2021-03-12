@@ -15,8 +15,10 @@ public class CreditApplication {
     String studentId;
     String status;
     String dateApplied;
+    int id;
 
-    public CreditApplication(String firstName, String lastName, String address, String city, String state, String email, String phone, int SSN, int creditSore, double income, String password, String studentId, String status, String dateApplied) {
+    public CreditApplication(int id, String firstName, String lastName, String address, String city, String state, String email, String phone, int SSN, int creditSore, double income, String password, String studentId, String status, String dateApplied) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -31,6 +33,7 @@ public class CreditApplication {
         this.studentId = studentId;
         this.status = status;
         this.dateApplied = dateApplied;
+
     }
 
     public String getFirstName() {

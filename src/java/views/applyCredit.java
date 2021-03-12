@@ -65,7 +65,7 @@ public class applyCredit extends JFrame {
 
 	btnNew.addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent arg0) {
-		WinBuilder.applyCreditNew applycreditnew = new WinBuilder.applyCreditNew();
+		applyCreditNew applycreditnew = new applyCreditNew();
 		applycreditnew.setVisible(true);
 		dispose();
 	    }

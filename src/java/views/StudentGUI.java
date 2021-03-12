@@ -22,6 +22,7 @@ public class StudentGUI extends JFrame {
     private JTextField txtSaving;
     private JTextField textField_1;
     private JTextField txtTransfers;
+	JButton btnCreateCredit = new JButton("apply for Credit Card");
 
     /**
      * Launch the application.
@@ -156,6 +157,14 @@ public class StudentGUI extends JFrame {
 	JButton btnPayCreditcard = new JButton("Pay Credit Card");
 	btnPayCreditcard.setBounds(488, 378, 216, 35);
 	contentPane.add(btnPayCreditcard);
+
+
+	btnCreateCredit.setBounds(150, 378, 216, 35);
+	contentPane.add(btnCreateCredit);
+
+
+
+
 	btnPayCreditcard.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
 
@@ -172,6 +181,23 @@ public class StudentGUI extends JFrame {
 
 	    }
 	});
+
+		btnCreateCredit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				try {
+
+					applyCreditStudent applyCredit = new applyCreditStudent();
+					applyCredit.setVisible(true);
+
+				} catch (Exception ex) {
+
+				}
+
+			}
+		});
+
+
 
     }
 

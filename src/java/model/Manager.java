@@ -1,5 +1,6 @@
 package model;
 
+import model.bank_accounts.CreditApplication;
 import util.MySQLConnect;
 import util.ModelMappers;
 //import util.UserMapper;
@@ -64,6 +65,16 @@ public class Manager extends User {
         List<Manager> managers = ModelMappers.mapManagers(resultList); // put into list
 
         return managers;
+    }
+
+    public static List<CreditApplication> getCreditApplication(){
+        MySQLConnect mysql = new MySQLConnect();
+        String queryString = "SELECT * FROM credit_application;"; //query to get employees
+
+        List<Map<String, Object>> resultList = mysql.getData(queryString); // get employees
+        List<CreditApplication> creditApplications = ModelMappers.mapCreditApplications(resultList); // put into list
+
+        return creditApplications;
     }
 
 
@@ -176,4 +187,30 @@ public class Manager extends User {
         mysql.executeStatement(queryString);
         System.out.println("New student added successfully.");
     }
+
+    public static void processApp(CreditApplication creditApplication){
+        MySQLConnect mysql = new MySQLConnect();
+        String queryString = "INSERT INTO metro_bank.credit_application " +
+                "(fname, lname, phone, email, " +
+                "date_applied, ssn, address, " +
+                "city, state, password, income, credit_score, student_id, status) VALUES (" +
+                "\"" + creditApplication.getFirstName() + "\"," +
+                "\"" + creditApplication.getLastName() + "\"," +
+                "\"" + creditApplication.getPhone() + "\"," +
+                "\"" + creditApplication.getEmail() + "\"," +
+                "\"" + creditApplication.getDateApplied() + "\"," +
+                "\"" + creditApplication.getSSN() + "\"," +
+                "\"" + creditApplication.getAddress() + "\"," +
+                "\"" + creditApplication.getCity() + "\"," +
+                "\"" + creditApplication.getState() + "\"," +
+                "\"" + creditApplication.getPassword() + "\"," +
+                "\"" + creditApplication.getIncome() + "\"," +
+                "\"" + creditApplication.getCreditSore() + "\"," +
+                "\"" + creditApplication.getStudentId() + "\"," +
+                "\"" + "In review" + "\"" +
+                ");";
+        mysql.executeStatement(queryString);
+    }
+
+
 }
