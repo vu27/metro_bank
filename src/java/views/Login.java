@@ -202,7 +202,7 @@ public class Login extends JFrame {
         btnLogin.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent arg0) {
                 EmployeeGUI employeeGUI = new EmployeeGUI();
-                StudentGUI studentGUI = new StudentGUI();
+
                 ManagerGUI managerGUI = new ManagerGUI();
 
                 String selectRole = "";
@@ -296,6 +296,7 @@ public class Login extends JFrame {
                                 break;
                             case "Student":
                                 if (student != null && student.getPassword().equals(password.getText())) {
+                                    StudentGUI studentGUI = new StudentGUI(student);
                                     studentGUI.setVisible(true);
                                     resetLoginTextInputs(userName, password);
                                 } else {

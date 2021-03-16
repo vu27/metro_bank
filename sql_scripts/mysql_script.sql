@@ -54,9 +54,10 @@ CREATE TABLE IF NOT EXISTS metro_bank.checkings (
 	is_active boolean NOT NULL,
     student_id integer NOT NULL,
     total double NOT NULL,
-	is_overdrafted double NOT NULL,
+	is_overdrafted boolean NOT NULL,
 	FOREIGN KEY (student_id) REFERENCES metro_bank.student(student_id)
 );
+
 
 /* Create Savings Model */
 CREATE TABLE IF NOT EXISTS metro_bank.savings (
@@ -160,15 +161,15 @@ INSERT INTO metro_bank.student (
     student_city,
     student_state
 ) VALUES
-('Jerry', 'Hills', '953-555-1177', 'j.hills@metrobank.edu', 'password', '2021-02-25T05:47:26.853Z',  119038905 , '8930 Theatre Street', 'Stow', 'OH'),
-('Walter', 'Smith', '612-555-1234', 'w.Smith@metrobank.edu', 'password', '2021-02-25T05:47:26.853Z',  632588008 , '50 Tunnel Ave.', 'Philadelphia', 'PA'),
-('Straw', 'Berry', '622-555-1234', 's.berry@metrobank.edu', 'password', '2021-02-25T05:47:26.853Z',  586479145 , '446 Tunnel Street ', 'Ridgecrest', 'Ridgecrest'),
-('Darby', 'Dancer', '122-555-1234', 'd.dancer@metrobank.edu', 'password', '2021-02-25T05:47:26.853Z', 159182143 , '977 North Bear Hill St. ', 'Harlingen', 'TX'),
-('Dan', 'Johnson', '952-412-5970', 'd.johnson@metrobank.edu', 'password', '2021-02-25T05:47:26.853Z',  530273896 , '1 South St Paul Street ', 'New Rochelle', 'NY'),
-('Jean', 'Shorewood', '734-712-0857', 'j.shorewood@metrobank.edu', 'password', '2021-02-25T05:47:26.853Z', 382548071  , '9900 Alderwood St. Suite 228 ', 'Malvern', 'PA'),
-('Tony', 'Stark', '970-466-2152', 't.stark@metrobank.edu', 'password', '2021-02-25T05:47:26.853Z', 618653460 , '65 Proctor Street ', 'Sugar Land', 'TX'),
-('Elena', 'Adam', '970-346-0526', 'e.adam@metrobank.edu', 'password', '2021-02-25T05:47:26.853Z', 420722015 , '27 N. Riverside St. ', 'Covington', 'GA'),
-('Bobby', 'Dolphin', '651-555-9987', 'b.dolphin@metrobank.edu', 'password', '2021-02-25T05:47:26.853Z',  580544296 , '479 S. Santa Clara St.', 'South El Monte', 'CA');
+('Jerry', 'Hills', '953-555-1177', 'j.hills@metrostate.edu', 'password', '2021-02-25T05:47:26.853Z',  119038905 , '8930 Theatre Street', 'Stow', 'OH'),
+('Walter', 'Smith', '612-555-1234', 'w.Smith@metrostate.edu', 'password', '2021-02-25T05:47:26.853Z',  632588008 , '50 Tunnel Ave.', 'Philadelphia', 'PA'),
+('Straw', 'Berry', '622-555-1234', 's.berry@metrostate.edu', 'password', '2021-02-25T05:47:26.853Z',  586479145 , '446 Tunnel Street ', 'Ridgecrest', 'Ridgecrest'),
+('Darby', 'Dancer', '122-555-1234', 'd.dancer@metrostate.edu', 'password', '2021-02-25T05:47:26.853Z', 159182143 , '977 North Bear Hill St. ', 'Harlingen', 'TX'),
+('Dan', 'Johnson', '952-412-5970', 'd.johnson@metrostate.edu', 'password', '2021-02-25T05:47:26.853Z',  530273896 , '1 South St Paul Street ', 'New Rochelle', 'NY'),
+('Jean', 'Shorewood', '734-712-0857', 'j.shorewood@metrostate.edu', 'password', '2021-02-25T05:47:26.853Z', 382548071  , '9900 Alderwood St. Suite 228 ', 'Malvern', 'PA'),
+('Tony', 'Stark', '970-466-2152', 't.stark@metrostate.edu', 'password', '2021-02-25T05:47:26.853Z', 618653460 , '65 Proctor Street ', 'Sugar Land', 'TX'),
+('Elena', 'Adam', '970-346-0526', 'e.adam@metrostate.edu', 'password', '2021-02-25T05:47:26.853Z', 420722015 , '27 N. Riverside St. ', 'Covington', 'GA'),
+('Bobby', 'Dolphin', '651-555-9987', 'b.dolphin@metrostate.edu', 'password', '2021-02-25T05:47:26.853Z',  580544296 , '479 S. Santa Clara St.', 'South El Monte', 'CA');
 
 /* Populate Credit accounts */
 INSERT INTO metro_bank.credit (
@@ -181,26 +182,6 @@ INSERT INTO metro_bank.credit (
 	apr
 ) VALUES
 ('2021-02-25T05:47:26.853Z', true, 2, 322.22, 50.01, 9000, .2443);
-
-/* Populate Checkings accounts */
-INSERT INTO metro_bank.checkings (
-	date_opened,
-    is_active,
-    student_id,
-    total,
-	is_overdrafted
-) VALUES
-('2021-02-25T05:47:26.853Z', true, 1, 2002.99, false);
-
-/* Populate Savings accounts */
-INSERT INTO metro_bank.savings (
-	date_opened,
-    is_active,
-    student_id,
-    total,
-	interest
-) VALUES
-('2021-02-25T05:47:26.853Z', true, 1, 1202.00, .02);
 
 /* Populate Credit applications */
 INSERT INTO metro_bank.credit_application (
@@ -220,3 +201,39 @@ INSERT INTO metro_bank.credit_application (
     date_applied
 ) VALUES
 ('Jerry', 'Hills', '8930 Theatre Street', 'Stow', 'OH', 'j.hills@metrobank.edu', '953-555-1177', 119038905, 500, 35000, 'password', 2, 'In review', '2021-02-25T05:47:26.853Z' );
+
+/* Populate Checkings */
+INSERT INTO metro_bank.checkings (
+	date_opened,
+    is_active,
+    student_id,
+    total,
+    is_overdrafted
+) VALUES
+('2021-02-25T05:47:26.853Z', true, 1, 912.43, false),
+('2021-02-25T05:47:26.853Z', true, 2, 2576.32, false),
+('2021-02-25T05:47:26.853Z', true, 3, 1020.21, false),
+('2021-02-25T05:47:26.853Z', true, 4, 30123.22, false),
+('2021-02-25T05:47:26.853Z', true, 5, 50.00, false),
+('2021-02-25T05:47:26.853Z', true, 6, 123.21, false),
+('2021-02-25T05:47:26.853Z', true, 7, 5021.21,  false),
+('2021-02-25T05:47:26.853Z', true, 8, 12.00, false),
+('2021-02-25T05:47:26.853Z', true, 9, 12.00, false);
+
+/* Populate Savings */
+INSERT INTO metro_bank.savings (
+	date_opened,
+    is_active,
+    student_id,
+    total,
+    interest
+) VALUES
+('2021-02-25T05:47:26.853Z', true, 1, 1000.01, 0.02),
+('2021-02-25T05:47:26.853Z', true, 2, 50.01, 0.02),
+('2021-02-25T05:47:26.853Z', true, 3, 7000.11, 0.02),
+('2021-02-25T05:47:26.853Z', true, 4, 200.21, 0.02),
+('2021-02-25T05:47:26.853Z', true, 5, 20.12, 0.02),
+('2021-02-25T05:47:26.853Z', true, 6, 40.66, 0.02),
+('2021-02-25T05:47:26.853Z', true, 7, 232.99, 0.02),
+('2021-02-25T05:47:26.853Z', true, 8, 123.21, 0.02),
+('2021-02-25T05:47:26.853Z', true, 9, 2.21, 0.02);

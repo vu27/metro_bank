@@ -8,6 +8,10 @@ public class Student extends User {
         this.dateCreated = dateCreated;
     }
 
+    public Student() {
+        super();
+    };
+
     public String getDateCreated() {
         return dateCreated;
     }

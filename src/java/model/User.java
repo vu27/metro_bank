@@ -25,6 +25,10 @@ public class User {
         this.state = state;
     }
 
+    public User() {
+
+    }
+
     public int getId() {
         return id;
     }

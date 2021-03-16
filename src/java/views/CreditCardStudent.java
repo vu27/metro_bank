@@ -1,5 +1,7 @@
 package views;
 
+import model.Student;
+
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -118,7 +120,7 @@ public class CreditCardStudent extends JFrame {
 		    // JFrame.DISPOSE_ON_CLOSE;
 		    // frame.setVisible(false);
 		    dispose();
-		    StudentGUI custom = new StudentGUI();
+		    StudentGUI custom = new StudentGUI(new Student());
 		    custom.setVisible(true);
 		    // System.exit(0);
 
