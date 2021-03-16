@@ -7,10 +7,10 @@ import java.time.Instant;
 
 public class MySqlConnectionExample {
     public static void main(String[] args) throws SQLException {
-
-        Checkings checkingsEx = new Checkings(1, Instant.now().toString(), true, 1, 122.22, false);
-
-        System.out.println(checkingsEx.getTotal());
+//
+//        Checkings checkingsEx = new Checkings(1, Instant.now().toString(), true, 1, 122.22, false);
+//
+//        System.out.println(checkingsEx.getTotal());
 
 
 //        // Example of MySQL query/connection

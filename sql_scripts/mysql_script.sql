@@ -55,6 +55,9 @@ CREATE TABLE IF NOT EXISTS metro_bank.checkings (
     student_id integer NOT NULL,
     total double NOT NULL,
 	is_overdrafted boolean NOT NULL,
+	account_number BIGINT NOT NULL,
+	routing_number BIGINT NOT NULL,
+	debit_card_number BIGINT NOT NULL,
 	FOREIGN KEY (student_id) REFERENCES metro_bank.student(student_id)
 );
 
@@ -67,6 +70,8 @@ CREATE TABLE IF NOT EXISTS metro_bank.savings (
     student_id integer NOT NULL,
     total double NOT NULL,
 	interest double NOT NULL,
+	account_number BIGINT NOT NULL,
+    routing_number BIGINT NOT NULL,
     FOREIGN KEY (student_id) REFERENCES metro_bank.student(student_id)
 );
 
@@ -208,17 +213,20 @@ INSERT INTO metro_bank.checkings (
     is_active,
     student_id,
     total,
-    is_overdrafted
+    is_overdrafted,
+    account_number,
+    routing_number,
+    debit_card_number
 ) VALUES
-('2021-02-25T05:47:26.853Z', true, 1, 912.43, false),
-('2021-02-25T05:47:26.853Z', true, 2, 2576.32, false),
-('2021-02-25T05:47:26.853Z', true, 3, 1020.21, false),
-('2021-02-25T05:47:26.853Z', true, 4, 30123.22, false),
-('2021-02-25T05:47:26.853Z', true, 5, 50.00, false),
-('2021-02-25T05:47:26.853Z', true, 6, 123.21, false),
-('2021-02-25T05:47:26.853Z', true, 7, 5021.21,  false),
-('2021-02-25T05:47:26.853Z', true, 8, 12.00, false),
-('2021-02-25T05:47:26.853Z', true, 9, 12.00, false);
+('2021-02-25T05:47:26.853Z', true, 1, 912.43, false, 021000021, 021000021, 1003830171874018),
+('2021-02-25T05:47:26.853Z', true, 2, 2576.32, false, 121000021, 021000022, 2003830171874018),
+('2021-02-25T05:47:26.853Z', true, 3, 1020.21, false, 221000021, 021000023, 3003830171874018),
+('2021-02-25T05:47:26.853Z', true, 4, 30123.22, false, 321000021, 021000024, 4003830171874018),
+('2021-02-25T05:47:26.853Z', true, 5, 50.00, false, 421000021, 021000025, 5003830171874018),
+('2021-02-25T05:47:26.853Z', true, 6, 123.21, false, 521000021, 021000026, 6003830171874018),
+('2021-02-25T05:47:26.853Z', true, 7, 5021.21,  false, 621000021, 021000027, 7003830171874018),
+('2021-02-25T05:47:26.853Z', true, 8, 12.00, false, 721000021, 021000028, 8003830171874018),
+('2021-02-25T05:47:26.853Z', true, 9, 12.00, false, 821000021, 021000029, 9003830171874018);
 
 /* Populate Savings */
 INSERT INTO metro_bank.savings (
@@ -226,14 +234,16 @@ INSERT INTO metro_bank.savings (
     is_active,
     student_id,
     total,
-    interest
+    interest,
+    account_number,
+    routing_number
 ) VALUES
-('2021-02-25T05:47:26.853Z', true, 1, 1000.01, 0.02),
-('2021-02-25T05:47:26.853Z', true, 2, 50.01, 0.02),
-('2021-02-25T05:47:26.853Z', true, 3, 7000.11, 0.02),
-('2021-02-25T05:47:26.853Z', true, 4, 200.21, 0.02),
-('2021-02-25T05:47:26.853Z', true, 5, 20.12, 0.02),
-('2021-02-25T05:47:26.853Z', true, 6, 40.66, 0.02),
-('2021-02-25T05:47:26.853Z', true, 7, 232.99, 0.02),
-('2021-02-25T05:47:26.853Z', true, 8, 123.21, 0.02),
-('2021-02-25T05:47:26.853Z', true, 9, 2.21, 0.02);
+('2021-02-25T05:47:26.853Z', true, 1, 1000.01, 0.02, 011000021, 021001021),
+('2021-02-25T05:47:26.853Z', true, 2, 50.01, 0.02, 021000021, 021002021),
+('2021-02-25T05:47:26.853Z', true, 3, 7000.11, 0.02, 031000021, 021300021),
+('2021-02-25T05:47:26.853Z', true, 4, 200.21, 0.02, 041000021, 021040021),
+('2021-02-25T05:47:26.853Z', true, 5, 20.12, 0.02, 051000021, 021005021),
+('2021-02-25T05:47:26.853Z', true, 6, 40.66, 0.02, 061000021, 021006021),
+('2021-02-25T05:47:26.853Z', true, 7, 232.99, 0.02, 071000021, 021070021),
+('2021-02-25T05:47:26.853Z', true, 8, 123.21, 0.02, 081000021, 021080021),
+('2021-02-25T05:47:26.853Z', true, 9, 2.21, 0.02, 091000021, 021090021);
