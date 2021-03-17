@@ -1,5 +1,6 @@
 package model;
 
+import model.bank_accounts.Credit;
 import model.bank_accounts.CreditApplication;
 import util.MySQLConnect;
 import util.ModelMappers;
@@ -211,6 +212,34 @@ public class Manager extends User {
                 ");";
         mysql.executeStatement(queryString);
     }
+
+    public static void processApp(Credit credit){
+        MySQLConnect mysql = new MySQLConnect();
+
+        String queryString = "INSERT INTO metro_bank.credit " +
+                "(date_opened,is_active , student_id, balance, " +
+                "statement_balance, available_credit, apr) " +
+                "VALUES (" +
+                "\"" + credit.getDateOpened() + "\"," +
+                "\"" + 1 + "\"," +
+                "\"" + credit.getStudentId() + "\"," +
+                "\"" + credit.getBalance() + "\"," +
+                "\"" + credit.getStatementBalance() + "\"," +
+                "\"" + credit.getAvailableCredit() + "\"," +
+                "\"" + credit.getApr() + "\"" +
+                ");";
+        mysql.executeStatement(queryString);
+
+
+        queryString = "Update metro_bank.credit_application" + " SET status = \"Approved\"" +
+                " WHERE student_id = " + credit.getStudentId() +
+                ";";
+        mysql.executeStatement(queryString);
+
+
+    }
+
+
 
 
 }

@@ -36,6 +36,10 @@ public class CreditApplication {
 
     }
 
+    public int getId(){
+        return id;
+    }
+
     public String getFirstName() {
         return firstName;
     }

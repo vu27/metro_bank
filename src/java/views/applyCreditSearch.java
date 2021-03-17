@@ -94,8 +94,8 @@ public class applyCreditSearch extends JFrame {
 					try {
 						if(getStudents() != null ){
 
-
-							if(ifAppExists(student)) {
+							//System.out.print("Student found");
+							if(!ifAppExists(student)) {
 								applyCreditExisting applycreditexist = new applyCreditExisting();
 								applycreditexist.setVisible(true);
 								dispose();
@@ -176,12 +176,15 @@ public class applyCreditSearch extends JFrame {
     	creditApplications = Manager.getCreditApplication();
 
 		for(int i = 0; i < creditApplications.size(); i++){
+
+			//System.out.println(student.getEmail());
+
 			if(creditApplications.get(i).getEmail().equals(student.getEmail()) ||
-					creditApplications.get(i).getStudentId().equals(student.getId())){
+					creditApplications.get(i).getStudentId().equals(String.valueOf(student.getId()))){
 				JLabel lblAddSuccess = new JLabel("");
 				lblAddSuccess.setForeground(Color.RED);
 				lblAddSuccess.setBounds(165, 414, 663, 26);
-				JOptionPane.showMessageDialog(lblAddSuccess, "Application Already Exisits");
+				JOptionPane.showMessageDialog(lblAddSuccess, "Application Already Exists");
 				return true;
 			}
 		}
