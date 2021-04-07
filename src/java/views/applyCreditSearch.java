@@ -22,7 +22,8 @@ public class applyCreditSearch extends JFrame {
     private JTextField txtEmail;
     public static Student student;
 	private List<Student> students = new ArrayList<>(); //holds all students
-	private List<CreditApplication> creditApplications = new ArrayList<>();
+	private List <CreditApplication> creditApplications = new ArrayList<>();
+	//private List<CreditApplication> creditApplications = new ArrayList<>();
 
     /**
      * Launch the application.
@@ -79,13 +80,14 @@ public class applyCreditSearch extends JFrame {
 
 
 		students = Manager.getStudents();
+		creditApplications = Manager.getCreditApplication();
 
 		btnExit.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
 				dispose();
 			}
 
-			;
+
 		});
 
 		btnSearch.addMouseListener(new MouseAdapter() {
@@ -94,7 +96,6 @@ public class applyCreditSearch extends JFrame {
 					try {
 						if(getStudents() != null ){
 
-							//System.out.print("Student found");
 							if(!ifAppExists(student)) {
 								applyCreditExisting applycreditexist = new applyCreditExisting();
 								applycreditexist.setVisible(true);
@@ -149,6 +150,17 @@ public class applyCreditSearch extends JFrame {
 			// if found set textfields to targets data
 			if(students.get(i).getEmail().equalsIgnoreCase(txtEmail.getText()) || students.get(i).getId() == id){
 				student = students.get(i);
+
+				if(txtEmail.getText().equalsIgnoreCase(creditApplications.get(i).getEmail()) || id == Integer.parseInt(creditApplications.get(i).getStudentId())){
+
+						JLabel usernotfound = new JLabel("Application has been processed");
+						usernotfound.setForeground(Color.RED);
+						usernotfound.setBounds(165, 414, 663, 26);
+						JOptionPane.showMessageDialog(usernotfound, "App has been processed already");
+						return null;
+
+				}
+
 
 				return student;
 			}

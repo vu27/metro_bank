@@ -2,6 +2,7 @@ package views;
 
 import model.Student;
 import model.bank_accounts.Checkings;
+import model.bank_accounts.Credit;
 import model.bank_accounts.Savings;
 import util.MySQLConnect;
 
@@ -34,8 +35,12 @@ public class StudentGUI extends JFrame {
     private JTextField textDebitCardNumber;
     private JTextField textSavingsAcountNumber;
     private JTextField textSavingsRoutingNumber;
+    private JTextField txtTotalCredit;
+    private JTextField txtCreditNum;
+    private JTextField txtCreditBalance;
     Checkings checkingsAccount;
     Savings savingsAccount;
+    Credit creditAccount;
 
     /**
      * Launch the application.
@@ -58,7 +63,7 @@ public class StudentGUI extends JFrame {
      */
     public StudentGUI(Student student) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1263, 553);
+        setBounds(100, 100, 1379, 559);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -91,42 +96,19 @@ public class StudentGUI extends JFrame {
         lblSavings.setBounds(21, 144, 142, 64);
         contentPane.add(lblSavings);
 
-        txtTransfers = new JTextField();
-        txtTransfers.setColumns(10);
-        txtTransfers.setBounds(906, 143, 279, 48);
-        contentPane.add(txtTransfers);
-
-        JComboBox comboBoxtransfer = new JComboBox();
-        comboBoxtransfer.setModel(new DefaultComboBoxModel(new String[]{"Select", "Checking", "Savings"}));
-        comboBoxtransfer.setBounds(906, 82, 103, 32);
-        contentPane.add(comboBoxtransfer);
-
-        JComboBox comboBoxtransfer2 = new JComboBox();
-        comboBoxtransfer2.setModel(new DefaultComboBoxModel(new String[]{"Select", "Checking", "Savings"}));
-        comboBoxtransfer2.setBounds(1067, 82, 103, 32);
-        contentPane.add(comboBoxtransfer2);
-
-        JLabel lblNewLabel = new JLabel("To");
-        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel.setBounds(992, 85, 92, 26);
-        contentPane.add(lblNewLabel);
-
-        JLabel lblFrom = new JLabel("From");
-        lblFrom.setHorizontalAlignment(SwingConstants.CENTER);
-        lblFrom.setBounds(817, 85, 92, 26);
-        contentPane.add(lblFrom);
+        txtCreditBalance = new JTextField();
+        txtCreditBalance.setColumns(10);
+        txtCreditBalance.setBounds(1022, 100, 279, 48);
+        txtCreditBalance.setEditable(false);
+        contentPane.add(txtCreditBalance);
 
         JLabel lblTotal_1_1 = new JLabel("$");
         lblTotal_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTotal_1_1.setBounds(817, 135, 142, 64);
+        lblTotal_1_1.setBounds(933, 92, 142, 64);
         contentPane.add(lblTotal_1_1);
 
-        JButton btnTransfer = new JButton("Transfer");
-        btnTransfer.setBounds(956, 241, 142, 35);
-        contentPane.add(btnTransfer);
-
-        JButton btnExit = new JButton("Exit");
-        btnExit.setBounds(978, 437, 141, 35);
+        JButton btnExit = new JButton("Log Off");
+        btnExit.setBounds(1071, 442, 179, 35);
         contentPane.add(btnExit);
 
         JLabel lblStudentHeader = new JLabel("Student");
@@ -134,9 +116,9 @@ public class StudentGUI extends JFrame {
         lblStudentHeader.setBounds(476, 0, 368, 56);
         contentPane.add(lblStudentHeader);
 
-        JLabel lblNewLabel_1_1 = new JLabel("Transfers");
+        JLabel lblNewLabel_1_1 = new JLabel("Credit Balance");
         lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_1_1.setBounds(817, 33, 368, 56);
+        lblNewLabel_1_1.setBounds(933, 41, 368, 56);
         contentPane.add(lblNewLabel_1_1);
 
         JLabel lblNewLabel_1_1_1_1 = new JLabel("Cash");
@@ -145,12 +127,8 @@ public class StudentGUI extends JFrame {
         contentPane.add(lblNewLabel_1_1_1_1);
 
         JButton btnPayCreditcard = new JButton("Pay Credit Card");
-        btnPayCreditcard.setBounds(490, 437, 216, 35);
-        contentPane.add(btnPayCreditcard);
+        btnPayCreditcard.setBounds(1049, 328, 216, 35);
 
-
-        btnCreateCredit.setBounds(144, 437, 216, 35);
-        contentPane.add(btnCreateCredit);
 
         JLabel lblNewLabel_1_1_1_1_1 = new JLabel("Accounts Information");
         lblNewLabel_1_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -202,6 +180,38 @@ public class StudentGUI extends JFrame {
         textSavingsRoutingNumber.setBounds(595, 335, 210, 48);
         contentPane.add(textSavingsRoutingNumber);
 
+        txtTotalCredit = new JTextField();
+        txtTotalCredit.setEditable(false);
+        txtTotalCredit.setColumns(10);
+        txtTotalCredit.setBounds(1022, 196, 279, 48);
+        contentPane.add(txtTotalCredit);
+
+        JLabel lblNewLabel_1_1_1 = new JLabel("Credit Information");
+        lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_1_1_1.setBounds(964, 141, 368, 56);
+        contentPane.add(lblNewLabel_1_1_1);
+
+        JLabel lblTotal_1_1_1 = new JLabel("$");
+        lblTotal_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTotal_1_1_1.setBounds(933, 188, 121, 64);
+        contentPane.add(lblTotal_1_1_1);
+
+        JLabel lblNewLabel_1_1_1_2 = new JLabel("Total Credit");
+        lblNewLabel_1_1_1_2.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_1_1_1_2.setBounds(728, 195, 368, 56);
+        contentPane.add(lblNewLabel_1_1_1_2);
+
+        txtCreditNum = new JTextField();
+        txtCreditNum.setEditable(false);
+        txtCreditNum.setColumns(10);
+        txtCreditNum.setBounds(1022, 258, 279, 48);
+        contentPane.add(txtCreditNum);
+
+        JLabel lblNewLabel_1_1_1_2_1 = new JLabel("Credit Card Number");
+        lblNewLabel_1_1_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_1_1_1_2_1.setBounds(738, 258, 368, 56);
+        contentPane.add(lblNewLabel_1_1_1_2_1);
+
         btnPayCreditcard.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
 
@@ -234,6 +244,24 @@ public class StudentGUI extends JFrame {
             }
         });
 
+        btnExit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+
+                try {
+
+                    dispose();
+
+                } catch (Exception ex) {
+
+                }
+
+            }
+        });
+
+
+
+
+
         // Example of using student object
         System.out.println(student.getFname() + "IS NOW LOGGED IN");
 
@@ -245,6 +273,12 @@ public class StudentGUI extends JFrame {
         savingsAccount = retrieveSavingsAccount(student);
         textSavings.setText(String.valueOf(savingsAccount.getTotal()));
 
+        // Fill in credit account information
+        creditAccount = retrieveCreditAccount(student);
+
+
+
+
         // Fill in total
         txtTotal.setText(String.valueOf(calculateTotal(checkingsAccount, savingsAccount)));
 
@@ -254,6 +288,18 @@ public class StudentGUI extends JFrame {
         textDebitCardNumber.setText(Long.valueOf(checkingsAccount.getDebitCardNumber()).toString());
         textSavingsAcountNumber.setText(Long.valueOf(savingsAccount.getAccountNumber()).toString());
         textSavingsRoutingNumber.setText(Long.valueOf(savingsAccount.getRoutingNumber()).toString());
+
+// Credit stuff
+        txtTotalCredit.setText("N/A");
+        txtCreditBalance.setText("N/A");
+        txtCreditNum.setText("N/A");
+        if(creditAccount!=null){
+            contentPane.add(btnPayCreditcard);
+            txtTotalCredit.setText(String.valueOf(creditAccount.getAvailableCredit()));
+            txtCreditBalance.setText(String.valueOf(creditAccount.getBalance()));
+        }
+
+
     }
 
 
@@ -296,6 +342,38 @@ public class StudentGUI extends JFrame {
 
         return savingsAccount;
     }
+
+    public Credit retrieveCreditAccount(Student student) {
+        MySQLConnect mySQLConnect = new MySQLConnect();
+        String queryString = "SELECT * FROM credit WHERE student_id = " + student.getId() + ";";
+        List<Map<String, Object>> resultList = mySQLConnect.getData(queryString);
+
+        //System.out.println(resultList.get(0).get("student_id"));
+
+        try{
+            boolean isActive = resultList.get(0).get("is_active").toString() == "1" ? true : false;
+
+            Credit creditAccount = new Credit(Integer.parseInt(resultList.get(0).get("id").toString()),
+                    resultList.get(0).get("date_opened").toString(), isActive,
+                    Integer.parseInt(resultList.get(0).get("student_id").toString()),
+                    Double.parseDouble(resultList.get(0).get("balance").toString()),
+                    Double.parseDouble(resultList.get(0).get("statement_balance").toString()),
+                    Double.parseDouble(resultList.get(0).get("available_credit").toString()),
+                    Double.parseDouble(resultList.get(0).get("apr").toString()));
+
+            return creditAccount;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return null;
+        }
+
+
+
+        //return creditAccount;
+    }
+
+
+
 
     public double calculateTotal(Checkings checkings, Savings savings) {
         return checkings.getTotal() + savings.getTotal();

@@ -212,7 +212,7 @@ public class applyCreditExisting extends JFrame {
 		finishApplication();
 	    }
 
-	    ;
+
 	});
 	btnExit.addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent arg0) {
@@ -226,37 +226,51 @@ public class applyCreditExisting extends JFrame {
 
     public void finishApplication() {
 
-		if (isTextFieldsValid() && validCreditScore()) {
-
-			String income = txtIncome.getText().replaceAll("[$,]", "");
-			String date = Instant.now().toString();
-
-			CreditApplication creditApplication = new CreditApplication(0,txtFname.getText(), txtLname.getText(),
-					txtAddress.getText(),txtCity.getText(),
-					txtEmail.getText(), txtPhone.getText(),comboBoxstate.getSelectedItem().toString(),
-					Integer.parseInt(txtSSN.getText()), Integer.parseInt(txtCreditScore.getText()),Double.parseDouble(income),
-					student.getPassword(), String.valueOf(student.getId()),
-					"In review", date);
 
 
+		try {
 
-			Manager.processApp(creditApplication);
+			if (isTextFieldsValid() && validCreditScore()) {
+
+				String income = txtIncome.getText().replaceAll("[$,]", "");
+				String date = Instant.now().toString();
+
+				CreditApplication creditApplication = new CreditApplication(0,txtFname.getText(), txtLname.getText(),
+						txtAddress.getText(),txtCity.getText() ,comboBoxstate.getSelectedItem().toString(),
+						txtEmail.getText(), txtPhone.getText(),
+						Integer.parseInt(txtSSN.getText()), Integer.parseInt(txtCreditScore.getText()),Double.parseDouble(income),
+						student.getPassword(), String.valueOf(student.getId()),
+						"In review", date);
 
 
-	    // add to datebase somehow
 
-		resetTextInputs();
-	    JLabel lblAddSuccess = new JLabel("");
-	    lblAddSuccess.setForeground(Color.RED);
-	    lblAddSuccess.setBounds(165, 414, 663, 26);
-	    JOptionPane.showMessageDialog(lblAddSuccess, "Application Created successfully");
+				Manager.processApp(creditApplication);
+
+
+				// add to datebase somehow
+
+				resetTextInputs();
+				JLabel lblAddSuccess = new JLabel("");
+				lblAddSuccess.setForeground(Color.RED);
+				lblAddSuccess.setBounds(165, 414, 663, 26);
+				JOptionPane.showMessageDialog(lblAddSuccess, "Application Created successfully");
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			JLabel lblAddSuccess = new JLabel("");
+			lblAddSuccess.setForeground(Color.RED);
+			lblAddSuccess.setBounds(165, 414, 663, 26);
+			JOptionPane.showMessageDialog(lblAddSuccess, "Application Process Failed");
+
 
 		}
 
-		JLabel lblAddSuccess = new JLabel("");
-		lblAddSuccess.setForeground(Color.RED);
-		lblAddSuccess.setBounds(165, 414, 663, 26);
-		JOptionPane.showMessageDialog(lblAddSuccess, "Application Process Failed");
+
+
+
 
 
 

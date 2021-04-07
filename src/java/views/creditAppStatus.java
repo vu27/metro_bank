@@ -234,6 +234,7 @@ public class creditAppStatus extends JFrame {
 
         txtIncome.setEditable(false);
         txtCreditScore.setEditable(false);
+        txtStatus.setEditable(false);
 
 
 

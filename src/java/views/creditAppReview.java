@@ -163,8 +163,17 @@ public class creditAppReview extends  JFrame{
         for(int i = 0; i < size; i++){
 
             // if found set textfields to targets data
-            if(creditApplications.get(i).getEmail().equalsIgnoreCase(txtEmail.getText()) || creditApplications.get(i).getId() == id ||
-            creditApplications.get(i).getStudentId().equals(txtStuID.getText())){
+            if((creditApplications.get(i).getEmail().equalsIgnoreCase(txtEmail.getText()) || creditApplications.get(i).getId() == id ||
+            creditApplications.get(i).getStudentId().equals(txtStuID.getText()) ) ){
+
+                if(creditApplications.get(i).getStatus().equals("Approved") || creditApplications.get(i).getStatus().equals("Denied")){
+                    JLabel usernotfound = new JLabel("Application has been processed");
+                    usernotfound.setForeground(Color.RED);
+                    usernotfound.setBounds(165, 414, 663, 26);
+                    JOptionPane.showMessageDialog(usernotfound, "App has been processed already");
+                    return null;
+                }
+
                 creditApp = creditApplications.get(i);
 
                 return creditApp;

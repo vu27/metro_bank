@@ -280,7 +280,7 @@ public class creditAppReview2 extends JFrame {
                 double creditAmount = Double.parseDouble(txtCredit.getText());
                 credit = new Credit(0, date,true,Integer.parseInt(creditApplication.getStudentId()),
                         0,0,
-                        creditAmount, apr);
+                        creditAmount, apr/100);
 
 
                 Manager.processApp(credit);
