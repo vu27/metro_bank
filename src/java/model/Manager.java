@@ -78,6 +78,15 @@ public class Manager extends User {
         return creditApplications;
     }
 
+    public static List<Credit> getCredit(){
+        MySQLConnect mysql = new MySQLConnect();
+        String queryString = "SELECT * FROM credit;";
+
+        List<Map<String, Object>> resultList = mysql.getData(queryString); // get employees
+        List<Credit> credits = ModelMappers.mapCredit(resultList); // put into list
+
+        return credits;
+    }
 
     public static void updateEmployee(Employee employee, String fName, String lName, String email, int ID,
                                       String phone, String password, double salary, String address, String city,

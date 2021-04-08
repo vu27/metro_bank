@@ -151,7 +151,9 @@ public class applyCreditSearch extends JFrame {
 			if(students.get(i).getEmail().equalsIgnoreCase(txtEmail.getText()) || students.get(i).getId() == id){
 				student = students.get(i);
 
-				if(txtEmail.getText().equalsIgnoreCase(creditApplications.get(i).getEmail()) || id == Integer.parseInt(creditApplications.get(i).getStudentId())){
+
+				try{
+					if(txtEmail.getText().equalsIgnoreCase(creditApplications.get(i).getEmail()) || id == Integer.parseInt(creditApplications.get(i).getStudentId())){
 
 						JLabel usernotfound = new JLabel("Application has been processed");
 						usernotfound.setForeground(Color.RED);
@@ -159,7 +161,12 @@ public class applyCreditSearch extends JFrame {
 						JOptionPane.showMessageDialog(usernotfound, "App has been processed already");
 						return null;
 
+					}
+				}catch (Exception e){
+					return student;
 				}
+
+
 
 
 				return student;

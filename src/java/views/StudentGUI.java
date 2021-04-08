@@ -38,6 +38,7 @@ public class StudentGUI extends JFrame {
     private JTextField txtTotalCredit;
     private JTextField txtCreditNum;
     private JTextField txtCreditBalance;
+    JButton btnPayCreditcard = new JButton("Pay Credit Card");
     Checkings checkingsAccount;
     Savings savingsAccount;
     Credit creditAccount;
@@ -212,22 +213,12 @@ public class StudentGUI extends JFrame {
         lblNewLabel_1_1_1_2_1.setBounds(738, 258, 368, 56);
         contentPane.add(lblNewLabel_1_1_1_2_1);
 
-        btnPayCreditcard.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
+        //JButton btnPayCreditcard = new JButton("Pay Credit Card");
+        btnPayCreditcard.setBounds(1049, 328, 216, 35);
+        contentPane.add(btnPayCreditcard);
 
-                try {
 
-                    dispose();
-                    CreditCardStudent creditCard = new CreditCardStudent();
-                    creditCard.setVisible(true);
-                    // this.setVisible(false);
 
-                } catch (Exception ex) {
-
-                }
-
-            }
-        });
 
         btnCreateCredit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -293,11 +284,34 @@ public class StudentGUI extends JFrame {
         txtTotalCredit.setText("N/A");
         txtCreditBalance.setText("N/A");
         txtCreditNum.setText("N/A");
+        btnPayCreditcard.setEnabled(false);
         if(creditAccount!=null){
+            btnPayCreditcard.setEnabled(true);
             contentPane.add(btnPayCreditcard);
             txtTotalCredit.setText(String.valueOf(creditAccount.getAvailableCredit()));
             txtCreditBalance.setText(String.valueOf(creditAccount.getBalance()));
         }
+
+
+
+        btnPayCreditcard.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+
+                try {
+
+                    dispose();
+                    //CreditCardStudent creditCard = new CreditCardStudent();
+                    //creditCard.setVisible(true);
+                    // this.setVisible(false);
+                    payCreditCard payCard = new payCreditCard(student);
+                    payCard.setVisible(true);
+
+                } catch (Exception ex) {
+
+                }
+
+            }
+        });
 
 
     }

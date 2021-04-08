@@ -186,7 +186,9 @@ INSERT INTO metro_bank.credit (
 	available_credit,
 	apr
 ) VALUES
-('2021-02-25T05:47:26.853Z', true, 1, 322.22, 50.01, 9000, .2443);
+('2021-02-25T05:47:26.853Z', true, 1, 322.22, 50.01, 9000, .2443),
+('2021-03-25T05:47:26.853Z', true, 2, 421.22, 10.01, 4000, .16,
+('2021-04-25T05:47:26.853Z', true, 1, 90.22, 60.01, 10000, .21);
 
 /* Populate Credit applications */
 INSERT INTO metro_bank.credit_application (
