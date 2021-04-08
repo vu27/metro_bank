@@ -15,6 +15,9 @@ import model.Manager;
 import model.Student;
 import model.bank_accounts.CreditApplication;
 
+/**
+ * search for student that is applying for a credit card
+ */
 public class applyCreditSearch extends JFrame {
 
     private JPanel contentPane;
@@ -23,7 +26,6 @@ public class applyCreditSearch extends JFrame {
     public static Student student;
 	private List<Student> students = new ArrayList<>(); //holds all students
 	private List <CreditApplication> creditApplications = new ArrayList<>();
-	//private List<CreditApplication> creditApplications = new ArrayList<>();
 
     /**
      * Launch the application.
@@ -79,8 +81,8 @@ public class applyCreditSearch extends JFrame {
 	contentPane.add(btnExit);
 
 
-		students = Manager.getStudents();
-		creditApplications = Manager.getCreditApplication();
+		students = Manager.getStudents(); //gets all students and put into the list
+		creditApplications = Manager.getCreditApplication(); //get all credit apps
 
 		btnExit.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
@@ -96,7 +98,7 @@ public class applyCreditSearch extends JFrame {
 					try {
 						if(getStudents() != null ){
 
-							if(!ifAppExists(student)) {
+							if(!ifAppExists(student)) { //checks if student already have a list
 								applyCreditExisting applycreditexist = new applyCreditExisting(student);
 								applycreditexist.setVisible(true);
 								dispose();
@@ -119,20 +121,16 @@ public class applyCreditSearch extends JFrame {
     }
 
 
-	public static Student getter(){
-		return student;
-	}
-
-	public static void setter(Student studentNew){
-    	student = studentNew;
-	}
-
+	/**
+	 * find student information
+	 * @return student object
+	 */
 	public Student getStudents(){
 		int size = students.size(); //how many students in list
 		int id = 0; //ID to search with
 
 
-		if(!txtStuID.getText().isEmpty()){
+		if(!txtStuID.getText().isEmpty()){ //checks if a valid number is entered
 			if(!allDigits(txtStuID.getText())){ //if Id isnt a number throw error
 				JLabel useriderror = new JLabel("must enter a proper ID number");
 				useriderror.setForeground(Color.RED);
@@ -180,16 +178,20 @@ public class applyCreditSearch extends JFrame {
 
 		return null;
 
-
 	}
 
 
 
-
+	//checks if the string has only digits
 	public static boolean allDigits(String s) {
 		return s.replaceAll("\\d", "").equals("");
 	}
 
+	/**
+	 * check if student already have an application
+	 * @param student the object to check with
+	 * @return true if student have application already
+	 */
 	public boolean ifAppExists(Student student){
 
     	creditApplications = Manager.getCreditApplication();

@@ -15,7 +15,10 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 
-public class creditAppReview2 extends JFrame {
+/**
+ * approve or deny pending credit card application
+ */
+public class creditAppReviewPending extends JFrame {
 
     private JPanel contentPane;
     private JTextField txtFname;
@@ -33,7 +36,7 @@ public class creditAppReview2 extends JFrame {
     private JComboBox comboBoxstate = new JComboBox();
     private JTextField txtStuID;
     private Student student;
-    private CreditApplication creditApplication;
+    //private CreditApplication creditApplication;
     private JTextField txtAPR;
     private Credit credit;
 
@@ -45,7 +48,7 @@ public class creditAppReview2 extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    creditAppReview2 frame = new creditAppReview2();
+                    creditAppReviewPending frame = new creditAppReviewPending(new CreditApplication());
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -57,7 +60,7 @@ public class creditAppReview2 extends JFrame {
     /**
      * Create the frame.
      */
-    public creditAppReview2() {
+    public creditAppReviewPending(CreditApplication creditApplication) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 915, 671);
         contentPane = new JPanel();
@@ -108,12 +111,6 @@ public class creditAppReview2 extends JFrame {
         JLabel lblState = new JLabel("State");
         lblState.setBounds(456, 242, 111, 49);
         contentPane.add(lblState);
-
-        // JComboBox comboBoxstate = new JComboBox();
-        // comboBoxstate.setMaximumRowCount(54);
-        // comboBoxstate.setBounds(556, 242, 295, 48);
-        // contentPane.add(comboBoxstate);
-
         txtPhone = new JTextField();
         txtPhone.setEditable(false);
         txtPhone.setColumns(10);
@@ -206,9 +203,6 @@ public class creditAppReview2 extends JFrame {
         btnDeny.setBounds(600, 600, 150, 42);
         contentPane.add(btnDeny);
 
-
-
-
         JButton btnExit = new JButton("Exit");
         btnExit.setBounds(163, 600, 208, 42);
         contentPane.add(btnExit);
@@ -234,18 +228,16 @@ public class creditAppReview2 extends JFrame {
         JLabel lblStudentId = new JLabel("Student ID");
         lblStudentId.setBounds(423, 382, 142, 49);
         contentPane.add(lblStudentId);
-
-
         txtIncome.setEditable(false);
         txtCreditScore.setEditable(false);
 
 
 
-        setData();
+        setData(creditApplication); //set fields to creditapplication object
 
         btnApprove.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent arg0) {
-                approveApplication();
+                approveApplication(creditApplication);
             }
 
             ;
@@ -259,7 +251,7 @@ public class creditAppReview2 extends JFrame {
         });
         btnDeny.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent arg0) {
-                denyApplication();
+                denyApplication(creditApplication);
             }
 
             ;
@@ -267,69 +259,57 @@ public class creditAppReview2 extends JFrame {
 
     }
 
-    public void approveApplication() {
-
-            //String income = txtIncome.getText().replaceAll("[$,]", "");
+    /**
+     * approve the credit card application and update the database
+     * @param creditApplication
+     */
+    public void approveApplication(CreditApplication creditApplication) {
             String date = Instant.now().toString();
 
             try
             {
-               //double x = Double.parseDouble(txtAPR.getText());
-               // System.out.println(x);
-                float apr = Float.parseFloat(txtAPR.getText());
-                double creditAmount = Double.parseDouble(txtCredit.getText());
+                float apr = Float.parseFloat(txtAPR.getText()); // get the APR
+                double creditAmount = Double.parseDouble(txtCredit.getText()); // get the income
+
+                //create new object
                 credit = new Credit(0, date,true,Integer.parseInt(creditApplication.getStudentId()),
                         0,0,
-                        creditAmount, apr/100);
+                        creditAmount, apr/100, false);
 
 
-                Manager.processApp(credit);
-
-
+                Manager.processApp(credit); //send to database
 
                 resetTextInputs();
                 JLabel lblAddSuccess = new JLabel("");
                 lblAddSuccess.setForeground(Color.RED);
                 lblAddSuccess.setBounds(165, 414, 663, 26);
                 JOptionPane.showMessageDialog(lblAddSuccess, "Application Created successfully");
+                dispose();
             }
             catch(NumberFormatException e)
             {
-
                 resetTextInputs();
                 JLabel lblAddSuccess = new JLabel("");
                 lblAddSuccess.setForeground(Color.RED);
                 lblAddSuccess.setBounds(165, 414, 663, 26);
-                JOptionPane.showMessageDialog(lblAddSuccess, "error");
-                //not a double
+                JOptionPane.showMessageDialog(lblAddSuccess, "Application Can't be Create at this time");
             }
-
-
-
-
-
-           // Manager.processApp(creditApplication);
-
-
-            // add to datebase somehow
-
-
-
-
 
     }
 
 
-    public void denyApplication() {
-
-        //String income = txtIncome.getText().replaceAll("[$,]", "");
-        String date = Instant.now().toString();
+    /**
+     * Credit application is denied
+     * @param creditApplication object odeny
+     */
+    public void denyApplication(CreditApplication creditApplication) {
 
         try
         {
 
-            MySQLConnect mysql = new MySQLConnect();
+            MySQLConnect mysql = new MySQLConnect(); //connect to database
 
+            //run query to update the denial
                 String queryString = "Update metro_bank.credit_application" + " SET status = \"Denied\"" +
                         " WHERE id = " + creditApplication.getId() + " AND student_id = " + creditApplication.getStudentId() +
                         ";";
@@ -337,12 +317,11 @@ public class creditAppReview2 extends JFrame {
             mysql.executeStatement(queryString);
 
             resetTextInputs();
+            dispose();
             JLabel lblAddSuccess = new JLabel("");
             lblAddSuccess.setForeground(Color.RED);
             lblAddSuccess.setBounds(165, 414, 663, 26);
             JOptionPane.showMessageDialog(lblAddSuccess, "Application Denied successfully");
-
-
 
         }
         catch(NumberFormatException e)
@@ -355,50 +334,12 @@ public class creditAppReview2 extends JFrame {
             //not a double
         }
 
-
-
-
-
-        // Manager.processApp(creditApplication);
-
-
-        // add to datebase somehow
-
-
-
-
-
     }
 
-    public boolean isTextFieldsValid() {
-        // Verify all fields have values
-        if (txtFname.getText().isEmpty() || txtLname.getText().isEmpty() || txtAddress.getText().isEmpty()
-                || txtCity.getText().isEmpty() || txtEmail.getText().isEmpty() || txtPhone.getText().isEmpty()
-                || txtSSN.getText().isEmpty() || txtIncome.getText().isEmpty()
-                || String.valueOf(comboBoxstate.getSelectedItem()).contentEquals("Select")
-                || txtCreditScore.getText().isEmpty()) {
-
-            JLabel lblFieldIsEmpty = new JLabel("");
-            lblFieldIsEmpty.setForeground(Color.RED);
-            lblFieldIsEmpty.setBounds(165, 414, 663, 26);
-            JOptionPane.showMessageDialog(lblFieldIsEmpty, "Input fields cannot be empty.");
-            return false;
-        }
-
-        return true;
-    }
-
-    public boolean validCreditScore(){
-        if(Integer.parseInt(txtCreditScore.getText()) > 300 && Integer.parseInt(txtCreditScore.getText()) < 850)
-            return true;
-
-        JLabel lblFieldIsEmpty = new JLabel("");
-        lblFieldIsEmpty.setForeground(Color.RED);
-        lblFieldIsEmpty.setBounds(165, 414, 663, 26);
-        JOptionPane.showMessageDialog(lblFieldIsEmpty, "Credit Score Invalid.");
-        return false;
-    }
-
+    /**
+     * check if double
+     * @return true if double
+     */
     public boolean isDouble(){
         return true;
     }
@@ -419,12 +360,11 @@ public class creditAppReview2 extends JFrame {
     }
 
 
-
-
-
-    public void setData(){
-        //student = applyCreditSearch.getter();
-        creditApplication = creditAppReview.getter();
+    /**
+     * sets data field
+     * @param creditApplication
+     */
+    public void setData(CreditApplication creditApplication){
         txtFname.setText(creditApplication.getFirstName());
         txtLname.setText(creditApplication.getLastName());
         txtAddress.setText(creditApplication.getAddress());
@@ -447,13 +387,10 @@ public class creditAppReview2 extends JFrame {
      */
     public void resetTextInputs() {
         txtEmail.setText("");
-        //txtManID.setText("");
         txtFname.setText("");
         txtLname.setText("");
         txtEmail.setText("");
-        //txtPassword.setText("");
         txtPhone.setText("");
-        //txtID.setText("");
         txtIncome.setText("");
         txtAddress.setText("");
         txtCity.setText("");
@@ -463,7 +400,7 @@ public class creditAppReview2 extends JFrame {
         txtAPR.setText("");
         comboBoxstate.setSelectedIndex(0);
         txtStuID.setText("");
-
+        txtCredit.setText("");
     }
 
 

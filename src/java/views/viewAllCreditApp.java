@@ -1,7 +1,6 @@
 package views;
 
 import model.Manager;
-import model.Student;
 import model.bank_accounts.CreditApplication;
 
 import javax.swing.*;
@@ -13,8 +12,10 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * this windows views all credit applications
+ */
 public class viewAllCreditApp extends JFrame{
-
 
     private JPanel contentPane;
     private JTable table; // table
@@ -59,10 +60,10 @@ public class viewAllCreditApp extends JFrame{
                 "SSN", "Credit Score", "Income", "Password" , "Student ID", "Status", "Date Applied"}; // columns name
         dtm.setColumnIdentifiers(header); //set column names to column
         table.setModel(dtm); //set table to default table model
-        //for (int count = 1; count <= 2; count++) {
+
         dtm.addRow(new Object[] { null, null, null,
                 null, null, });
-        //}
+
 
         table.setBounds(9, 5, 503, 284); //set table to certain size
 
@@ -97,6 +98,7 @@ public class viewAllCreditApp extends JFrame{
 
         // create exit button
         JButton btnNewButton = new JButton("Exit");
+
         btnNewButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -112,77 +114,13 @@ public class viewAllCreditApp extends JFrame{
 
             }
         });
+
+
         btnNewButton.setBounds(714, 439, 180, 82);
         contentPane.add(btnNewButton);
         creditApp = Manager.getCreditApplication();
-        //students = Manager.getStudents(); //get students and put it into students array list
         updateTable(); // put students into table
 
-        // may be implemented later
-        table.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent mouseEvent) { // reacts to clicking on the Jtable by double clicking
-                JTable table = (JTable) mouseEvent.getSource();
-                Point point = mouseEvent.getPoint();
-                int row = table.rowAtPoint(point);
-                int column = table.getSelectedColumn();
-                int dialogButton = JOptionPane.YES_NO_OPTION;
-
-                if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) { // double click to trigger
-                    // maybe double click to show password of user but have manager enter their own password to access this information
-                    //System.out.println(row);
-                    //System.out.println(column);
-                    //String value = table.getModel().getValueAt(row, column).toString();
-                    //System.out.println(value);
-                    //Point point = mouseEvent.getPoint();
-                    //int row = table.rowAtPoint(point); //get row
-                    //int row = table.getModel().getRowCount();
-                    //System.out.println(	students.get(row).getFname());
-                    int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to Save your Previous Note First?","Warning",dialogButton);
-                    if(dialogResult == JOptionPane.YES_OPTION){
-                        // Saving code here
-                    }
-
-                    //User student = students.get(row);
-                    //String password = students.get(row).getPassword();
-                    //System.out.println(password);
-                    //String fName = students.get(row).getFname();
-                    //System.out.println(fName);
-
-                    //table.getModel().setValueAt(password,row,4);
-
-
-
-                    // maybe open account view when double click on the table
-
-                    //
-
-                }
-
-                // int column = table.getSelectedColumn();
-                // int row = table.getSelectedRow();
-                // String value = table.getModel().getValueAt(row, column).toString();
-                // System.out.println(value);
-            }
-        });
-
-
-
-
-
-
-
-        // frame.add(panel);
-        // JScrollPane pane = new JScrollPane(table);
-        // panel.setLayout(null);
-
-        // scroll_table = new JScrollPane(table);
-
-        // panel.add(table);
-
-        // Scrollbar scrollbar = new Scrollbar();
-        // scrollbar.setBounds(486, 5, 34, 214);
-        // panel.add(scrollbar);
     }
 
 
@@ -212,11 +150,6 @@ public class viewAllCreditApp extends JFrame{
             table.getModel().setValueAt(creditApp.get(i).getStudentId(),i,12);
             table.getModel().setValueAt(creditApp.get(i).getStatus(),i,13);
             table.getModel().setValueAt(creditApp.get(i).getDateApplied(),i,14);
-
-
-           // table.getModel().setValueAt("******",i,5); //password is hidden
-            //table.getModel().setValueAt(creditApp.get(i).getDateApplied(),i,6);
-
 
             dtm.addRow(new Object[]{ null, null, null, null, null }); // create a empty row
         }

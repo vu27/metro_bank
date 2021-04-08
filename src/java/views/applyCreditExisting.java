@@ -25,6 +25,9 @@ import model.Manager;
 import model.Student;
 import model.bank_accounts.CreditApplication;
 
+/**
+ * This creates a window for a student to fill out information and apply for a credit
+ */
 public class applyCreditExisting extends JFrame {
 
     private JPanel contentPane;
@@ -41,7 +44,7 @@ public class applyCreditExisting extends JFrame {
     private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
     private JComboBox comboBoxstate = new JComboBox();
     private JTextField txtStuID;
-    //private Student student;
+
 
 
     /**
@@ -114,11 +117,6 @@ public class applyCreditExisting extends JFrame {
 	JLabel lblState = new JLabel("State");
 	lblState.setBounds(456, 242, 111, 49);
 	contentPane.add(lblState);
-
-	// JComboBox comboBoxstate = new JComboBox();
-	// comboBoxstate.setMaximumRowCount(54);
-	// comboBoxstate.setBounds(556, 242, 295, 48);
-	// contentPane.add(comboBoxstate);
 
 	txtPhone = new JTextField();
 	txtPhone.setEditable(false);
@@ -203,9 +201,8 @@ public class applyCreditExisting extends JFrame {
 	lblStudentId.setBounds(423, 382, 142, 49);
 	contentPane.add(lblStudentId);
 
+	setData(student); //puts the data of student into the fields
 
-
-	setData(student);
 
 	btnFinish.addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent arg0) {
@@ -213,7 +210,9 @@ public class applyCreditExisting extends JFrame {
 	    }
 
 
-	});
+	}); //finish the application
+
+		//close window
 	btnExit.addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent arg0) {
 		dispose();
@@ -224,17 +223,23 @@ public class applyCreditExisting extends JFrame {
 
     }
 
-    public void finishApplication(Student student) {
+	/**
+	 * finsih the applications and send to the database
+	 * @param student
+	 */
+	public void finishApplication(Student student) {
 
 
 
 		try {
 
+			// checks if the credit score is valid and everything is filled out
 			if (isTextFieldsValid() && validCreditScore()) {
 
 				String income = txtIncome.getText().replaceAll("[$,]", "");
-				String date = Instant.now().toString();
+				String date = Instant.now().toString(); //get todays date
 
+				// create new object
 				CreditApplication creditApplication = new CreditApplication(0,txtFname.getText(), txtLname.getText(),
 						txtAddress.getText(),txtCity.getText() ,comboBoxstate.getSelectedItem().toString(),
 						txtEmail.getText(), txtPhone.getText(),
@@ -242,14 +247,10 @@ public class applyCreditExisting extends JFrame {
 						student.getPassword(), String.valueOf(student.getId()),
 						"In review", date);
 
-
-
-				Manager.processApp(creditApplication);
-
-
-				// add to datebase somehow
-
-				resetTextInputs();
+				Manager.processApp(creditApplication); //Insert in database
+				dispose(); //close window
+				//StudentGUI studentGUI = new StudentGUI(student); //open student gui
+				//studentGUI.setVisible(true);
 				JLabel lblAddSuccess = new JLabel("");
 				lblAddSuccess.setForeground(Color.RED);
 				lblAddSuccess.setBounds(165, 414, 663, 26);
@@ -257,9 +258,8 @@ public class applyCreditExisting extends JFrame {
 
 			}
 
-		} catch (Exception e) {
+		} catch (Exception e) { //fail case
 			e.printStackTrace();
-
 			JLabel lblAddSuccess = new JLabel("");
 			lblAddSuccess.setForeground(Color.RED);
 			lblAddSuccess.setBounds(165, 414, 663, 26);
@@ -277,7 +277,11 @@ public class applyCreditExisting extends JFrame {
 
     }
 
-    public boolean isTextFieldsValid() {
+	/**
+	 * checks if all fields are fillled
+	 * @return true if all filled
+	 */
+	public boolean isTextFieldsValid() {
 	// Verify all fields have values
 		if (txtFname.getText().isEmpty() || txtLname.getText().isEmpty() || txtAddress.getText().isEmpty()
 		|| txtCity.getText().isEmpty() || txtEmail.getText().isEmpty() || txtPhone.getText().isEmpty()
@@ -295,7 +299,11 @@ public class applyCreditExisting extends JFrame {
 	return true;
     }
 
-    public boolean validCreditScore(){
+	/**
+	 * checks if credit score is FICO range
+	 * @return
+	 */
+	public boolean validCreditScore(){
     	if(Integer.parseInt(txtCreditScore.getText()) > 300 && Integer.parseInt(txtCreditScore.getText()) < 850)
     		return true;
 
@@ -306,26 +314,12 @@ public class applyCreditExisting extends JFrame {
     	return false;
 	}
 
-	public boolean validNumber(){
-		String regex = "[0-9, /,]+";
 
-		if(txtIncome.getText().contains(regex) && txtCreditScore.getText().contains(regex)){
-			return true;
-		}
-		JLabel lblFieldIsEmpty = new JLabel("");
-		lblFieldIsEmpty.setForeground(Color.RED);
-		lblFieldIsEmpty.setBounds(165, 414, 663, 26);
-		JOptionPane.showMessageDialog(lblFieldIsEmpty, "Income and/or Credit Score not valid");
-		return false;
-
-	}
-
-
-
-
-
+	/**
+	 * Sets data fields in text box
+	 * @param student to set the data to
+	 */
     public void setData(Student student){
-    	//student = applyCreditSearch.getter();
     	txtFname.setText(student.getFname());
     	txtLname.setText(student.getLname());
     	txtAddress.setText(student.getAddress());
@@ -346,13 +340,10 @@ public class applyCreditExisting extends JFrame {
 	 */
 	public void resetTextInputs() {
 		txtEmail.setText("");
-		//txtManID.setText("");
 		txtFname.setText("");
 		txtLname.setText("");
 		txtEmail.setText("");
-		//txtPassword.setText("");
 		txtPhone.setText("");
-		//txtID.setText("");
 		txtIncome.setText("");
 		txtAddress.setText("");
 		txtCity.setText("");

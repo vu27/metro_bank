@@ -12,6 +12,10 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Finds the credit application
+ */
 public class creditAppSearch extends JFrame{
 
     private JPanel contentPane;
@@ -21,7 +25,7 @@ public class creditAppSearch extends JFrame{
     public static Student student;
     public static CreditApplication creditApp;
     private List<Student> students = new ArrayList<>(); //holds all students
-    private List<CreditApplication> creditApplications = new ArrayList<>();
+    private List<CreditApplication> creditApplications = new ArrayList<>(); //holds all credit applications
 
     /**
      * Launch the application.
@@ -56,8 +60,6 @@ public class creditAppSearch extends JFrame{
 
         txtAppID = new JTextField();
         txtAppID.setBounds(170, 92, 186, 32);
-        //contentPane.add(txtAppID);
-        //txtAppID.setColumns(10);
 
         JLabel lblEmail = new JLabel("Email");
         lblEmail.setBounds(21, 154, 118, 26);
@@ -94,10 +96,8 @@ public class creditAppSearch extends JFrame{
         btnExit.setBounds(104, 253, 141, 35);
         contentPane.add(btnExit);
 
-
-        //students = Manager.getStudents();
-        creditApplications = Manager.getCreditApplication();
-        students = Manager.getStudents();
+        creditApplications = Manager.getCreditApplication(); //get all credit applications
+        students = Manager.getStudents(); // get all students
 
         btnExit.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent arg0) {
@@ -112,12 +112,8 @@ public class creditAppSearch extends JFrame{
 
                 try {
                     if(getStudent() != null && getApps() != null){
-                        creditAppStatus credit = new creditAppStatus(student);
+                        creditAppStatus credit = new creditAppStatus(student); //pass student into new window
                         credit.setVisible(true);
-                        //System.out.print("Student found");
-
-                        //applyCreditExisting applycreditexist = new applyCreditExisting();
-                        //applycreditexist.setVisible(true);
                         dispose();
 
 
@@ -142,16 +138,16 @@ public class creditAppSearch extends JFrame{
     }
 
 
-
-    public static void setter(Student studentNew){
-        student = studentNew;
-    }
-
+    /**
+     * look for student
+     * @return student that was being searched for
+     */
     public Student getStudent(){
         int size = students.size(); //how many students in list
         int id = 0; //ID to search with
 
 
+        //check if fields are valid
         if(!txtAppID.getText().isEmpty()){
             if(!allDigits(txtAppID.getText())){ //if Id isnt a number throw error
                 JLabel useriderror = new JLabel("must enter a proper ID number");
@@ -183,13 +179,15 @@ public class creditAppSearch extends JFrame{
 
         return null;
 
-
     }
 
 
-
+    /**
+     * search for pending credit application
+     * @return credit application object
+     */
     public CreditApplication getApps(){
-        int size = creditApplications.size(); //how many students in list
+        int size = creditApplications.size(); //how many credit apps in list
         int id = 0; //ID to search with
 
 
@@ -227,35 +225,17 @@ public class creditAppSearch extends JFrame{
 
     }
 
-    public static CreditApplication getter(){
-        return creditApp;
-    }
 
-
+    /**
+     * check if string is all digits
+     * @param s string to check
+     * @return true if all digits
+     */
     public static boolean allDigits(String s) {
         return s.replaceAll("\\d", "").equals("");
     }
 
-    public boolean ifAppExists(CreditApplication creditApplication){
 
-        creditApplications = Manager.getCreditApplication();
-
-        for(int i = 0; i < creditApplications.size(); i++){
-
-            //System.out.println(student.getEmail());
-
-            if(creditApplications.get(i).getEmail().equals(creditApp.getEmail()) ||
-                    creditApplications.get(i).getStudentId().equals(String.valueOf(creditApp.getId()))){
-                JLabel lblAddSuccess = new JLabel("");
-                lblAddSuccess.setForeground(Color.RED);
-                lblAddSuccess.setBounds(165, 414, 663, 26);
-                JOptionPane.showMessageDialog(lblAddSuccess, "Application Already Exists");
-                return true;
-            }
-        }
-
-        return false;
-    }
 
 
 }

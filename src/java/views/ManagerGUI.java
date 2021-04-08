@@ -101,7 +101,7 @@ public class ManagerGUI extends JFrame {
 					viewEmployees.setVisible(true);
 					break;
 				case "Pending Credit":
-					creditAppReview creditApp = new creditAppReview();
+					creditAppReviewSearch creditApp = new creditAppReviewSearch();
 					creditApp.setVisible(true);
 					break;
 				case "View All Credit App":

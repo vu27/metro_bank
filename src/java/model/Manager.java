@@ -219,9 +219,6 @@ public class Manager extends User {
     public static void deleteStudent(Student student){
         MySQLConnect mysql = new MySQLConnect();
 
-        //String queryString = "ALTER TABLE student DROP FOREIGN KEY ";
-
-       //mysql.executeStatement(queryString);
 
         String queryString = "DELETE FROM metro_bank.student " +
                 " WHERE student_id = " +  student.getId() + ";";
@@ -232,8 +229,6 @@ public class Manager extends User {
         mysql.executeStatement(queryString);
 
         try{
-
-
 
             queryString = "UPDATE metro_bank.checkings " + " SET is_active = 0 " +
                     " WHERE student_id = " +  student.getId() + ";";
@@ -247,18 +242,21 @@ public class Manager extends User {
         }
 
 
+        try{
+            queryString = "UPDATE metro_bank.savings " + " SET is_active = 0 " +
+                    " WHERE student_id = " +  student.getId() + ";";
+
+            mysql.executeStatement(queryString);
+
+            queryString = "UPDATE metro_bank.credit " + " SET is_active = 0 " +
+                    " WHERE student_id = " +  student.getId() + ";";
+
+            mysql.executeStatement(queryString);
 
 
-        queryString = "UPDATE metro_bank.savings " + " SET is_active = 0 " +
-                " WHERE student_id = " +  student.getId() + ";";
+        } catch (Exception e) {
 
-        mysql.executeStatement(queryString);
-
-        queryString = "UPDATE metro_bank.credit " + " SET is_active = 0 " +
-                " WHERE student_id = " +  student.getId() + ";";
-
-        mysql.executeStatement(queryString);
-
+        }
 
 
         System.out.println("Student Destroyed");
@@ -295,7 +293,7 @@ public class Manager extends User {
 
         String queryString = "INSERT INTO metro_bank.credit " +
                 "(date_opened,is_active , student_id, balance, " +
-                "statement_balance, available_credit, apr) " +
+                "statement_balance, available_credit, apr, payment_made) " +
                 "VALUES (" +
                 "\"" + credit.getDateOpened() + "\"," +
                 "\"" + 1 + "\"," +
@@ -303,7 +301,8 @@ public class Manager extends User {
                 "\"" + credit.getBalance() + "\"," +
                 "\"" + credit.getStatementBalance() + "\"," +
                 "\"" + credit.getAvailableCredit() + "\"," +
-                "\"" + credit.getApr() + "\"" +
+                "\"" + credit.getApr() + "\"," +
+                "\"" + 0 + "\"" +
                 ");";
         mysql.executeStatement(queryString);
 

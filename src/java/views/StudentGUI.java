@@ -3,23 +3,17 @@ package views;
 import model.Student;
 import model.bank_accounts.Checkings;
 import model.bank_accounts.Credit;
+import model.bank_accounts.CreditApplication;
 import model.bank_accounts.Savings;
 import util.MySQLConnect;
 
-import java.awt.EventQueue;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class StudentGUI extends JFrame {
@@ -42,6 +36,7 @@ public class StudentGUI extends JFrame {
     Checkings checkingsAccount;
     Savings savingsAccount;
     Credit creditAccount;
+    CreditApplication creditApplication;
 
     /**
      * Launch the application.
@@ -204,12 +199,12 @@ public class StudentGUI extends JFrame {
         txtCreditNum.setEditable(false);
         txtCreditNum.setColumns(10);
         txtCreditNum.setBounds(1022, 258, 279, 48);
-        contentPane.add(txtCreditNum);
+        //contentPane.add(txtCreditNum);
 
         JLabel lblNewLabel_1_1_1_2_1 = new JLabel("Credit Card Number");
         lblNewLabel_1_1_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel_1_1_1_2_1.setBounds(738, 258, 368, 56);
-        contentPane.add(lblNewLabel_1_1_1_2_1);
+        //contentPane.add(lblNewLabel_1_1_1_2_1);
 
         //JButton btnPayCreditcard = new JButton("Pay Credit Card");
         btnPayCreditcard.setBounds(1049, 328, 216, 35);
@@ -228,17 +223,28 @@ public class StudentGUI extends JFrame {
         contentPane.add(btnApplyCredit);
 
 
+
+
+
+
         btnViewStatus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
 
                 try {
+                    creditApplication = retrieveCreditApplication(student);
+                    if(creditApplication != null ){
+
+                        creditAppStatus appStatus = new creditAppStatus(student);
+                        appStatus.setVisible(true);
+                    }
+                    else{
+                        JLabel usernotfound = new JLabel("Target not found");
+                        usernotfound.setForeground(Color.RED);
+                        usernotfound.setBounds(165, 414, 663, 26);
+                        JOptionPane.showMessageDialog(usernotfound, "User doesn't have a credit application");
+                    }
 
 
-                    creditAppStatus appStatus = new creditAppStatus(student);
-                    appStatus.setVisible(true);
-
-                    //applyCreditStudent applyCredit = new applyCreditStudent();
-                    //applyCredit.setVisible(true);
 
                 } catch (Exception ex) {
 
@@ -251,11 +257,19 @@ public class StudentGUI extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
 
                 try {
+                    creditApplication = retrieveCreditApplication(student);
+                    creditAccount = retrieveCreditAccount(student);
+                    if(creditApplication == null  && creditAccount != null ){
+                        applyCreditExisting applyCredit = new applyCreditExisting(student);
+                        applyCredit.setVisible(true);
+                    }
+                    else{
+                        JLabel usernotfound = new JLabel("Target not found");
+                        usernotfound.setForeground(Color.RED);
+                        usernotfound.setBounds(165, 414, 663, 26);
+                        JOptionPane.showMessageDialog(usernotfound, "User already have a credit application or Credit Card");
+                    }
 
-                    applyCreditExisting applyCredit = new applyCreditExisting(student);
-                    applyCredit.setVisible(true);
-                    //applyCreditStudent applyCredit = new applyCreditStudent();
-                    //applyCredit.setVisible(true);
 
                 } catch (Exception ex) {
 
@@ -264,14 +278,28 @@ public class StudentGUI extends JFrame {
             }
         });
 
-
-        btnCreateCredit.addActionListener(new ActionListener() {
+        btnPayCreditcard.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
 
                 try {
 
-                    applyCreditStudent applyCredit = new applyCreditStudent();
-                    applyCredit.setVisible(true);
+                    creditAccount = retrieveCreditAccount(student);
+
+                    if(creditAccount != null ){
+                        dispose();
+                        payCreditCard payCard = new payCreditCard(student);
+                        payCard.setVisible(true);
+                    }
+                    else{
+                        JLabel usernotfound = new JLabel("Target not found");
+                        usernotfound.setForeground(Color.RED);
+                        usernotfound.setBounds(165, 414, 663, 26);
+                        JOptionPane.showMessageDialog(usernotfound, "Credit Card Not Found");
+                    }
+
+
+
+
 
                 } catch (Exception ex) {
 
@@ -279,11 +307,17 @@ public class StudentGUI extends JFrame {
 
             }
         });
+
+
+
 
         btnExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
 
                 try {
+
+
+
 
                     dispose();
 
@@ -311,6 +345,7 @@ public class StudentGUI extends JFrame {
 
         // Fill in credit account information
         creditAccount = retrieveCreditAccount(student);
+        creditApplication = retrieveCreditApplication(student);
 
 
 
@@ -330,8 +365,8 @@ public class StudentGUI extends JFrame {
         txtCreditBalance.setText("N/A");
         txtCreditNum.setText("N/A");
         btnPayCreditcard.setEnabled(false);
-        btnApplyCredit.setEnabled(false);
-        btnViewStatus.setEnabled(false);
+        btnApplyCredit.setEnabled(true);
+        btnViewStatus.setEnabled(true);
         if(creditAccount!=null){
             btnPayCreditcard.setEnabled(true);
             contentPane.add(btnPayCreditcard);
@@ -340,25 +375,19 @@ public class StudentGUI extends JFrame {
 
         }
 
+        if(creditApplication != null){
+            btnApplyCredit.setEnabled(false);
+            btnViewStatus.setEnabled(true);
+        }
+
+        if(creditApplication == null){
+            btnViewStatus.setEnabled(false);
+        }
 
 
-        btnPayCreditcard.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
 
-                try {
-                    dispose();
-                    //CreditCardStudent creditCard = new CreditCardStudent();
-                    //creditCard.setVisible(true);
-                    // this.setVisible(false);
-                    payCreditCard payCard = new payCreditCard(student);
-                    payCard.setVisible(true);
 
-                } catch (Exception ex) {
 
-                }
-
-            }
-        });
 
 
     }
@@ -409,10 +438,10 @@ public class StudentGUI extends JFrame {
         String queryString = "SELECT * FROM credit WHERE student_id = " + student.getId() + ";";
         List<Map<String, Object>> resultList = mySQLConnect.getData(queryString);
 
-        //System.out.println(resultList.get(0).get("student_id"));
 
         try{
-            boolean isActive = resultList.get(0).get("is_active").toString() == "1" ? true : false;
+            boolean isActive = (boolean) resultList.get(0).get("is_active");
+            boolean paymentMade = (boolean) resultList.get(0).get("payment_made");
 
             Credit creditAccount = new Credit(Integer.parseInt(resultList.get(0).get("id").toString()),
                     resultList.get(0).get("date_opened").toString(), isActive,
@@ -420,7 +449,8 @@ public class StudentGUI extends JFrame {
                     Double.parseDouble(resultList.get(0).get("balance").toString()),
                     Double.parseDouble(resultList.get(0).get("statement_balance").toString()),
                     Double.parseDouble(resultList.get(0).get("available_credit").toString()),
-                    Double.parseDouble(resultList.get(0).get("apr").toString()));
+                    Double.parseDouble(resultList.get(0).get("apr").toString()),
+                    paymentMade);
 
             return creditAccount;
         } catch (Exception e) {
@@ -431,6 +461,37 @@ public class StudentGUI extends JFrame {
 
         //return creditAccount;
     }
+
+    public CreditApplication retrieveCreditApplication(Student student) {
+        MySQLConnect mySQLConnect = new MySQLConnect();
+        String queryString = "SELECT * FROM credit_application WHERE student_id = " + student.getId() + ";";
+        List<Map<String, Object>> resultList = mySQLConnect.getData(queryString);
+
+        //System.out.println(resultList.get(0).get("student_id"));
+
+        try{
+            //boolean isActive = resultList.get(0).get("is_active").toString() == "1" ? true : false;
+
+            CreditApplication creditApplication = new CreditApplication(Integer.parseInt(resultList.get(0).get("id").toString()),
+                    resultList.get(0).get("fname").toString(), resultList.get(0).get("lname").toString(),
+                    resultList.get(0).get("address").toString(), resultList.get(0).get("city").toString(),
+                    resultList.get(0).get("state").toString(), resultList.get(0).get("email").toString(),
+                    resultList.get(0).get("phone").toString(), Integer.parseInt(resultList.get(0).get("ssn").toString()),
+                    Integer.parseInt(resultList.get(0).get("credit_score").toString()), Double.parseDouble(resultList.get(0).get("income").toString()),
+                    resultList.get(0).get("password").toString(), String.valueOf(resultList.get(0).get("student_id")), resultList.get(0).get("status").toString(),
+                    resultList.get(0).get("date_applied").toString());
+
+
+            return creditApplication;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return null;
+        }
+
+
+        //return creditAccount;
+    }
+
 
 
 

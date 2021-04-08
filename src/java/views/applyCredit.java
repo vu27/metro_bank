@@ -8,6 +8,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * This is a helper class to determine if student is already in the system
+ */
 public class applyCredit extends JFrame {
 
     private JPanel contentPane;
@@ -51,18 +54,22 @@ public class applyCredit extends JFrame {
 	btnExit.setBounds(69, 225, 205, 41);
 	contentPane.add(btnExit);
 
+		/**
+		 * click existing button will open new window to search for student
+		 */
 	btnExisting.addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent arg0) {
-		//WinBuilder.applyCreditExisting applyCreditExist = new WinBuilder.applyCreditExisting();
 		applyCreditSearch search = new applyCreditSearch();
 		search.setVisible(true);
-		//applyCreditExist.setVisible(true);
 		dispose();
 	    }
 
 	    ;
 	});
 
+		/**
+		 * open new window so student can enter their info
+		 */
 	btnNew.addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent arg0) {
 		applyCreditNew applycreditnew = new applyCreditNew();
@@ -73,12 +80,12 @@ public class applyCredit extends JFrame {
 	    ;
 	});
 
+	//exit out of the window
 	btnExit.addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent arg0) {
 		dispose();
 	    }
 
-	    ;
 	});
 
     }

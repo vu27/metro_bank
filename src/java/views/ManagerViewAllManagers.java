@@ -26,7 +26,7 @@ public class ManagerViewAllManagers extends JFrame {
 
     private JPanel contentPane;
     private JTable table; // table
-    private List<Manager> managers = new ArrayList<>(); //holds all students
+    private List<Manager> managers = new ArrayList<>(); //holds all Managers
     private DefaultTableModel dtm = new DefaultTableModel(0, 0); //default table model
 
 
@@ -119,66 +119,6 @@ public class ManagerViewAllManagers extends JFrame {
         managers = Manager.getManagers(); //get students and put it into students array list
         updateTable(); // put students into table
 
-        // may be implemented later
-        table.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent mouseEvent) { // reacts to clicking on the Jtable by double clicking
-                JTable table = (JTable) mouseEvent.getSource();
-                //Point point = mouseEvent.getPoint();
-                //int row = table.rowAtPoint(point);
-                //int column = table.getSelectedColumn();
-
-                if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) { // double click to trigger
-                    // maybe double click to show password of user but have manager enter their own password to access this information
-                    //System.out.println(row);
-                    //System.out.println(column);
-                    //String value = table.getModel().getValueAt(row, column).toString();
-                    //System.out.println(value);
-                    Point point = mouseEvent.getPoint();
-                    int row = table.rowAtPoint(point); //get row
-                    //int row = table.getModel().getRowCount();
-                    //System.out.println(	students.get(row).getFname());
-
-                    //User student = students.get(row);
-                    //String password = students.get(row).getPassword();
-                    //System.out.println(password);
-                    //String fName = students.get(row).getFname();
-                    //System.out.println(fName);
-
-                    //table.getModel().setValueAt(password,row,4);
-
-
-
-                    // maybe open account view when double click on the table
-
-                    //
-
-                }
-
-                // int column = table.getSelectedColumn();
-                // int row = table.getSelectedRow();
-                // String value = table.getModel().getValueAt(row, column).toString();
-                // System.out.println(value);
-            }
-        });
-
-
-
-
-
-
-
-        // frame.add(panel);
-        // JScrollPane pane = new JScrollPane(table);
-        // panel.setLayout(null);
-
-        // scroll_table = new JScrollPane(table);
-
-        // panel.add(table);
-
-        // Scrollbar scrollbar = new Scrollbar();
-        // scrollbar.setBounds(486, 5, 34, 214);
-        // panel.add(scrollbar);
     }
 
 
@@ -209,8 +149,6 @@ public class ManagerViewAllManagers extends JFrame {
 
 
     }
-
-
 
 
 

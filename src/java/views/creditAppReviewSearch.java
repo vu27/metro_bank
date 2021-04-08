@@ -3,7 +3,7 @@ package views;
 import model.Manager;
 import model.Student;
 import model.bank_accounts.CreditApplication;
-
+import model.bank_accounts.Credit;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -12,14 +12,17 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class creditAppReview extends  JFrame{
+/**
+ * Manager can go and at pending credit card applications and approve/deny it
+ */
+public class creditAppReviewSearch extends  JFrame{
 
     private JPanel contentPane;
     private JTextField txtAppID;
     private JTextField txtEmail;
     private  JTextField txtStuID;
-    public static Student student;
-    public static CreditApplication creditApp;
+    private CreditApplication creditApplication;
+    private List<Credit> credits = new ArrayList();
     private List<Student> students = new ArrayList<>(); //holds all students
     private List<CreditApplication> creditApplications = new ArrayList<>();
 
@@ -30,7 +33,7 @@ public class creditAppReview extends  JFrame{
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    creditAppReview frame = new creditAppReview();
+                    creditAppReviewSearch frame = new creditAppReviewSearch();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -42,7 +45,7 @@ public class creditAppReview extends  JFrame{
     /**
      * Create the frame.
      */
-    public creditAppReview() {
+    public creditAppReviewSearch() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 526, 419);
         contentPane = new JPanel();
@@ -94,9 +97,9 @@ public class creditAppReview extends  JFrame{
         btnExit.setBounds(104, 253, 141, 35);
         contentPane.add(btnExit);
 
+        creditApplications = Manager.getCreditApplication(); // get all credit card apps
 
-        //students = Manager.getStudents();
-        creditApplications = Manager.getCreditApplication();
+
 
         btnExit.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent arg0) {
@@ -110,24 +113,25 @@ public class creditAppReview extends  JFrame{
             public void mouseClicked(MouseEvent arg0) {
 
                 try {
-                    if(getApps() != null ){
-                        creditAppReview2 credit = new creditAppReview2();
-                        credit.setVisible(true);
-                        //System.out.print("Student found");
+                    creditApplication = getApps(); //get the application the manager is looking for
+                    if(creditApplication != null ){
 
-                            //applyCreditExisting applycreditexist = new applyCreditExisting();
-                            //applycreditexist.setVisible(true);
+                        if(ifCredit(creditApplication) == false){
+                            creditAppReviewPending credit = new creditAppReviewPending(creditApplication);
+                            credit.setVisible(true);
                             dispose();
-
+                        }
+                        else{ //error case
+                            JLabel usernotfound = new JLabel("Target not found");
+                            usernotfound.setForeground(Color.RED);
+                            usernotfound.setBounds(165, 414, 663, 26);
+                            JOptionPane.showMessageDialog(usernotfound, "User already have a credit card");
+                        }
 
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
-
-
             }
 
             ;
@@ -137,11 +141,10 @@ public class creditAppReview extends  JFrame{
     }
 
 
-
-    public static void setter(Student studentNew){
-        student = studentNew;
-    }
-
+    /**
+     * get a unique credit card application being searched for
+     * @return credit card application that is being searched
+     */
     public CreditApplication getApps(){
         int size = creditApplications.size(); //how many students in list
         int id = 0; //ID to search with
@@ -174,9 +177,9 @@ public class creditAppReview extends  JFrame{
                     return null;
                 }
 
-                creditApp = creditApplications.get(i);
+                creditApplication = creditApplications.get(i);
 
-                return creditApp;
+                return creditApplication;
             }
 
         } //if target not found throw error
@@ -190,35 +193,24 @@ public class creditAppReview extends  JFrame{
 
     }
 
-    public static CreditApplication getter(){
-        return creditApp;
-    }
 
-
+    //check if string is all digits
     public static boolean allDigits(String s) {
         return s.replaceAll("\\d", "").equals("");
     }
 
-    public boolean ifAppExists(CreditApplication creditApplication){
 
-        creditApplications = Manager.getCreditApplication();
-
-        for(int i = 0; i < creditApplications.size(); i++){
-
-            //System.out.println(student.getEmail());
-
-            if(creditApplications.get(i).getEmail().equals(creditApp.getEmail()) ||
-                    creditApplications.get(i).getStudentId().equals(String.valueOf(creditApp.getId()))){
-                JLabel lblAddSuccess = new JLabel("");
-                lblAddSuccess.setForeground(Color.RED);
-                lblAddSuccess.setBounds(165, 414, 663, 26);
-                JOptionPane.showMessageDialog(lblAddSuccess, "Application Already Exists");
+    // check if student already have a credit card
+    public boolean ifCredit(CreditApplication creditApplication){
+        credits = Manager.getCredit(); //get all credit cards
+        for( int i = 0; i < credits.size(); i++){
+            if(Integer.parseInt(creditApplication.getStudentId()) == credits.get(i).getStudentId()){
                 return true;
             }
         }
-
         return false;
     }
+
 
 
 }

@@ -39,6 +39,8 @@ public class Login extends JFrame {
                 try {
                     Login window = new Login();
                     window.frmLogin.setVisible(true);
+                    util.interestTimer.main(null);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

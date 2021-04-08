@@ -87,6 +87,7 @@ CREATE TABLE IF NOT EXISTS metro_bank.credit (
 	statement_balance double NOT NULL,
 	available_credit double NOT NULL,
 	apr double NOT NULL,
+    payment_made boolean NOT NULL,
     FOREIGN KEY (student_id) REFERENCES metro_bank.student(student_id)
     ON DELETE CASCADE
 );
@@ -172,7 +173,7 @@ INSERT INTO metro_bank.student (
 ) VALUES
 ('Jerry', 'Hills', '953-555-1177', 'j.hills@metrostate.edu', 'password', '2021-02-25T05:47:26.853Z',  119038905 , '8930 Theatre Street', 'Stow', 'OH'),
 ('Walter', 'Smith', '612-555-1234', 'w.Smith@metrostate.edu', 'password', '2021-02-25T05:47:26.853Z',  632588008 , '50 Tunnel Ave.', 'Philadelphia', 'PA'),
-('Straw', 'Berry', '622-555-1234', 's.berry@metrostate.edu', 'password', '2021-02-25T05:47:26.853Z',  586479145 , '446 Tunnel Street ', 'Ridgecrest', 'Ridgecrest'),
+('Straw', 'Berry', '622-555-1234', 's.berry@metrostate.edu', 'password', '2021-02-25T05:47:26.853Z',  586479145 , '446 Tunnel Street ', 'Ridgecrest', 'TX'),
 ('Darby', 'Dancer', '122-555-1234', 'd.dancer@metrostate.edu', 'password', '2021-02-25T05:47:26.853Z', 159182143 , '977 North Bear Hill St. ', 'Harlingen', 'TX'),
 ('Dan', 'Johnson', '952-412-5970', 'd.johnson@metrostate.edu', 'password', '2021-02-25T05:47:26.853Z',  530273896 , '1 South St Paul Street ', 'New Rochelle', 'NY'),
 ('Jean', 'Shorewood', '734-712-0857', 'j.shorewood@metrostate.edu', 'password', '2021-02-25T05:47:26.853Z', 382548071  , '9900 Alderwood St. Suite 228 ', 'Malvern', 'PA'),
@@ -188,9 +189,10 @@ INSERT INTO metro_bank.credit (
     balance,
 	statement_balance,
 	available_credit,
-	apr
+	apr,
+    payment_made
 ) VALUES
-('2021-02-25T05:47:26.853Z', true, 1, 322.22, 50.01, 9000, .2443);
+('2021-02-25T05:47:26.853Z', true, 1, 322.22, 50.01, 9000, .2443,1);
 
 
 /* Populate Credit applications */

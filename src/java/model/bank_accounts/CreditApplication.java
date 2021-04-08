@@ -36,6 +36,11 @@ public class CreditApplication {
 
     }
 
+    public CreditApplication() {
+        super();
+    }
+
+
     public int getId(){
         return id;
     }

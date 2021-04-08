@@ -38,8 +38,6 @@ public class applyCreditNew extends JFrame {
     private JLabel lblState;
     private JLabel lblSSN;
     private JLabel lblCreditScore;
-    private JTextField txtPassword;
-    private JTextField txtPassword2;
     private JLabel lblCreatePassword;
     private JLabel lblCreatePassword2;
     private JLabel lblIncome;
@@ -48,8 +46,6 @@ public class applyCreditNew extends JFrame {
     private String emailBank = "@metrobank.edu";
     private Date date = new Date();
     private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-    private JTextField txtStuID;
-    private JLabel lblStudentId;
 	private List<Student> students = new ArrayList<>(); //holds all students
 	JPasswordField password = new JPasswordField();
 	JPasswordField password2 = new JPasswordField();
@@ -174,32 +170,17 @@ public class applyCreditNew extends JFrame {
 	lblCreditScore.setBounds(425, 373, 142, 49);
 	contentPane.add(lblCreditScore);
 
-
 	password.setColumns(10);
 	password.setBounds(569, 442, 282, 49);
 	password.setFont(new Font("font", Font.PLAIN, 30));
 	password.setEchoChar('*');
 	contentPane.add(password);
 
-
 	password2.setColumns(10);
 	password2.setBounds(591, 509, 260, 49);
 	password2.setFont(new Font("font", Font.PLAIN, 30));
 	password2.setEchoChar('*');
 	contentPane.add(password2);
-
-
-
-	//txtPassword = new JTextField();
-	//txtPassword.setColumns(10);
-	//txtPassword.setBounds(569, 442, 282, 49);
-	//txtPassword.setEchoChar('*');
-	//contentPane.add(txtPassword);
-
-	//txtPassword2 = new JTextField();
-	//txtPassword2.setColumns(10);
-	//txtPassword2.setBounds(591, 509, 260, 49);
-	//contentPane.add(txtPassword2);
 
 	lblCreatePassword = new JLabel("Create Password");
 	lblCreatePassword.setBounds(398, 443, 453, 49);
@@ -231,14 +212,6 @@ public class applyCreditNew extends JFrame {
 	lblNewLabel.setBounds(343, 10, 241, 49);
 	contentPane.add(lblNewLabel);
 
-	txtStuID = new JTextField();
-	txtStuID.setColumns(10);
-	txtStuID.setBounds(163, 517, 225, 49);
-	//contentPane.add(txtStuID);
-
-	lblStudentId = new JLabel("Student ID");
-	lblStudentId.setBounds(43, 520, 111, 49);
-	//contentPane.add(lblStudentId);
 
 	btnFinish.addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent arg0) {
@@ -254,23 +227,29 @@ public class applyCreditNew extends JFrame {
 	});
     }
 
-    public void finishApplication (){
+	/**
+	 * takes the data from the fields and creates a new object and inserts it into the datatbase as a student
+	 * and credit application
+	 */
+	public void finishApplication (){
 
+		//check if fields are valid
 		if (isTextFieldsValid() && validEmail() && validCreditScore() && userExists() && passwordMatch()) {
 
 			String income = txtIncome.getText().replaceAll("[$,]", "");
-			String date = Instant.now().toString();
+			String date = Instant.now().toString(); //get todays date
+
+			// create student object
 			Student student = new Student(0,txtFname.getText(), txtLname.getText(),txtPhone.getText(),
 					txtEmail.getText(), String.valueOf(password.getPassword()), date, Integer.parseInt(txtSSN.getText()),
 					txtAddress.getText(), txtCity.getText(), comboBoxstate.getSelectedItem().toString());
 
 
-			Manager.addStudent(student); //create new student and add to database
-			//student = null;
-			students = Manager.getStudents(); //get database
-			//int size = students.size();
 
-			Student newStudent = findStudent(); // search for student in new databse and get the Object
+			Manager.addStudent(student); //create new student and add to database
+			students = Manager.getStudents(); //get database
+			Student newStudent = findStudent(); // search for student in new database and get the Object
+
 
 
 			if(newStudent == null){
@@ -278,7 +257,6 @@ public class applyCreditNew extends JFrame {
 				lblAddSuccess.setForeground(Color.RED);
 				lblAddSuccess.setBounds(165, 414, 663, 26);
 				JOptionPane.showMessageDialog(lblAddSuccess, "Student created not found in database");
-				resetTextInputs();
 				resetTextInputs();
 				dispose();
 			}
@@ -398,7 +376,7 @@ public class applyCreditNew extends JFrame {
     }
 
 	/**
-	 * check if user is already in databse
+	 * check if user is already in database
 	 * @return false if found in databse under student
 	 */
 	public boolean userExists(){

@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * displays credit application status
+ */
 public class creditAppStatus extends JFrame {
 
     private JPanel contentPane;
@@ -32,11 +35,9 @@ public class creditAppStatus extends JFrame {
     private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
     private JComboBox comboBoxstate = new JComboBox();
     private JTextField txtStuID;
-    //private Student student;
     private CreditApplication creditApplication;
     private JTextField txtAPR;
-    private Credit credit;
-    private List<CreditApplication> creditApplications = new ArrayList<>();
+    private List<CreditApplication> creditApplications = new ArrayList<>(); // holds all credit apps
 
 
     /**
@@ -111,11 +112,6 @@ public class creditAppStatus extends JFrame {
         JLabel lblState = new JLabel("State");
         lblState.setBounds(456, 242, 111, 49);
         contentPane.add(lblState);
-
-        // JComboBox comboBoxstate = new JComboBox();
-        // comboBoxstate.setMaximumRowCount(54);
-        // comboBoxstate.setBounds(556, 242, 295, 48);
-        // contentPane.add(comboBoxstate);
 
         txtPhone = new JTextField();
         txtPhone.setEditable(false);
@@ -243,11 +239,9 @@ public class creditAppStatus extends JFrame {
 
 
         try {
-            //creditApplication = creditAppSearch.getter();
-            //setData();
-            creditApplications = Manager.getCreditApplication();
-            getApps(student);
-            setStudentData(student);
+            creditApplications = Manager.getCreditApplication(); //get all credit applications
+            getApps(student); // get credit application being searched
+            setStudentData(student); //set datafields
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -255,13 +249,7 @@ public class creditAppStatus extends JFrame {
         }
 
 
-        btnApprove.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent arg0) {
-                //  approveApplication();
-            }
 
-            ;
-        });
         btnExit.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent arg0) {
                 dispose();
@@ -269,13 +257,7 @@ public class creditAppStatus extends JFrame {
 
             ;
         });
-        btnDeny.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent arg0) {
-                //denyApplication();
-            }
 
-            ;
-        });
 
     }
 
@@ -306,33 +288,6 @@ public class creditAppStatus extends JFrame {
 
     }
 
-    public void setData() {
-        //student = applyCreditSearch.getter();
-        creditApplication = creditAppSearch.getter();
-        txtFname.setText(creditApplication.getFirstName());
-        txtLname.setText(creditApplication.getLastName());
-        txtAddress.setText(creditApplication.getAddress());
-        txtEmail.setText(creditApplication.getEmail());
-        txtCity.setText(creditApplication.getCity());
-        txtPhone.setText(creditApplication.getPhone());
-        txtSSN.setText(String.valueOf(creditApplication.getSSN()));
-        txtStuID.setText(String.valueOf(creditApplication.getStudentId()));
-        comboBoxstate.setEditable(true);
-        comboBoxstate.getModel().setSelectedItem(creditApplication.getState());
-        comboBoxstate.setEditable(false);
-        comboBoxstate.setEnabled(false);
-        //txtCredit.setText(creditApplication.getCreditSore());
-        txtCreditScore.setText(String.valueOf(creditApplication.getCreditSore()));
-        txtIncome.setText(String.valueOf(creditApplication.getIncome()));
-        //txtCredit.setText();
-        txtStatus.setText(creditApplication.getStatus());
-        JLabel usernotfound = new JLabel("Target not found");
-        usernotfound.setForeground(Color.RED);
-        usernotfound.setBounds(165, 414, 663, 26);
-        JOptionPane.showMessageDialog(usernotfound, "Application not found");
-        dispose();
-
-    }
 
     public CreditApplication getApps(Student student) {
         int size = creditApplications.size(); //how many students in list

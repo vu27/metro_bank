@@ -99,6 +99,7 @@ public class ModelMappers {
 
         for (int i = 0; i < resultList.size(); i++) {
             boolean isActive = resultList.get(i).get("is_active").toString() == "1" ? true : false;
+            boolean paymentMade = resultList.get(i).get("payment_made").toString() == "1" ? true : false;
 
             credit.add(new Credit( Integer.parseInt(resultList.get(i).get("id").toString()),
                     resultList.get(i).get("date_opened").toString(),
@@ -107,7 +108,8 @@ public class ModelMappers {
                     Double.parseDouble(resultList.get(i).get("balance").toString()),
                     Double.parseDouble(resultList.get(i).get("statement_balance").toString()),
                     Double.parseDouble(resultList.get(i).get("available_credit").toString()),
-                    Double.parseDouble(resultList.get(i).get("apr").toString())));
+                    Double.parseDouble(resultList.get(i).get("apr").toString()),
+                    paymentMade));
         }
         return credit;
     }

@@ -32,7 +32,7 @@ public class ManagerViewAllEmployees extends JFrame {
 
     private JPanel contentPane;
     private JTable table;
-	private List<Employee> employees = new ArrayList<>(); //holds all students
+	private List<Employee> employees = new ArrayList<>(); //holds all Employees
 	private DefaultTableModel dtm = new DefaultTableModel(0, 0); //default table model
 
     /**

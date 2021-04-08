@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 public class studentViewAppStatus extends JFrame {
-
+//DELETE maybe
     private JPanel contentPane;
     private JTextField txtFname;
     private JTextField txtLname;
@@ -247,26 +247,13 @@ public class studentViewAppStatus extends JFrame {
 
 
         try{
-            //creditApplication = creditAppSearch.getter();
-            //student.getId();
-            getData();
-            setData();
+            creditApplication = getData(); //get credit application that is being searched
+            setData(); // set data fields
 
         } catch (Exception e) {
             e.printStackTrace();
 
         }
-
-
-
-
-        btnApprove.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent arg0) {
-                //  approveApplication();
-            }
-
-            ;
-        });
         btnExit.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent arg0) {
                 dispose();
@@ -274,27 +261,15 @@ public class studentViewAppStatus extends JFrame {
 
             ;
         });
-        btnDeny.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent arg0) {
-                //denyApplication();
-            }
 
-            ;
-        });
 
     }
 
 
-
-
-
-
+    /**
+     * set data fields
+     */
     public void setData(){
-
-
-
-        //student = applyCreditSearch.getter();
-        creditApplication = creditAppSearch.getter();
         txtFname.setText(creditApplication.getFirstName());
         txtLname.setText(creditApplication.getLastName());
         txtAddress.setText(creditApplication.getAddress());
@@ -307,18 +282,15 @@ public class studentViewAppStatus extends JFrame {
         comboBoxstate.getModel().setSelectedItem(creditApplication.getState());
         comboBoxstate.setEditable(false);
         comboBoxstate.setEnabled(false);
-        //txtCredit.setText(creditApplication.getCreditSore());
         txtCreditScore.setText(String.valueOf(creditApplication.getCreditSore()));
         txtIncome.setText(String.valueOf(creditApplication.getIncome()));
-        //txtCredit.setText();
         txtStatus.setText(creditApplication.getStatus());
-
-
-
-
-
     }
 
+    /**
+     * get the credit application that is being searched for
+     * @return credit application object being serached
+     */
     public CreditApplication getData(){
         int size = creditApplications.size();
 

@@ -14,20 +14,17 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * search for employee and remove from database
+ */
+
 public class DeleteEmployee extends JFrame {
 
     private JPanel contentPane;
-    private JTextField txtFname;
-    private JTextField txtLname;
-    private JTextField txtAddress;
-    private JTextField txtCity;
     private JTextField txtEmpID;
-    private JTextField txtPhone;
-	//private JPanel contentPane;
 	private Employee employee; //employee that was searched
 	private List<Employee> employees = new ArrayList<>(); //holds all employees
 	private JTextField txtEmail;
-	//private JTextField txtEmpID;
 	private JTextField txtFname2;
 	private JTextField txtLName2;
 	private JTextField txtEmail2;
@@ -164,7 +161,7 @@ public class DeleteEmployee extends JFrame {
 		lblSearchEmployee.setBounds(264, 21, 178, 45);
 		contentPane.add(lblSearchEmployee);
 
-		JLabel lblUpdateEmployee = new JLabel("Update Employee");
+		JLabel lblUpdateEmployee = new JLabel("Delete Employee");
 		lblUpdateEmployee.setBounds(1198, 21, 178, 45);
 		contentPane.add(lblUpdateEmployee);
 
@@ -236,6 +233,8 @@ public class DeleteEmployee extends JFrame {
 		btnSearch.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
 				getEmployee(); //get employee when user clicks search button
+
+
 			}
 		});
 
@@ -265,9 +264,12 @@ public class DeleteEmployee extends JFrame {
     }
 
 
-    public void deleteEmployee(){
+	/**
+	 * calls the manager class to run the sql to remove from database
+	 */
+	public void deleteEmployee(){
 
-		Manager.deleteEmployee(employee);
+		Manager.deleteEmployee(employee); // run sql script
 		JLabel useriderror = new JLabel("must enter a proper ID number and/or salary");
 		useriderror.setForeground(Color.RED);
 		useriderror.setBounds(165, 414, 663, 26);
@@ -279,32 +281,8 @@ public class DeleteEmployee extends JFrame {
 
 
 	/**
-	 * updates Employee information into the data base by getting all fields from the txt box and pass this to
-	 * the manager class to update the database
+	 * get the employee target to remove from database
 	 */
-	public void updateEmployee(){
-
-		//check if proper ID and Proper salary was entered before passing it to the Manager
-		if(txtSalary.getText().matches("\\d*\\.?\\d+") && allDigits(txtID.getText())) {
-			Manager.updateEmployee(employee, txtFname2.getText(), txtLName2.getText(), employee.getEmail(),
-					Integer.parseInt(txtID.getText()), textPhone.getText(), txtPassword.getText(),
-					Double.parseDouble(txtSalary.getText()), textAddress.getText(), textCity.getText(),
-					comboBoxstate2.getSelectedItem().toString(), Integer.parseInt(textSSN.getText()));
-
-			resetTextInputs(); //makes all fields blank
-		}
-		// throw error message if user input incorrect ID or salary
-		else if(!txtSalary.getText().matches("\\d*\\.?\\d+") || !allDigits(txtID.getText())){
-			JLabel useriderror = new JLabel("must enter a proper ID number and/or salary");
-			useriderror.setForeground(Color.RED);
-			useriderror.setBounds(165, 414, 663, 26);
-			JOptionPane.showMessageDialog(useriderror, "must enter a proper ID number and/or salary");
-		}
-
-
-
-	}
-
 	public void getEmployee(){
 		int size = employees.size(); //how many Employees in list
 		int id = 0;
@@ -328,6 +306,7 @@ public class DeleteEmployee extends JFrame {
 		// searches through array list for the employee
 		for(int i = 0; i < size; i++){
 
+			//find the employee and set the data fields to the employee information
 			if(employees.get(i).getEmail().equalsIgnoreCase(txtEmail.getText()) || employees.get(i).getId() == id){
 				employee = employees.get(i);
 				txtFname2.setText(employee.getFname());
@@ -343,6 +322,9 @@ public class DeleteEmployee extends JFrame {
 				comboBoxstate2.setEditable(true);
 				comboBoxstate2.getModel().setSelectedItem(employee.getState());
 				comboBoxstate2.setEditable(false);
+
+				setEditable();
+
 
 				return;
 			}
@@ -380,6 +362,24 @@ public class DeleteEmployee extends JFrame {
 		textCity.setText("");
 		textSSN.setText("");
 		comboBoxstate2.setSelectedIndex(0);
+	}
+
+	/**
+	 * make everything not editable
+	 */
+	public void setEditable(){
+		textAddress.setEditable(false);
+		txtFname2.setEditable(false);
+		txtLName2.setEditable(false);
+		txtEmail2.setEditable(false);
+		txtPassword.setEditable(false);
+		textPhone.setEditable(false);
+		txtID.setEditable(false);
+		txtSalary.setEditable(false);
+		textAddress.setEditable(false);
+		textCity.setEditable(false);
+		comboBoxstate2.setEnabled(false);
+		textSSN.setEditable(false);
 	}
 
 

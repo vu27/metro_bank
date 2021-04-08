@@ -13,21 +13,17 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Search and delete the Manager from the databse
+ */
 public class DeleteManager extends JFrame{
 
 
     private JPanel contentPane;
-    private JTextField txtFname;
-    private JTextField txtLname;
-    private JTextField txtAddress;
-    private JTextField txtCity;
     private JTextField txtEmpID;
-    private JTextField txtPhone;
-    //private JPanel contentPane;
-    private Manager manager; //employee that was searched
-    private List<Manager> managers = new ArrayList<>(); //holds all employees
+    private Manager manager; //manager that was searched
+    private List<Manager> managers = new ArrayList<>(); //holds all managers
     private JTextField txtEmail;
-    //private JTextField txtEmpID;
     private JTextField txtFname2;
     private JTextField txtLName2;
     private JTextField txtEmail2;
@@ -233,14 +229,13 @@ public class DeleteManager extends JFrame{
 
         btnSearch.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent arg0) {
-                getManager(); //get employee when user clicks search button
+                getManager(); //get Manager when user clicks search button
             }
         });
 
         btnDelete.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent arg0) {
-                //updateEmployee(); //updates the new information to the employee
-                deleteManager();
+                deleteManager(); //delete manager from database
                 managers = Manager.getManagers(); //gets a new list with the updated information
 
             }
@@ -262,9 +257,12 @@ public class DeleteManager extends JFrame{
 
     }
 
+    /**
+     * calls the Manager class to remove the target manager from database
+     */
     public void deleteManager(){
 
-        Manager.deleteManager(manager);
+        Manager.deleteManager(manager); // run sql script to remove manager from database
         JLabel useriderror = new JLabel("must enter a proper ID number and/or salary");
         useriderror.setForeground(Color.RED);
         useriderror.setBounds(165, 414, 663, 26);
@@ -276,10 +274,8 @@ public class DeleteManager extends JFrame{
 
 
     /**
-     * updates Employee information into the data base by getting all fields from the txt box and pass this to
-     * the manager class to update the database
+     * updates Manager information into the data base by getting all fields from the txt box
      */
-
 
     public void getManager(){
         int size = managers.size(); //how many Employees in list
@@ -320,6 +316,8 @@ public class DeleteManager extends JFrame{
                 comboBoxstate2.getModel().setSelectedItem(manager.getState());
                 comboBoxstate2.setEditable(false);
 
+                setEditable();
+
                 return;
             }
         }
@@ -356,6 +354,25 @@ public class DeleteManager extends JFrame{
         textCity.setText("");
         textSSN.setText("");
         comboBoxstate2.setSelectedIndex(0);
+    }
+
+    /**
+     * makes all fields un-editable
+     */
+    public void setEditable(){
+        textAddress.setEditable(false);
+        txtFname2.setEditable(false);
+        txtLName2.setEditable(false);
+        txtEmail2.setEditable(false);
+        txtPassword.setEditable(false);
+        textPhone.setEditable(false);
+        txtID.setEditable(false);
+        txtSalary.setEditable(false);
+        textAddress.setEditable(false);
+        textCity.setEditable(false);
+        comboBoxstate2.setEnabled(false);
+
+        textSSN.setEditable(false);
     }
 
 

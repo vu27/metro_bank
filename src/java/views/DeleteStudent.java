@@ -14,20 +14,16 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * search for student and remove that student from the database and deactivates all accounts associated with that student
+ */
 public class DeleteStudent extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtFname;
-	private JTextField txtLname;
-	private JTextField txtAddress;
-	private JTextField txtCity;
 	private JTextField txtEmpID;
-	private JTextField txtPhone;
-	//private JPanel contentPane;
-	private Student student; //employee that was searched
-	private List<Student> students = new ArrayList<>(); //holds all employees
+	private Student student; //student that was searched
+	private List<Student> students = new ArrayList<>(); //holds all students
 	private JTextField txtEmail;
-	//private JTextField txtEmpID;
 	private JTextField txtFname2;
 	private JTextField txtLName2;
 	private JTextField txtEmail2;
@@ -189,12 +185,10 @@ public class DeleteStudent extends JFrame {
 		JLabel lblSalary = new JLabel("Salary");
 		lblSalary.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSalary.setBounds(1243, 319, 154, 41);
-		//contentPane.add(lblSalary);
 
 		txtSalary = new JTextField();
 		txtSalary.setColumns(10);
 		txtSalary.setBounds(1382, 312, 295, 55);
-		//contentPane.add(txtSalary);
 
 		textAddress = new JTextField();
 		textAddress.setColumns(10);
@@ -231,22 +225,18 @@ public class DeleteStudent extends JFrame {
 		lblOr.setBounds(507, 87, 133, 41);
 		contentPane.add(lblOr);
 
-
-		//managers = Manager.getManagers(); //gets the managers and put into arraylist
-		students = Manager.getStudents();
+		students = Manager.getStudents(); //get all students
 
 		btnSearch.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
-				getStudent(); //get employee when user clicks search button
+				getStudent(); //get student target when user clicks search button
 			}
 		});
 
 		btnDelete.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
-				//updateEmployee(); //updates the new information to the employee
-				deleteStudent();
+				deleteStudent(); //removes student from database
 
-				//managers = Manager.getManagers(); //gets a new list with the updated information
 				students = Manager.getStudents();
 			}
 		});
@@ -267,28 +257,25 @@ public class DeleteStudent extends JFrame {
 
     }
 
+	/**
+	 * deletes student from databse by calling the manager class to run the script
+	 */
 	public void deleteStudent(){
 
-		//Manager.deleteManager(manager);
-		Manager.deleteStudent(student);
-
+		Manager.deleteStudent(student); //run script
 
 		JLabel useriderror = new JLabel("must enter a proper ID number and/or salary");
 		useriderror.setForeground(Color.RED);
 		useriderror.setBounds(165, 414, 663, 26);
 		JOptionPane.showMessageDialog(useriderror, "Student Deleted");
 
-		resetTextInputs();
-
+		resetTextInputs();// reset the text fields
 	}
 
 
 	/**
-	 * updates Employee information into the data base by getting all fields from the txt box and pass this to
-	 * the manager class to update the database
+	 * search for student in the list and set the fields to the student info
 	 */
-
-
 	public void getStudent(){
 		int size = students.size(); //how many Employees in list
 		int id = 0;
@@ -320,7 +307,6 @@ public class DeleteStudent extends JFrame {
 				txtPassword.setText(student.getPassword());
 				textPhone.setText(student.getPhone());
 				txtID.setText(String.valueOf(student.getId()));
-				//txtSalary.setText(String.valueOf((student.getSalary())));
 				textAddress.setText(student.getAddress());
 				textCity.setText(student.getCity());
 				textSSN.setText(String.valueOf(student.getSsn()));
@@ -350,7 +336,6 @@ public class DeleteStudent extends JFrame {
 	 * make all text fields empty
 	 */
 	public void resetTextInputs() {
-
 		txtEmail.setText("");
 		txtEmpID.setText("");
 		txtFname2.setText("");
