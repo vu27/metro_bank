@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS metro_bank.checkings (
 	routing_number BIGINT NOT NULL,
 	debit_card_number BIGINT NOT NULL,
 	FOREIGN KEY (student_id) REFERENCES metro_bank.student(student_id)
+    ON DELETE CASCADE
 );
 
 
@@ -73,6 +74,7 @@ CREATE TABLE IF NOT EXISTS metro_bank.savings (
 	account_number BIGINT NOT NULL,
     routing_number BIGINT NOT NULL,
     FOREIGN KEY (student_id) REFERENCES metro_bank.student(student_id)
+    ON DELETE CASCADE
 );
 
 /* Create Credit Model */
@@ -86,6 +88,7 @@ CREATE TABLE IF NOT EXISTS metro_bank.credit (
 	available_credit double NOT NULL,
 	apr double NOT NULL,
     FOREIGN KEY (student_id) REFERENCES metro_bank.student(student_id)
+    ON DELETE CASCADE
 );
 
 /* Create CreditApplication Model */
@@ -103,7 +106,8 @@ CREATE TABLE IF NOT EXISTS metro_bank.credit_application (
     income double NOT NULL,
     password varchar(75) NOT NULL,
     student_id integer NOT NULL,
-    FOREIGN KEY (student_id) REFERENCES metro_bank.student(student_id),
+    FOREIGN KEY (student_id) REFERENCES metro_bank.student(student_id)
+    ON DELETE CASCADE,
     status varchar(75) NOT NULL,
     date_applied varchar(75) NOT NULL
 );
@@ -186,9 +190,8 @@ INSERT INTO metro_bank.credit (
 	available_credit,
 	apr
 ) VALUES
-('2021-02-25T05:47:26.853Z', true, 1, 322.22, 50.01, 9000, .2443),
-('2021-03-25T05:47:26.853Z', true, 2, 421.22, 10.01, 4000, .16,
-('2021-04-25T05:47:26.853Z', true, 1, 90.22, 60.01, 10000, .21);
+('2021-02-25T05:47:26.853Z', true, 1, 322.22, 50.01, 9000, .2443);
+
 
 /* Populate Credit applications */
 INSERT INTO metro_bank.credit_application (

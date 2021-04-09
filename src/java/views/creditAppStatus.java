@@ -1,9 +1,9 @@
 package views;
 
+import model.Manager;
 import model.Student;
 import model.bank_accounts.Credit;
 import model.bank_accounts.CreditApplication;
-import util.MySQLConnect;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,7 +11,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class creditAppStatus extends JFrame {
 
@@ -30,10 +32,11 @@ public class creditAppStatus extends JFrame {
     private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
     private JComboBox comboBoxstate = new JComboBox();
     private JTextField txtStuID;
-    private Student student;
+    //private Student student;
     private CreditApplication creditApplication;
     private JTextField txtAPR;
     private Credit credit;
+    private List<CreditApplication> creditApplications = new ArrayList<>();
 
 
     /**
@@ -43,7 +46,7 @@ public class creditAppStatus extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    creditAppStatus frame = new creditAppStatus();
+                    creditAppStatus frame = new creditAppStatus(new Student());
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -54,8 +57,10 @@ public class creditAppStatus extends JFrame {
 
     /**
      * Create the frame.
+     *
+     * @param student
      */
-    public creditAppStatus() {
+    public creditAppStatus(Student student) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 915, 671);
         contentPane = new JPanel();
@@ -154,7 +159,7 @@ public class creditAppStatus extends JFrame {
         txtAPR = new JTextField();
         txtAPR.setColumns(10);
         txtAPR.setBounds(566, 520, 285, 49);
-       // contentPane.add(txtAPR);
+        // contentPane.add(txtAPR);
 
         txtIncome = new JTextField();
         txtIncome.setColumns(10);
@@ -171,23 +176,23 @@ public class creditAppStatus extends JFrame {
 
         JLabel lblDollar = new JLabel("$");
         lblDollar.setBounds(143, 520, 111, 49);
-       // contentPane.add(lblDollar);
+        // contentPane.add(lblDollar);
 
         txtStatus = new JTextField();
         txtStatus.setColumns(10);
         txtStatus.setBounds(163, 520, 225, 49);
-       contentPane.add(txtStatus);
+        contentPane.add(txtStatus);
 
 
         JLabel lblAPR = new JLabel("APR");
         lblAPR.setHorizontalAlignment(SwingConstants.CENTER);
         lblAPR.setBounds(380, 520, 241, 49);
-       // contentPane.add(lblAPR);
+        // contentPane.add(lblAPR);
 
         JLabel lblPercent = new JLabel("%");
         lblPercent.setHorizontalAlignment(SwingConstants.CENTER);
         lblPercent.setBounds(750, 520, 241, 49);
-       // contentPane.add(lblPercent);
+        // contentPane.add(lblPercent);
 
 
         JLabel lblNewLabel = new JLabel("Credit Card Application");
@@ -202,20 +207,20 @@ public class creditAppStatus extends JFrame {
 
         JButton btnDeny = new JButton("Deny");
         btnDeny.setBounds(600, 600, 150, 42);
-       // contentPane.add(btnDeny);
+        // contentPane.add(btnDeny);
 
 
         JButton btnExit = new JButton("Exit");
         btnExit.setBounds(163, 600, 208, 42);
         contentPane.add(btnExit);
 
-        comboBoxstate.setModel(new DefaultComboBoxModel(new String[] { "Select", "Alabama", "Alaska", "Arizona",
+        comboBoxstate.setModel(new DefaultComboBoxModel(new String[]{"Select", "Alabama", "Alaska", "Arizona",
                 "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii",
                 "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland",
                 "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada",
                 "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
                 "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee",
-                "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming" }));
+                "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"}));
         comboBoxstate.setMaximumRowCount(54);
         comboBoxstate.setBounds(556, 241, 295, 48);
         comboBoxstate.setEditable(false);
@@ -237,11 +242,12 @@ public class creditAppStatus extends JFrame {
         txtStatus.setEditable(false);
 
 
-
-
-        try{
-            creditApplication = creditAppSearch.getter();
-            setData();
+        try {
+            //creditApplication = creditAppSearch.getter();
+            //setData();
+            creditApplications = Manager.getCreditApplication();
+            getApps(student);
+            setStudentData(student);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -249,11 +255,9 @@ public class creditAppStatus extends JFrame {
         }
 
 
-
-
         btnApprove.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent arg0) {
-              //  approveApplication();
+                //  approveApplication();
             }
 
             ;
@@ -276,7 +280,33 @@ public class creditAppStatus extends JFrame {
     }
 
 
-    public void setData(){
+    public void setStudentData(Student student) {
+        txtFname.setText(student.getFname());
+        txtLname.setText(student.getLname());
+        txtAddress.setText(student.getAddress());
+        txtEmail.setText(student.getEmail());
+        txtCity.setText(student.getCity());
+        txtPhone.setText(student.getPhone());
+        txtSSN.setText(String.valueOf(student.getSsn()));
+        txtStuID.setText(String.valueOf(student.getId()));
+        comboBoxstate.setEditable(true);
+        comboBoxstate.getModel().setSelectedItem(student.getState());
+        comboBoxstate.setEnabled(false);
+
+        try{
+            txtCreditScore.setText(String.valueOf(creditApplication.getCreditSore()));
+            txtIncome.setText(String.valueOf(creditApplication.getIncome()));
+            //txtCredit.setText();
+            txtStatus.setText(creditApplication.getStatus());
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+
+
+
+    }
+
+    public void setData() {
         //student = applyCreditSearch.getter();
         creditApplication = creditAppSearch.getter();
         txtFname.setText(creditApplication.getFirstName());
@@ -296,9 +326,38 @@ public class creditAppStatus extends JFrame {
         txtIncome.setText(String.valueOf(creditApplication.getIncome()));
         //txtCredit.setText();
         txtStatus.setText(creditApplication.getStatus());
-
+        JLabel usernotfound = new JLabel("Target not found");
+        usernotfound.setForeground(Color.RED);
+        usernotfound.setBounds(165, 414, 663, 26);
+        JOptionPane.showMessageDialog(usernotfound, "Application not found");
+        dispose();
 
     }
 
+    public CreditApplication getApps(Student student) {
+        int size = creditApplications.size(); //how many students in list
+        int id = 0; //ID to search with
 
+
+        //search for target in arrayList
+        for (int i = 0; i < size; i++) {
+
+            // if found set textfields to targets data
+            if (Integer.parseInt(creditApplications.get(i).getStudentId()) == student.getId()) {
+                creditApplication = creditApplications.get(i);
+
+                return creditApplication;
+            }
+
+        } //if target not found throw error
+        JLabel usernotfound = new JLabel("Target not found");
+        usernotfound.setForeground(Color.RED);
+        usernotfound.setBounds(165, 414, 663, 26);
+        JOptionPane.showMessageDialog(usernotfound, "Application not found");
+        dispose();
+
+        return null;
+
+
+    }
 }

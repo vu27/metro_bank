@@ -41,7 +41,7 @@ public class applyCreditExisting extends JFrame {
     private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
     private JComboBox comboBoxstate = new JComboBox();
     private JTextField txtStuID;
-    private Student student;
+    //private Student student;
 
 
     /**
@@ -51,7 +51,7 @@ public class applyCreditExisting extends JFrame {
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 		try {
-		    applyCreditExisting frame = new applyCreditExisting();
+		    applyCreditExisting frame = new applyCreditExisting(new Student());
 		    frame.setVisible(true);
 		} catch (Exception e) {
 		    e.printStackTrace();
@@ -63,7 +63,7 @@ public class applyCreditExisting extends JFrame {
     /**
      * Create the frame.
      */
-    public applyCreditExisting() {
+    public applyCreditExisting(Student student) {
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setBounds(100, 100, 915, 671);
 	contentPane = new JPanel();
@@ -205,11 +205,11 @@ public class applyCreditExisting extends JFrame {
 
 
 
-	setData();
+	setData(student);
 
 	btnFinish.addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent arg0) {
-		finishApplication();
+		finishApplication(student);
 	    }
 
 
@@ -224,7 +224,7 @@ public class applyCreditExisting extends JFrame {
 
     }
 
-    public void finishApplication() {
+    public void finishApplication(Student student) {
 
 
 
@@ -324,8 +324,8 @@ public class applyCreditExisting extends JFrame {
 
 
 
-    public void setData(){
-    	student = applyCreditSearch.getter();
+    public void setData(Student student){
+    	//student = applyCreditSearch.getter();
     	txtFname.setText(student.getFname());
     	txtLname.setText(student.getLname());
     	txtAddress.setText(student.getAddress());

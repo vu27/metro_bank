@@ -1,11 +1,11 @@
 package views;
-import java.awt.EventQueue;
+import model.Student;
+
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class applyCredit extends JFrame {
@@ -82,4 +82,6 @@ public class applyCredit extends JFrame {
 	});
 
     }
+
+
 }

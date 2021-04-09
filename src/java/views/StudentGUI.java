@@ -108,9 +108,7 @@ public class StudentGUI extends JFrame {
         lblTotal_1_1.setBounds(933, 92, 142, 64);
         contentPane.add(lblTotal_1_1);
 
-        JButton btnExit = new JButton("Log Off");
-        btnExit.setBounds(1071, 442, 179, 35);
-        contentPane.add(btnExit);
+
 
         JLabel lblStudentHeader = new JLabel("Student");
         lblStudentHeader.setHorizontalAlignment(SwingConstants.CENTER);
@@ -217,7 +215,54 @@ public class StudentGUI extends JFrame {
         btnPayCreditcard.setBounds(1049, 328, 216, 35);
         contentPane.add(btnPayCreditcard);
 
+        JButton btnExit = new JButton("Log Off");
+        btnExit.setBounds(1071, 462, 179, 35);
+        contentPane.add(btnExit);
 
+        JButton btnViewStatus = new JButton("View Credit Card Status");
+        btnViewStatus.setBounds(1049, 364, 216, 35);
+        contentPane.add(btnViewStatus);
+
+        JButton btnApplyCredit = new JButton("Apply For a Credit Card");
+        btnApplyCredit.setBounds(1049, 400, 216, 35);
+        contentPane.add(btnApplyCredit);
+
+
+        btnViewStatus.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+
+                try {
+
+
+                    creditAppStatus appStatus = new creditAppStatus(student);
+                    appStatus.setVisible(true);
+
+                    //applyCreditStudent applyCredit = new applyCreditStudent();
+                    //applyCredit.setVisible(true);
+
+                } catch (Exception ex) {
+
+                }
+
+            }
+        });
+
+        btnApplyCredit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+
+                try {
+
+                    applyCreditExisting applyCredit = new applyCreditExisting(student);
+                    applyCredit.setVisible(true);
+                    //applyCreditStudent applyCredit = new applyCreditStudent();
+                    //applyCredit.setVisible(true);
+
+                } catch (Exception ex) {
+
+                }
+
+            }
+        });
 
 
         btnCreateCredit.addActionListener(new ActionListener() {
@@ -285,11 +330,14 @@ public class StudentGUI extends JFrame {
         txtCreditBalance.setText("N/A");
         txtCreditNum.setText("N/A");
         btnPayCreditcard.setEnabled(false);
+        btnApplyCredit.setEnabled(false);
+        btnViewStatus.setEnabled(false);
         if(creditAccount!=null){
             btnPayCreditcard.setEnabled(true);
             contentPane.add(btnPayCreditcard);
             txtTotalCredit.setText(String.valueOf(creditAccount.getAvailableCredit()));
             txtCreditBalance.setText(String.valueOf(creditAccount.getBalance()));
+
         }
 
 
@@ -298,7 +346,6 @@ public class StudentGUI extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
 
                 try {
-
                     dispose();
                     //CreditCardStudent creditCard = new CreditCardStudent();
                     //creditCard.setVisible(true);
@@ -382,10 +429,8 @@ public class StudentGUI extends JFrame {
         }
 
 
-
         //return creditAccount;
     }
-
 
 
 

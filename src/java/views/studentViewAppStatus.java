@@ -45,7 +45,7 @@ public class studentViewAppStatus extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    creditAppStatus frame = new creditAppStatus();
+                    creditAppStatus frame = new creditAppStatus(new Student());
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();

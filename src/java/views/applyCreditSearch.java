@@ -97,7 +97,7 @@ public class applyCreditSearch extends JFrame {
 						if(getStudents() != null ){
 
 							if(!ifAppExists(student)) {
-								applyCreditExisting applycreditexist = new applyCreditExisting();
+								applyCreditExisting applycreditexist = new applyCreditExisting(student);
 								applycreditexist.setVisible(true);
 								dispose();
 							}

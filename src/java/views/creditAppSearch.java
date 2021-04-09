@@ -52,12 +52,12 @@ public class creditAppSearch extends JFrame{
 
         JLabel lblNewLabel = new JLabel("Application ID");
         lblNewLabel.setBounds(21, 95, 118, 26);
-        contentPane.add(lblNewLabel);
+        //contentPane.add(lblNewLabel);
 
         txtAppID = new JTextField();
         txtAppID.setBounds(170, 92, 186, 32);
-        contentPane.add(txtAppID);
-        txtAppID.setColumns(10);
+        //contentPane.add(txtAppID);
+        //txtAppID.setColumns(10);
 
         JLabel lblEmail = new JLabel("Email");
         lblEmail.setBounds(21, 154, 118, 26);
@@ -83,7 +83,7 @@ public class creditAppSearch extends JFrame{
         contentPane.add(lblOr);
         JLabel lblOr2 = new JLabel("OR");
         lblOr2.setBounds(170, 130, 118, 26);
-        contentPane.add(lblOr2);
+        //contentPane.add(lblOr2);
 
 
         JButton btnSearch = new JButton("Search");
@@ -97,6 +97,7 @@ public class creditAppSearch extends JFrame{
 
         //students = Manager.getStudents();
         creditApplications = Manager.getCreditApplication();
+        students = Manager.getStudents();
 
         btnExit.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent arg0) {
@@ -110,8 +111,8 @@ public class creditAppSearch extends JFrame{
             public void mouseClicked(MouseEvent arg0) {
 
                 try {
-                    if(getApps() != null ){
-                        creditAppStatus credit = new creditAppStatus();
+                    if(getStudent() != null && getApps() != null){
+                        creditAppStatus credit = new creditAppStatus(student);
                         credit.setVisible(true);
                         //System.out.print("Student found");
 
@@ -146,6 +147,47 @@ public class creditAppSearch extends JFrame{
         student = studentNew;
     }
 
+    public Student getStudent(){
+        int size = students.size(); //how many students in list
+        int id = 0; //ID to search with
+
+
+        if(!txtAppID.getText().isEmpty()){
+            if(!allDigits(txtAppID.getText())){ //if Id isnt a number throw error
+                JLabel useriderror = new JLabel("must enter a proper ID number");
+                useriderror.setForeground(Color.RED);
+                useriderror.setBounds(165, 414, 663, 26);
+                JOptionPane.showMessageDialog(useriderror, "must enter a proper ID number");
+                return null;
+            }
+            else
+                id = Integer.parseInt(txtAppID.getText().toString());
+        }
+
+        //search for target in arrayList
+        for(int i = 0; i < size; i++){
+
+            // if found set textfields to targets data
+            if(students.get(i).getEmail().equalsIgnoreCase(txtEmail.getText()) ||
+                    students.get(i).getId() == Integer.parseInt(txtStuID.getText())){
+                student = students.get(i);
+
+                return student;
+            }
+
+        } //if target not found throw error
+        JLabel usernotfound = new JLabel("Target not found");
+        usernotfound.setForeground(Color.RED);
+        usernotfound.setBounds(165, 414, 663, 26);
+        JOptionPane.showMessageDialog(usernotfound, "Application not found");
+
+        return null;
+
+
+    }
+
+
+
     public CreditApplication getApps(){
         int size = creditApplications.size(); //how many students in list
         int id = 0; //ID to search with
@@ -178,7 +220,7 @@ public class creditAppSearch extends JFrame{
         JLabel usernotfound = new JLabel("Target not found");
         usernotfound.setForeground(Color.RED);
         usernotfound.setBounds(165, 414, 663, 26);
-        JOptionPane.showMessageDialog(usernotfound, "Target not found");
+        JOptionPane.showMessageDialog(usernotfound, "Application not found");
 
         return null;
 

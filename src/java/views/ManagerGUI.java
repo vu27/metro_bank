@@ -47,7 +47,7 @@ public class ManagerGUI extends JFrame {
 
 	JComboBox comboBoxManager = new JComboBox();
 	comboBoxManager.setModel(new DefaultComboBoxModel(
-		new String[] { "Select", "Add Employee", "Add Manager", "Add Student", "Delete Employee",
+		new String[] { "Select", "Add Employee", "Add Manager", "Add Student", "Delete Employee","Delete Manager","Delete Student",
 				"Apply Student Credit", "Edit Employee", "Edit Students", "Edit Managers", "Bank Stats",
 				"View All Students", "View All Employees", "Pending Credit", "View All Credit App", "View Credit Status" }));
 	comboBoxManager.setBounds(21, 51, 227, 49);
@@ -75,8 +75,6 @@ public class ManagerGUI extends JFrame {
 				case "Add Student":
 					AddStudentGUI addStudentGUI = new AddStudentGUI();
 					addStudentGUI.setVisible(true);
-					break;
-				case "Delete Employee":
 					break;
 				case "Apply Student Credit":
 					applyCredit credit = new applyCredit();
@@ -113,6 +111,18 @@ public class ManagerGUI extends JFrame {
 				case "View Credit Status":
 					creditAppSearch creditSearch = new creditAppSearch();
 					creditSearch.setVisible(true);
+					break;
+				case "Delete Employee":
+					DeleteEmployee deleteEmployee = new DeleteEmployee();
+					deleteEmployee.setVisible(true);
+					break;
+				case "Delete Manager":
+					DeleteManager deleteManager = new DeleteManager();
+					deleteManager.setVisible(true);
+					break;
+				case "Delete Student":
+					DeleteStudent deleteStudent = new DeleteStudent();
+					deleteStudent.setVisible(true);
 					break;
 				default:
 					System.out.print("Swtich Error");

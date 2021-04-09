@@ -198,6 +198,74 @@ public class Manager extends User {
         System.out.println("New student added successfully.");
     }
 
+    public static void deleteEmployee(Employee employee){
+        MySQLConnect mysql = new MySQLConnect();
+        String queryString = "DELETE FROM metro_bank.employee " +
+                " WHERE employee_id = " + employee.getId() + ";";
+
+        mysql.executeStatement(queryString);
+        System.out.println("Employee Destroyed");
+    }
+
+    public static void deleteManager(Manager manager){
+        MySQLConnect mysql = new MySQLConnect();
+        String queryString = "DELETE FROM metro_bank.manager " +
+                " WHERE manager_id = " +  manager.getId() + ";";
+
+        mysql.executeStatement(queryString);
+        System.out.println("Manager Destroyed");
+    }
+
+    public static void deleteStudent(Student student){
+        MySQLConnect mysql = new MySQLConnect();
+
+        //String queryString = "ALTER TABLE student DROP FOREIGN KEY ";
+
+       //mysql.executeStatement(queryString);
+
+        String queryString = "DELETE FROM metro_bank.student " +
+                " WHERE student_id = " +  student.getId() + ";";
+
+        mysql.executeStatement(queryString);
+
+        queryString = "SET FOREIGN_KEY_CHECKS = 1";
+        mysql.executeStatement(queryString);
+
+        try{
+
+
+
+            queryString = "UPDATE metro_bank.checkings " + " SET is_active = 0 " +
+                    " WHERE student_id = " +  student.getId() + ";";
+
+            mysql.executeStatement(queryString);
+
+
+
+        }catch (Exception e){
+
+        }
+
+
+
+
+        queryString = "UPDATE metro_bank.savings " + " SET is_active = 0 " +
+                " WHERE student_id = " +  student.getId() + ";";
+
+        mysql.executeStatement(queryString);
+
+        queryString = "UPDATE metro_bank.credit " + " SET is_active = 0 " +
+                " WHERE student_id = " +  student.getId() + ";";
+
+        mysql.executeStatement(queryString);
+
+
+
+        System.out.println("Student Destroyed");
+    }
+
+
+
     public static void processApp(CreditApplication creditApplication){
         MySQLConnect mysql = new MySQLConnect();
         String queryString = "INSERT INTO metro_bank.credit_application " +
