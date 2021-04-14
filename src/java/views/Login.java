@@ -22,13 +22,8 @@ public class Login extends JFrame {
     public Student student;
 
     private JFrame frmLogin;
-    private JTextField txtPassword;
     private JTextField userName;
-
-    protected String manager_str = "Manager";
-    protected String employee_string = "Employee";
-    protected String student_string = "Student";
-
+    private boolean userExist = false;
 
     /**
      * Launch the application.
@@ -82,27 +77,12 @@ public class Login extends JFrame {
 
         frmLogin.getContentPane().setLayout(null);
 
-        // txtPassword = new JTextField();
-        // txtPassword.setFont(new Font("Tahoma", Font.PLAIN, 30));
-        // txtPassword.setBounds(165, 200, 720, 72);
-        // frmLogin.getContentPane().add(txtPassword);
-        // txtPassword.setColumns(10);
-
-        // JLabel lblPassword = new JLabel("Password");
-        // lblPassword.setHorizontalAlignment(SwingConstants.CENTER);
-        // lblPassword.setBounds(276, 411, 154, 41);
-        // contentPane.add(lblPassword);
         JPasswordField password = new JPasswordField();
-        // txtPassword = new JTextField();
-        // txtPassword.setColumns(10);
-        // txtPassword.setBounds(430, 404, 718, 55);
         password.setColumns(10);
         password.setBounds(165, 214, 595, 72);
         password.setFont(new Font("font", Font.PLAIN, 30));
         password.setEchoChar('*');
         frmLogin.getContentPane().add(password);
-
-        // contentPane.add(password);
 
         userName = new JTextField();
         userName.setFont(new Font("font", Font.PLAIN, 30));
@@ -152,33 +132,6 @@ public class Login extends JFrame {
             }
         });
 
-        //radial buttons
-        JRadioButton rdbtnManager = new JRadioButton("Manager");
-        rdbtnManager.setFont(new Font("Dialog", Font.PLAIN, 21));
-        rdbtnManager.setForeground(Color.WHITE);
-        rdbtnManager.setBounds(784, 104, 244, 66);
-        rdbtnManager.setBackground(new Color(11, 40, 83));
-        frmLogin.getContentPane().add(rdbtnManager);
-
-        JRadioButton rdbtnEmployee = new JRadioButton("Employee");
-        rdbtnEmployee.setFont(new Font("Dialog", Font.PLAIN, 21));
-        rdbtnEmployee.setForeground(Color.WHITE);
-        rdbtnEmployee.setBounds(784, 183, 234, 46);
-        frmLogin.getContentPane().add(rdbtnEmployee);
-        rdbtnEmployee.setBackground(new Color(11, 40, 83));
-
-        JRadioButton rdbtnStudent = new JRadioButton("Student");
-        rdbtnStudent.setFont(new Font("Dialog", Font.PLAIN, 21));
-        rdbtnStudent.setForeground(Color.WHITE);
-        rdbtnStudent.setBounds(784, 247, 244, 62);
-        rdbtnStudent.setBackground(new Color(11, 40, 83));
-        frmLogin.getContentPane().add(rdbtnStudent);
-
-        ButtonGroup buttonGroupRole = new ButtonGroup();
-        buttonGroupRole.add(rdbtnManager);
-        buttonGroupRole.add(rdbtnEmployee);
-        buttonGroupRole.add(rdbtnStudent);
-
         //images
         JLabel lblSchool = new JLabel("");
         Image school = new ImageIcon(this.getClass().getResource("/static/Untitled.jpg")).getImage();
@@ -208,74 +161,79 @@ public class Login extends JFrame {
                 ManagerGUI managerGUI = new ManagerGUI();
 
                 String selectRole = "";
-                if (rdbtnManager.isSelected()) {
-                    selectRole = manager_str;
-                } else if (rdbtnStudent.isSelected()) {
-                    selectRole = student_string;
-                } else if (rdbtnEmployee.isSelected()) {
-                    selectRole = employee_string;
-                }
 
+                try {
+                    // Get the user from mySql db where username == inputted_email
+                    String managerQueryString = "SELECT * FROM manager WHERE manager_email = \""
+                            + userName.getText().toLowerCase() + "\";";
+                    String employeeQueryString = "SELECT * FROM employee WHERE employee_email = \""
+                            + userName.getText().toLowerCase() + "\";";
+                    String studentQueryString = "SELECT * FROM student WHERE student_email = \""
+                            + userName.getText().toLowerCase() + "\";";
 
-                // Check if user selected a role
-                if (!rdbtnManager.isSelected() && !rdbtnEmployee.isSelected() && !rdbtnStudent.isSelected()) {
-                    JOptionPane.showMessageDialog(lblRoleNotSelected, "User role not selected");
-                } else {
+                    List<Map<String, Object>> managerResultList = mysql.getData(managerQueryString);
+                    List<Map<String, Object>> employeeResultList = mysql.getData(employeeQueryString);
+                    List<Map<String, Object>> studentResultList = mysql.getData(studentQueryString);
 
-                    try {
-                        // Get the user from mySql db where username == inputted_email
-                        String queryString = "SELECT * FROM " + selectRole.toLowerCase()
-                                + " WHERE + " + selectRole.toLowerCase() + "_email = \""
-                                + userName.getText().toLowerCase() + "\";";
-                        List<Map<String, Object>> resultList = mysql.getData(queryString);
+                    if (managerResultList.isEmpty() && employeeResultList.isEmpty() && studentResultList.isEmpty()) {
+                        userExist = false;
+                        JOptionPane.showMessageDialog(lblUserNotFound, "User not found");
+                    } else {
+                        userExist = true;
 
-                        // Create user model if user exists
-                        if (!resultList.isEmpty()) {
-                            switch (selectRole) {
-                                case "Manager":
-                                    manager = new Manager(Integer.parseInt(resultList.get(0).get("manager_id").toString()),
-                                            resultList.get(0).get("manager_fname").toString(),
-                                            resultList.get(0).get("manager_lname").toString(),
-                                            resultList.get(0).get("manager_phone").toString(),
-                                            resultList.get(0).get("manager_email").toString(),
-                                            resultList.get(0).get("manager_password").toString(),
-                                            Double.parseDouble(resultList.get(0).get("manager_salary").toString()),
-                                            Integer.parseInt(resultList.get(0).get("manager_ssn").toString()),
-                                            resultList.get(0).get("manager_address").toString(),
-                                            resultList.get(0).get("manager_city").toString(),
-                                            resultList.get(0).get("manager_state").toString());
-                                    break;
-                                case "Employee":
-                                    employee = new Employee(Integer.parseInt(resultList.get(0).get("employee_id").toString()),
-                                            resultList.get(0).get("employee_fname").toString(),
-                                            resultList.get(0).get("employee_lname").toString(),
-                                            resultList.get(0).get("employee_phone").toString(),
-                                            resultList.get(0).get("employee_email").toString(),
-                                            resultList.get(0).get("employee_password").toString(),
-                                            Double.parseDouble(resultList.get(0).get("employee_salary").toString()),
-                                            Integer.parseInt(resultList.get(0).get("employee_ssn").toString()),
-                                            resultList.get(0).get("employee_address").toString(),
-                                            resultList.get(0).get("employee_city").toString(),
-                                            resultList.get(0).get("employee_state").toString());
-                                    break;
-                                case "Student":
-                                    student = new Student(Integer.parseInt(resultList.get(0).get("student_id").toString()),
-                                            resultList.get(0).get("student_fname").toString(),
-                                            resultList.get(0).get("student_lname").toString(),
-                                            resultList.get(0).get("student_phone").toString(),
-                                            resultList.get(0).get("student_email").toString(),
-                                            resultList.get(0).get("student_password").toString(),
-                                            resultList.get(0).get("date_created").toString(),
-                                            Integer.parseInt(resultList.get(0).get("student_ssn").toString()),
-                                            resultList.get(0).get("student_address").toString(),
-                                            resultList.get(0).get("student_city").toString(),
-                                            resultList.get(0).get("student_state").toString());
-                                    break;
-                                default:
-                                    System.out.println("Error with role selection.");
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(lblUserNotFound, "User not found");
+                        if (!managerResultList.isEmpty()) {
+                            selectRole = "Manager";
+                        } else if(!employeeResultList.isEmpty()) {
+                            selectRole = "Employee";
+                        } else if(!studentResultList.isEmpty()) {
+                            selectRole = "Student";
+                        }
+                    }
+
+                    // Create user model if user exists
+                    if (userExist) {
+                        switch (selectRole) {
+                            case "Manager":
+                                manager = new Manager(Integer.parseInt(managerResultList.get(0).get("manager_id").toString()),
+                                        managerResultList.get(0).get("manager_fname").toString(),
+                                        managerResultList.get(0).get("manager_lname").toString(),
+                                        managerResultList.get(0).get("manager_phone").toString(),
+                                        managerResultList.get(0).get("manager_email").toString(),
+                                        managerResultList.get(0).get("manager_password").toString(),
+                                        Double.parseDouble(managerResultList.get(0).get("manager_salary").toString()),
+                                        Integer.parseInt(managerResultList.get(0).get("manager_ssn").toString()),
+                                        managerResultList.get(0).get("manager_address").toString(),
+                                        managerResultList.get(0).get("manager_city").toString(),
+                                        managerResultList.get(0).get("manager_state").toString());
+                                break;
+                            case "Employee":
+                                employee = new Employee(Integer.parseInt(employeeResultList.get(0).get("employee_id").toString()),
+                                        employeeResultList.get(0).get("employee_fname").toString(),
+                                        employeeResultList.get(0).get("employee_lname").toString(),
+                                        employeeResultList.get(0).get("employee_phone").toString(),
+                                        employeeResultList.get(0).get("employee_email").toString(),
+                                        employeeResultList.get(0).get("employee_password").toString(),
+                                        Double.parseDouble(employeeResultList.get(0).get("employee_salary").toString()),
+                                        Integer.parseInt(employeeResultList.get(0).get("employee_ssn").toString()),
+                                        employeeResultList.get(0).get("employee_address").toString(),
+                                        employeeResultList.get(0).get("employee_city").toString(),
+                                        employeeResultList.get(0).get("employee_state").toString());
+                                break;
+                            case "Student":
+                                student = new Student(Integer.parseInt(studentResultList.get(0).get("student_id").toString()),
+                                        studentResultList.get(0).get("student_fname").toString(),
+                                        studentResultList.get(0).get("student_lname").toString(),
+                                        studentResultList.get(0).get("student_phone").toString(),
+                                        studentResultList.get(0).get("student_email").toString(),
+                                        studentResultList.get(0).get("student_password").toString(),
+                                        studentResultList.get(0).get("date_created").toString(),
+                                        Integer.parseInt(studentResultList.get(0).get("student_ssn").toString()),
+                                        studentResultList.get(0).get("student_address").toString(),
+                                        studentResultList.get(0).get("student_city").toString(),
+                                        studentResultList.get(0).get("student_state").toString());
+                                break;
+                            default:
+                                System.out.println("Error occurred");
                         }
 
                         // Verify password
@@ -308,14 +266,16 @@ public class Login extends JFrame {
                             default:
                                 System.out.println("Error at password confirmation");
                         }
-
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                        JLabel lblUserNotFound = new JLabel("UserName/Password is not correct");
-                        lblUserNotFound.setForeground(Color.RED);
-                        lblUserNotFound.setBounds(165, 414, 663, 26);
-                        frmLogin.getContentPane().add(lblUserNotFound);
+                    } else {
+                        JOptionPane.showMessageDialog(lblUserNotFound, "User not found");
                     }
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JLabel lblUserNotFound = new JLabel("UserName/Password is not correct");
+                    lblUserNotFound.setForeground(Color.RED);
+                    lblUserNotFound.setBounds(165, 414, 663, 26);
+                    frmLogin.getContentPane().add(lblUserNotFound);
                 }
             }
         });
@@ -324,5 +284,6 @@ public class Login extends JFrame {
     public void resetLoginTextInputs(JTextField userName, JPasswordField password) {
         userName.setText("");
         password.setText("");
+        userExist = false;
     }
 }
