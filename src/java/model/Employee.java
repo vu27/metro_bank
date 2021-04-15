@@ -3,6 +3,10 @@ package model;
 import model.bank_accounts.Credit;
 import util.MySQLConnect;
 
+import java.text.DecimalFormat;
+import java.util.List;
+import java.util.Map;
+
 public class Employee extends User {
     double salary;
 
@@ -19,7 +23,7 @@ public class Employee extends User {
         this.salary = salary;
     }
 
-    public static void processApp(Credit credit){
+    public static void processApp(Credit credit) {
         MySQLConnect mysql = new MySQLConnect();
 
         String queryString = "INSERT INTO metro_bank.credit " +
@@ -38,10 +42,63 @@ public class Employee extends User {
 
     }
 
-    public static void viewApplicationStatus(){
-        //work on later
+    public static boolean makeDepositChecking(long accountNumber, int studentId, double depositAmount) {
+        MySQLConnect mysql = new MySQLConnect();
+        double originalAmount;
+        double newAmount;
+
+        // See if account exists
+        String getAccountQuery = "SELECT * FROM checkings WHERE account_number = "
+                + accountNumber + " and student_id = " + studentId + ";";
+
+        List<Map<String, Object>> resultList = mysql.getData(getAccountQuery);
+
+        if (resultList.size() == 0) {
+            return false;
+        } else {
+            originalAmount = Double.parseDouble(resultList.get(0).get("total").toString());
+            newAmount = depositAmount + originalAmount;
+            DecimalFormat f = new DecimalFormat("##.00");
+
+            if (newAmount == originalAmount) {
+                return false;
+            } else {
+                String depositQuery = "UPDATE checkings SET total = " + f.format(newAmount)
+                        + " WHERE account_number = " + accountNumber + " AND "
+                        + " student_id = " + studentId + ";";
+                mysql.executeStatement(depositQuery);
+                return true;
+            }
+        }
     }
 
+    public static boolean makeDepositSavings(long accountNumber, int studentId, double depositAmount) {
+        MySQLConnect mysql = new MySQLConnect();
+        double originalAmount;
+        double newAmount;
 
+        // See if account exists
+        String getAccountQuery = "SELECT * FROM savings WHERE account_number = "
+                + accountNumber + " and student_id = " + studentId + ";";
 
+        List<Map<String, Object>> resultList = mysql.getData(getAccountQuery);
+
+        if (resultList.size() == 0) {
+            return false;
+        } else {
+            originalAmount = Double.parseDouble(resultList.get(0).get("total").toString());
+            newAmount = depositAmount + originalAmount;
+            DecimalFormat f = new DecimalFormat("##.00");
+
+            if (newAmount == originalAmount) {
+                return false;
+            } else {
+                String depositQuery = "UPDATE savings SET total = " + f.format(newAmount)
+                        + " WHERE account_number = " + accountNumber + " AND "
+                        + " student_id = " + studentId + ";";
+                mysql.executeStatement(depositQuery);
+                return true;
+            }
+        }
+    }
 }
