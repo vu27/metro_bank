@@ -79,7 +79,7 @@ public class EmployeeGUI extends JFrame {
 
 	JComboBox comboBoxAccount = new JComboBox();
 	comboBoxAccount.setModel(new DefaultComboBoxModel(
-		new String[] { "Select", "Open Account", "Close Account", "Modify Student Account", "Apply Student Credit", "View All Accounts", "View Credit Status", "Deposit" }));
+		new String[] { "Select", "Open Account", "Close Account", "Modify Student Account", "Apply Student Credit", "View All Accounts", "View Credit Status", "Deposit", "Withdraw" }));
 	comboBoxAccount.setBounds(53, 52, 282, 55);
 	contentPane.add(comboBoxAccount);
 
@@ -118,10 +118,13 @@ public class EmployeeGUI extends JFrame {
 				creditSearch.setVisible(true);
 			}
 			if (x.equals("Deposit")){
-				DepositToCheckingGUI depositToCheckingGUI = new DepositToCheckingGUI();
-				depositToCheckingGUI.setVisible(true);
+				DepositGUI depositGUI = new DepositGUI();
+				depositGUI.setVisible(true);
 			}
-
+			if (x.equals("Withdraw")){
+				WithdrawalGUI withdrawalGUI = new WithdrawalGUI();
+				withdrawalGUI.setVisible(true);
+			}
 
 
 

@@ -101,4 +101,68 @@ public class Employee extends User {
             }
         }
     }
+
+    public static boolean makeWithdrawalChecking(long accountNumber, int studentId, double withdrawalAmount) {
+        MySQLConnect mysql = new MySQLConnect();
+        double originalAmount;
+        double newAmount;
+
+        // See if account exists
+        String getAccountQuery = "SELECT * FROM checkings WHERE account_number = "
+                + accountNumber + " and student_id = " + studentId + ";";
+
+        List<Map<String, Object>> resultList = mysql.getData(getAccountQuery);
+
+        if (resultList.size() == 0) {
+            return false;
+        } else {
+            originalAmount = Double.parseDouble(resultList.get(0).get("total").toString());
+            newAmount = originalAmount - withdrawalAmount;
+            DecimalFormat f = new DecimalFormat("##.00");
+
+            if (newAmount == originalAmount) {
+                return false;
+            } else if (newAmount < 0) {
+                return false;
+            } else {
+                String depositQuery = "UPDATE checkings SET total = " + f.format(newAmount)
+                        + " WHERE account_number = " + accountNumber + " AND "
+                        + " student_id = " + studentId + ";";
+                mysql.executeStatement(depositQuery);
+                return true;
+            }
+        }
+    }
+
+    public static boolean makeWithdrawalSavings(long accountNumber, int studentId, double withdrawalAmount) {
+        MySQLConnect mysql = new MySQLConnect();
+        double originalAmount;
+        double newAmount;
+
+        // See if account exists
+        String getAccountQuery = "SELECT * FROM savings WHERE account_number = "
+                + accountNumber + " and student_id = " + studentId + ";";
+
+        List<Map<String, Object>> resultList = mysql.getData(getAccountQuery);
+
+        if (resultList.size() == 0) {
+            return false;
+        } else {
+            originalAmount = Double.parseDouble(resultList.get(0).get("total").toString());
+            newAmount = originalAmount - withdrawalAmount;
+            DecimalFormat f = new DecimalFormat("##.00");
+
+            if (newAmount == originalAmount) {
+                return false;
+            } else if (newAmount < 0) {
+                return false;
+            } else {
+                String depositQuery = "UPDATE savings SET total = " + f.format(newAmount)
+                        + " WHERE account_number = " + accountNumber + " AND "
+                        + " student_id = " + studentId + ";";
+                mysql.executeStatement(depositQuery);
+                return true;
+            }
+        }
+    }
 }

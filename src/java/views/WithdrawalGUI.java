@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class DepositToCheckingGUI extends JFrame {
+public class WithdrawalGUI extends JFrame {
 
     private JPanel contentPane;
     private JTextField txtFieldAmount;
@@ -31,7 +31,7 @@ public class DepositToCheckingGUI extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    DepositToCheckingGUI frame = new DepositToCheckingGUI();
+                    WithdrawalGUI frame = new WithdrawalGUI();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -43,7 +43,7 @@ public class DepositToCheckingGUI extends JFrame {
     /**
      * Create the frame.
      */
-    public DepositToCheckingGUI() {
+    public WithdrawalGUI() {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1263, 553);
@@ -71,11 +71,11 @@ public class DepositToCheckingGUI extends JFrame {
         textFieldStudentId.setBounds(553, 157, 210, 48);
         contentPane.add(textFieldStudentId);
 
-        JLabel lblAmount = new JLabel("Amount to Deposit");
+        JLabel lblAmount = new JLabel("Amount to Withdraw");
         lblAmount.setBounds(411, 209, 142, 64);
         contentPane.add(lblAmount);
 
-        JLabel lblHeader = new JLabel("Deposit");
+        JLabel lblHeader = new JLabel("Withdrawal");
         lblHeader.setHorizontalAlignment(SwingConstants.CENTER);
         lblHeader.setBounds(476, 0, 368, 56);
         contentPane.add(lblHeader);
@@ -125,16 +125,16 @@ public class DepositToCheckingGUI extends JFrame {
                         depositAmount = Double.parseDouble(txtFieldAmount.getText());
 
                         if (rdbtnChecking.isSelected()) {
-                            if(!Employee.makeDepositChecking(accountNumber, studentId, depositAmount)) {
+                            if(!Employee.makeWithdrawalChecking(accountNumber, studentId, depositAmount)) {
                                 textFieldStatus.setText("ERROR: Something went wrong.");
                             } else {
-                                textFieldStatus.setText("Deposit was successful.");
+                                textFieldStatus.setText("Withdrawal was successful.");
                             }
                         } else {
-                            if(!Employee.makeDepositSavings(accountNumber, studentId, depositAmount)) {
+                            if(!Employee.makeWithdrawalSavings(accountNumber, studentId, depositAmount)) {
                                 textFieldStatus.setText("ERROR: Something went wrong.");
                             } else {
-                                textFieldStatus.setText("Deposit was successful.");
+                                textFieldStatus.setText("Withdrawal was successful.");
                             }
                         }
                     }
