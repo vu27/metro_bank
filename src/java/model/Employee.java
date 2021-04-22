@@ -4,8 +4,10 @@ import model.bank_accounts.Credit;
 import util.MySQLConnect;
 
 import java.text.DecimalFormat;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class Employee extends User {
     double salary;
@@ -164,5 +166,44 @@ public class Employee extends User {
                 return true;
             }
         }
+    }
+
+    public static void createCheckingAccount(Student student) {
+        MySQLConnect mysql = new MySQLConnect();
+        long accountNumber = (long) Math.floor(Math.random() * 9_000_000_000L) + 1_000_000_000L;
+        long routingNumber = (long) Math.floor(Math.random() * 9_000_000_000L) + 1_000_000_000L;
+
+        long first14 = (long) (Math.random() * 100000000000000L);
+        long debitCardNumber = 5200000000000000L + first14;
+
+        String getLastUserString = "SELECT * FROM student ORDER BY student_id DESC LIMIT 1";
+        List<Map<String, Object>> studentList = mysql.getData(getLastUserString);
+
+        int studentId = Integer.parseInt(studentList.get(0).get("student_id").toString());
+
+        String newCheckingQuery = "INSERT INTO metro_bank.checkings " +
+                "(date_opened, is_active, student_id, total, is_overdrafted, account_number, routing_number, debit_card_number)" +
+                " VALUES ('" + Instant.now().toString() + "', true, " +  studentId + ", 0, false, " +
+                accountNumber + ", " + routingNumber + ", " + debitCardNumber + ");";
+
+        mysql.executeStatement(newCheckingQuery);
+    }
+
+    public static void createSavingsAccount(Student student) {
+        MySQLConnect mysql = new MySQLConnect();
+        long accountNumber = (long) Math.floor(Math.random() * 9_000_000_000L) + 1_000_000_000L;
+        long routingNumber = (long) Math.floor(Math.random() * 9_000_000_000L) + 1_000_000_000L;
+
+        String getLastUserString = "SELECT * FROM student ORDER BY student_id DESC LIMIT 1";
+        List<Map<String, Object>> studentList = mysql.getData(getLastUserString);
+
+        int studentId = Integer.parseInt(studentList.get(0).get("student_id").toString());
+
+        String newCheckingQuery = "INSERT INTO metro_bank.savings " +
+                "(date_opened, is_active, student_id, total, interest, account_number, routing_number)" +
+                " VALUES ('" + Instant.now().toString() + "', true, " +  studentId + ", 0, 0.02, " +
+                accountNumber + ", " + routingNumber + ");";
+
+        mysql.executeStatement(newCheckingQuery);
     }
 }

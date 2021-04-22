@@ -1,5 +1,6 @@
 package views;
 
+import model.Employee;
 import model.Manager;
 import model.Student;
 
@@ -210,6 +211,8 @@ public class AddStudentGUI extends JFrame {
                     String.valueOf(comboBoxstate.getSelectedItem()));
 
             Manager.addStudent(newStudent);
+            Employee.createCheckingAccount(newStudent);
+            Employee.createSavingsAccount(newStudent);
             resetFields();
 
             JLabel lblAddSuccess = new JLabel("");
@@ -217,6 +220,8 @@ public class AddStudentGUI extends JFrame {
             lblAddSuccess.setBounds(165, 414, 663, 26);
             JOptionPane.showMessageDialog(lblAddSuccess, "New student added successfully.");
         }
+
+
     }
 
     public void resetFields() {
