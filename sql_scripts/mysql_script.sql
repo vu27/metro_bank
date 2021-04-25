@@ -212,7 +212,7 @@ INSERT INTO metro_bank.credit_application (
     status,
     date_applied
 ) VALUES
-('Jerry', 'Hills', '8930 Theatre Street', 'Stow', 'OH', 'j.hills@metrobank.edu', '953-555-1177', 119038905, 500, 35000, 'password', 1, 'In review', '2021-02-25T05:47:26.853Z' );
+('Jerry', 'Hills', '8930 Theatre Street', 'Stow', 'OH', 'j.hills@metrobank.edu', '953-555-1177', 119038905, 500, 35000, 'password', 1, 'Approved', '2021-02-25T05:47:26.853Z' );
 
 /* Populate Checkings */
 INSERT INTO metro_bank.checkings (

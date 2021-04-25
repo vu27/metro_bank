@@ -4,15 +4,20 @@ import model.Employee;
 import model.Manager;
 import model.Student;
 import util.MySQLConnect;
-
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.*;
+
+/**
+ * This is the GUI for the Login Screen
+ * @author Everyone
+ * @since 2021/25/04
+ * @version 1.021.12
+ */
 
 public class Login extends JFrame {
 
@@ -20,7 +25,6 @@ public class Login extends JFrame {
     public Manager manager;
     public Employee employee;
     public Student student;
-
     private JFrame frmLogin;
     private JTextField userName;
     private boolean userExist = false;
@@ -137,7 +141,6 @@ public class Login extends JFrame {
         Image school = new ImageIcon(this.getClass().getResource("/static/Untitled.jpg")).getImage();
         lblSchool.setIcon(new ImageIcon(school));
         lblSchool.setBounds(543, 385, 464, 150);
-        // ImageIcon image = new ImageIcon("/Untitled.jpg");
         frmLogin.getContentPane().add(lblSchool);
 
         JLabel lblFdic = new JLabel("");

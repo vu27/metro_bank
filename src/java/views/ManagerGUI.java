@@ -1,22 +1,22 @@
 package views;
 
-import java.awt.EventQueue;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+/**
+ * This is the GUI for the Manager account
+ * @author Everyone
+ * @since 2021/25/04
+ * @version 1.021.12
+ */
 
 public class ManagerGUI extends JFrame {
 
     private JPanel contentPane;
-    private JTextField textField;
 
     /**
      * Launch the application.
@@ -39,10 +39,11 @@ public class ManagerGUI extends JFrame {
      */
     public ManagerGUI() {
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	setBounds(100, 100, 1049, 573);
+		setBounds(100, 100, 911, 379);
 	contentPane = new JPanel();
 	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 	setContentPane(contentPane);
+	getContentPane().setBackground(new Color(11, 40, 83));
 	contentPane.setLayout(null);
 
 	JComboBox comboBoxManager = new JComboBox();
@@ -50,12 +51,27 @@ public class ManagerGUI extends JFrame {
 		new String[] { "Select", "Add Employee", "Add Manager", "Add Student", "Delete Employee","Delete Manager","Delete Student",
 				"Apply Student Credit", "Edit Employee", "Edit Students", "Edit Managers", "Bank Stats",
 				"View All Students", "View All Employees", "Pending Credit", "View All Credit App", "View Credit Status" }));
-	comboBoxManager.setBounds(21, 51, 227, 49);
+	comboBoxManager.setBounds(21, 81, 227, 49);
 	contentPane.add(comboBoxManager);
 
+	JLabel lblSchool = new JLabel("");
+	Image school = new ImageIcon(this.getClass().getResource("/static/Untitled.jpg")).getImage();
+	lblSchool.setIcon(new ImageIcon(school));
+	lblSchool.setBounds(332, 51, 464, 150);
+	getContentPane().add(lblSchool);
+
+	JLabel lblMetroState = new JLabel("Metro State Bank Manager");
+	lblMetroState.setForeground(Color.WHITE);
+	lblMetroState.setHorizontalAlignment(SwingConstants.CENTER);
+	lblMetroState.setFont(new Font("Dialog", Font.PLAIN, 40));
+	lblMetroState.setBounds(85, 0, 686, 49);
+	getContentPane().add(lblMetroState);
+
 	JButton btnSelect = new JButton("Select");
-	btnSelect.setBounds(21, 227, 227, 41);
+	btnSelect.setBounds(21, 277, 227, 41);
 	contentPane.add(btnSelect);
+
+	//select button
 	btnSelect.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
 
@@ -136,45 +152,17 @@ public class ManagerGUI extends JFrame {
 	    }
 	});
 
-	textField = new JTextField();
-	textField.setBounds(626, 51, 291, 49);
-	contentPane.add(textField);
-	textField.setColumns(10);
 
-	JLabel lblEmpID = new JLabel("Employee ID");
-	lblEmpID.setBounds(457, 51, 127, 49);
-	contentPane.add(lblEmpID);
-
-	JButton btnSearch = new JButton("Search");
-	btnSearch.setBounds(690, 227, 227, 41);
-	contentPane.add(btnSearch);
 
 	JButton btnExit = new JButton("Exit");
-	btnExit.setBounds(337, 227, 227, 41);
+	btnExit.setBounds(590, 277, 227, 41);
 	contentPane.add(btnExit);
 	btnExit.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
 
 		try {
 
-		    // creditCardCustomer creditCard = new creditCardCustomer();
-		    // System.exit(0);
-		    // creditCard.setVisible(false);
-		    // this.
-		    // JFrame.DISPOSE_ON_CLOSE;
-		    // frame.setVisible(false);
 		    dispose();
-		    // WinBuilder mainMenu = new WinBuilder();
-		    // mainMenu.setVisible(true);
-
-		    //MainMenu mainMenu = new MainMenu();
-		   // mainMenu.setVisible(true);
-
-		    // ((JComponent) mainMenu).setVisible(true);
-
-		    // customer custom = new customer();
-		    // custom.setVisible(true);
-		    // System.exit(0);
 
 		} catch (Exception ex) {
 
