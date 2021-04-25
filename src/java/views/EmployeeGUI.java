@@ -55,8 +55,8 @@ public class EmployeeGUI extends JFrame {
 
 	JComboBox comboBoxAccount = new JComboBox();
 	comboBoxAccount.setModel(new DefaultComboBoxModel(
-		new String[] { "Select", "Add Student", "Close Account", "Modify Student Account", "Apply Student Credit",
-				"View All Accounts", "View Credit Status", "Deposit", "Withdraw" }));
+		new String[] { "Select", "Add Student", "Close Account", "Modify Student Account", "Apply Student Credit"
+				, "View Credit Status", "Deposit", "Withdraw" }));
 	comboBoxAccount.setBounds(53, 121, 282, 55);
 	contentPane.add(comboBoxAccount);
 
