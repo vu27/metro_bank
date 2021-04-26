@@ -89,6 +89,7 @@ public class interestTimer implements Runnable {
                 LocalDateTime now = LocalDateTime.now(); //get today's date
 
                 if(studentHighest.containsKey(credits.get(i).getStudentId())){
+                    Credit credit = credits.get(i); //get credit to charge interests
                     String[] str; //use for splitting up the date
                     String dateOpened =  credits.get(i).getDateOpened(); //get date the credit account opened
                     str = dateOpened.split("T"); //split up the date and time
@@ -105,16 +106,37 @@ public class interestTimer implements Runnable {
 
                     if(day==today && credits.get(i).isActive() == true){ // if account date matches today then charge
 
-                        Credit credit = credits.get(i); //get credit to charge interests
+                        if(credit.getStatementBalance() > 0 ){
+                            // calculate the new balance
+                            //double charge = (credit.getBalance() + credit.getStatementBalance()) * credit.getApr();
 
-                        // calculate the new balance
-                        double charge = (credit.getBalance() + credit.getStatementBalance()) * credit.getApr();
-                        double newStatementBalance = charge + credit.getBalance() + credit.getStatementBalance();
-                        newStatementBalance = round(newStatementBalance,2); //round up to decimals places
+                            double charge = (credit.getStatementBalance() * credit.getApr());
+                            double newStatementBalance = charge + credit.getBalance() + credit.getStatementBalance();
+                            newStatementBalance = round(newStatementBalance,2); //round up to decimals places
 
-                        credit.setStatementBalance(newStatementBalance);
-                        credit.setBalance(newStatementBalance);
-                        addInterest(credit); //mysql statement to call
+                            credit.setStatementBalance(newStatementBalance);
+                            credit.setBalance(newStatementBalance);
+                            addInterest(credit); //mysql statement to call
+                            break;
+                        }
+
+                        if(credit.getBalance() > 0 ){
+                            // calculate the new balance
+
+                            double newStatementBalance = credit.getBalance() + credit.getStatementBalance();
+                            newStatementBalance = round(newStatementBalance,2); //round up to decimals places
+
+                            credit.setStatementBalance(newStatementBalance);
+                            credit.setBalance(newStatementBalance);
+                            addInterest(credit); //mysql statement to call
+                            break;
+                        }
+
+                        break;
+
+
+
+
                     }
                 }
 
