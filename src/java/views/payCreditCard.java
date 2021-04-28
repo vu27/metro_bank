@@ -33,7 +33,6 @@ public class payCreditCard extends JFrame {
     private JPanel contentPane;
     private JTable table; // table
     private DefaultTableModel dtm = new DefaultTableModel(0, 0); // default table model
-    private JTextField textField;
     private JTextField txtPay;
     private JComboBox comboBox = new JComboBox();
     private List<Credit> credits = new ArrayList<>(); //holds all students credits
@@ -149,6 +148,7 @@ public class payCreditCard extends JFrame {
 
         JTextField txtMinPay = new JTextField();
         txtMinPay.setBounds(754, 214, 129, 32);
+        txtMinPay.setEditable(false);
         contentPane.add(txtMinPay);
         txtMinPay.setColumns(10);
 
@@ -318,6 +318,12 @@ public class payCreditCard extends JFrame {
      */
     public Double getMinPayment(){
         double minPayment = creditAccount.getStatementBalance(); //get statement balance
+
+        if(creditAccount.getPaymentMade() == true){
+            return 0.00;
+        }
+
+
         if(minPayment < 35 && minPayment > 0){ //must be greater than 35$ for a min balance to be 5$
             return 5.00;
         }
@@ -326,6 +332,8 @@ public class payCreditCard extends JFrame {
         if(minPayment == 0){
             return 0.00; //no min payment is now
         }
+
+
 
         else{ //10% of statement balance
             minPayment = minPayment * .1;

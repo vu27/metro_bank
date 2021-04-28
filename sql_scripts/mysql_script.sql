@@ -192,7 +192,8 @@ INSERT INTO metro_bank.credit (
 	apr,
     payment_made
 ) VALUES
-('2021-02-25T05:47:26.853Z', true, 1, 322.22, 50.01, 9000, .2443,1);
+('2021-02-25T05:47:26.853Z', true, 1, 322.22, 50.01, 9000, .2443,1),
+('2021-03-25T05:47:26.853Z', false, 2, 571.22, 20.04, 9000, .2443,0);
 
 
 /* Populate Credit applications */
@@ -212,7 +213,9 @@ INSERT INTO metro_bank.credit_application (
     status,
     date_applied
 ) VALUES
-('Jerry', 'Hills', '8930 Theatre Street', 'Stow', 'OH', 'j.hills@metrobank.edu', '953-555-1177', 119038905, 500, 35000, 'password', 1, 'Approved', '2021-02-25T05:47:26.853Z' );
+('Jerry', 'Hills', '8930 Theatre Street', 'Stow', 'OH', 'j.hills@metrobank.edu', '953-555-1177', 119038905, 500, 35000, 'password', 1, 'Approved', '2021-02-25T05:47:26.853Z' ),
+('Walter', 'Smith', '50 Tunnel Ave.', 'Philadelphia', 'PA', 'w.Smith@metrostate.edu', '612-555-1234', 632588008, 600, 45000, 'password', 2, 'Approved', '2021-02-25T05:47:26.853Z' );
+
 
 /* Populate Checkings */
 INSERT INTO metro_bank.checkings (
